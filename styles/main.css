@@ -1,0 +1,33 @@
+body {
+
+}
+
+canvas {
+
+
+}
+
+.frame {
+	width: 1280px;
+    height: 786px;
+	border: 0;
+	-ms-transform: scale(0.45);
+    -moz-transform: scale(0.45);
+    -o-transform: scale(0.45);
+    -webkit-transform: scale(0.45);
+    transform: scale(0.45);
+    
+    -ms-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+
+#startType {
+    position: relative;
+    margin: 0 auto;
+    display: block;
+   
+}
