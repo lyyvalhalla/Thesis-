@@ -12,7 +12,8 @@ var scene2, renderer2;
 
 
 var raycaster;
-var mouse;
+var mouse = new THREE.Vector2(), offset = new THREE.Vector3();
+var INTERSECTED, SELECTED;
 
 
 
@@ -22,18 +23,31 @@ d3.json("jsonbm.json", function(error, treeData) {
 	root = treeData.roots.bookmark_bar;
 	
 
-	update(root);
-
 	
+
 	init();
 	animate();
 	
 
+	// update(root);
+	
+
+
 	// calll stages here:
+	/*
 	scene2.add(new setupSearchBox(0, 0, 0));
 	scene.add(Flipping_Wall);
-	
+	/*
+
+
+	// archive parts
+	/*
+	scene2.add(new showFrame(sites[30], 0, 100, -300));
+	scene2.add(new showFrame(sites[0], 500, 0, -1000));
+	scene2.add(new showFrame(sites[52], 700, -50, 0));	
+	*/
 });
+
 
 
 
@@ -41,6 +55,7 @@ d3.json("jsonbm.json", function(error, treeData) {
 function update(source) {
 	nodes = tree.nodes(root);
 	links = tree.links(nodes);
+
 
 	for (var i=0; i<nodes.length; i++) {
 		if(nodes[i].url) {
@@ -54,27 +69,10 @@ function update(source) {
 		}
 	}
 
-	// display TIME of the bookmarks
-	console.log(getTime(nodes[88].date_added));
-	console.log(nodes[88].name);
-
-
-	// parent, children, value, depth
-
-	// console.log(returnDate(nodes[88].date_added));
-
-	// var xx = returnDate(folders[4].date_added);
-
-	// console.log(nodes[88]);
-	// console.log(xx);
-
-	
-	
-	// scene2.add(new showFrame(sites[30], 0, 100, -300));
-	// scene2.add(new showFrame(sites[0], 500, 0, -1000));
-	// scene2.add(new showFrame(sites[52], 700, -50, 0));	
+	generateNode(nodes);
 	
 }
+
 
 
 
@@ -91,6 +89,16 @@ function init() {
 	scene = new THREE.Scene();
 	scene2 = new THREE.Scene();
 
+	// drawings here
+	update(root);
+
+
+
+
+
+
+	raycaster = new THREE.Raycaster();
+
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setClearColor( 0xf0f0f0 );
@@ -105,7 +113,7 @@ function init() {
 
 
 	window.addEventListener( 'resize', onWindowResize, false );
-
+	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 	// startStage();
 
@@ -128,6 +136,8 @@ function onDocumentMouseMove( event ) {
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
+	raycaster.setFromCamera( mouse, camera );
+	// moveNode();
 }
 
 
@@ -145,7 +155,13 @@ function animate() {
 
 function rendering() {
 
+
+
 	camera.updateMatrixWorld();
+
+
+	moveNode();
+
 
 	renderer.render( scene, camera );
 	renderer2.render( scene2, camera );

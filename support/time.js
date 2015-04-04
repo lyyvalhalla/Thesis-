@@ -20,9 +20,9 @@ function getTime(microseconds) {
 
     return addDate(ref, days);
 
-    secondsToTime(seconds)
+    console.log(secondsToTime(seconds));
 
-    // console.log( addDate(ref, days));
+   
 
    
 
