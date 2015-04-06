@@ -76,6 +76,7 @@ function update(source) {
 	// draw bookmarks particles
 	// generateNode(nodes);
 
+	sortTime(nodes);
 	sortCategory(root)
 	
 }

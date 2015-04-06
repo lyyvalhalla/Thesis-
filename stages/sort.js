@@ -7,29 +7,54 @@ var colorA = [0xAA8439, 0xFFE3AA];
 1. position of the particles changing with TIME
 	-- mapping date_added to a range of Z values
 2. show time/date
+--- map date_added to data_minified
+--- push date_minified to json objects
+--- draw Z position depending on date_minified
+
 */
+
+
+
+// sort(a, b) {
+// 	return b.date_added < a.date_added ? 1 : -1;
+// }
+/*
+dates.push(d.date_added);
+
+// map date_added to z: 100 ~ -blah
+zTime = dates.map(function(double){
+	double = Math.floor((d.date_added/1000000)/86400);
+	return double;
+})
+
+
+*/
+
+var zTime = [];
+var dates = [];
 
 function sortTime(nodes) {
 
-	nodes.sort(function(a,b) {
-		// renturn b.date_added < a.date_added ? 1 : -1;	
-		// console.log(b.date_added);
-	}) 
-	// console.log(nodes);
+	nodes.forEach(function(d){
+		dates.push(d.date_added);
+		
+		
+		
+	});
+	
+	zTime = dates.map(function(double){
+		double = (Math.floor((double/1000000)/86400))-150000;
+		return double;
+	});
+
+	for(var i=0; i<nodes.length; i++) {
+		nodes[i].zTime = zTime[i];
+		// console.log(nodes[i].date_added + "; " + nodes[i].zTime);
+		// console.log(nodes[i]);
+	}
 }
 
 
-
-var sortZ = function( date_added) {
-
-}
-
-
-
-var dates =[];
-var zTime =[];
-
-//nodes = tree.nodes(root);
 
 
 // by category >>> big folders only
@@ -44,6 +69,8 @@ function sortCategory(source) {
 	for(var i=0; i<source.children.length; i++) {
 		childCategory = source.children[i];
 		childNodes = tree.nodes(childCategory);
+
+		
 	
 		childNodes.forEach(function(d){
 			// console.log(d);
@@ -51,35 +78,35 @@ function sortCategory(source) {
 			boxMat = new THREE.MeshBasicMaterial({color: colorArray[i]});
 			nodeBox = new THREE.Mesh(boxGeo, boxMat);
 
-			dates.push(d.date_added);
-
-			// map date_added to z: 100 ~ -blah
-			zTime = dates.map(function(double){
-				double = Math.floor((d.date_added/1000000)/86400);
-				return double;
-			})
-			
 			
 			d.particle = nodeBox;
 			d.particle.position.x = 2000 * i/10 - 1000;
 			d.particle.position.y = 2000 * Math.random() - 1000;
-			d.particle.position.z = 2000 * Math.random() - 1000;
+			d.particle.position.z = -2000 * (d.zTime/1000);
+			// d.particle.position.z = 2000 * Math.random() - 1000;
+			console.log(d.particle.position.z);
 			scene.add(d.particle);
 			
 		});		
 	}
-	console.log(zTime);
 }
 
+/*
+function sortTime(nodes) {
+
+	nodes.sort(function(a,b) {
+		renturn b.date_added < a.date_added ? 1 : -1;	
+	}) 
+}
+*/
 
 
 
 
 
-// sort(a, b) {
-// 	return b.date_added < a.date_added ? 1 : -1;
-// }
 
 
-// category = tree.nodes(root.children[0]);
-// console.log(category);
+
+
+
+
