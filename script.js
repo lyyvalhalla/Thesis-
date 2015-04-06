@@ -29,7 +29,9 @@ d3.json("jsonbm.json", function(error, treeData) {
 	animate();
 	
 
-	// update(root);
+	
+
+	// current function
 	
 
 
@@ -56,6 +58,8 @@ function update(source) {
 	nodes = tree.nodes(root);
 	links = tree.links(nodes);
 
+	
+
 
 	for (var i=0; i<nodes.length; i++) {
 		if(nodes[i].url) {
@@ -69,7 +73,10 @@ function update(source) {
 		}
 	}
 
-	generateNode(nodes);
+	// draw bookmarks particles
+	// generateNode(nodes);
+
+	sortCategory(root)
 	
 }
 
@@ -159,8 +166,8 @@ function rendering() {
 
 	camera.updateMatrixWorld();
 
-
-	moveNode();
+	// function to edit/remove nodes/json objects
+	// moveNode();
 
 
 	renderer.render( scene, camera );

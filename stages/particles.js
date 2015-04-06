@@ -4,8 +4,8 @@ var particleObjects;
 
 var Bookmark_Nodes = new THREE.Object3D();
 Bookmark_Nodes.name = "bm_particles";
-//generateLight(Bookmark_Nodes);
-generateLight(Bookmark_Nodes);
+
+// generateLight(Bookmark_Nodes);
 
 
 function generateNode(nodes) {
@@ -18,21 +18,23 @@ function generateNode(nodes) {
 		// console.log("depth:" + d.depth + "; parent:" + d.parent + "; children:" + d.children);
 		// console.log("date_added: " + d.date_added + "; name: " + d.name);
 		boxGeo = new THREE.BoxGeometry(50, 50, 50);
-		boxMat = new THREE.MeshLambertMaterial({color: boxColor});
+		boxMat = new THREE.MeshBasicMaterial({color: boxColor});
 		nodeBox = new THREE.Mesh(boxGeo, boxMat);
 		d.particle = nodeBox;
 		d.particle.position.x = 2000 * Math.random() - 1000;
 		d.particle.position.y = 2000 * Math.random() - 1000;
 		d.particle.position.z = 2000 * Math.random() - 1000;
+		// z range: 100 ~ - blah 
+		// d.particle.position.z = 100;
 		scene.add(d.particle);
 		// Bookmark_Nodes.add(d.particle);
 		particles.push(d.particle);
-
+		// console.log(d.date_added/1000000000000);
+		console.log(d.particle.position.z);
 	})
 
 	
 	// scene.add(Bookmark_Nodes);
-	console.log(Bookmark_Nodes);
 
 	for (var i =0; i<scene.children.length; i++) {
 		if(scene.children[i].name == "bm_particles") {
@@ -55,7 +57,7 @@ function generateLight(object) {
 	// object.add(light);
 }
 
-
+var trackID;
 
 function moveNode() {
 	// console.log(Bookmark_Nodes.children);
@@ -77,11 +79,16 @@ function moveNode() {
 			// check & remove 
 			for(var i=0; i<nodes.length; i++) {
 				if (nodes[i].particle == INTERSECTED) {
-					console.log(nodes[i].particle.uuid);
+					
 					// console.log(scene.children[i].uuid);
+					trackID = nodes[i];
 					scene.remove(nodes[i].particle);
 
-					// THREE.SceneUtils.detach(Bookmark_Nodes.children[i], Bookmark_Nodes, scene);
+					console.log(nodes.length);
+					delete(trackID);
+					//  ***************remove node data from JSON file here *****************************************
+
+					
 				}
 			}
 
@@ -95,21 +102,13 @@ function moveNode() {
 			
 			INTERSECTED = null;
 		}
+
+		// delete(trackID);
 	}
-}
 
-
-Array.prototype.removeValue = function(uuid, value) {
-	var array = $.map(this, function(v,i){
-      return v[name] === value ? null : v;
-	  });
-   	this.length = 0; //clear original array
-   	this.push.apply(this, array); //push all elements except the one we want to delete
 
 }
-
 	
-
 
 
 
@@ -119,3 +118,36 @@ Array.prototype.removeValue = function(uuid, value) {
 function generateParticle() {
 
 }
+
+
+//http://stackoverflow.com/questions/16866888/how-to-delete-objects-from-json-object
+/*function remove(delKey, delVal, o) {
+    for (var key in o) {
+        if (typeof o[key] === "object") {
+            if (remove(delKey, delVal, o[key])) { return true; }
+        } else {
+            if (delKey == key && delVal == o[key]) {
+                delete o[key];
+                return true;
+            }
+        }
+    }
+}
+*/
+
+
+
+
+
+
+
+/*
+Array.prototype.removeValue = function(uuid, value) {
+	var array = $.map(this, function(v,i){
+      return v[uuid] === value ? null : v;
+	  });
+   	this.length = 0; //clear original array
+   	this.push.apply(this, array); //push all elements except the one we want to delete
+
+}
+*/
