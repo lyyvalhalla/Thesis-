@@ -85,6 +85,12 @@ var setupSearchBox = function (x, y, z) {
 
 
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
+
 
 
 

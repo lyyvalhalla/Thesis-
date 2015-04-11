@@ -22,7 +22,7 @@ function createVectors() {
 
 
 function createPath() {
-	camera.position.set(0, 0, 100);
+	camera.position.set(0, -100, 0);
 
 
 	// compute length
@@ -80,10 +80,10 @@ function addPathNodes(nodes) {
 
 	for (var i =0; i<nodes.length; i++) {
 		var geometry =  new THREE.BoxGeometry(5, 5, 5);
-		var material =  new THREE.MeshLambertMaterial({color: 0xff0000});  // sortCategory() here 
+		var material =  new THREE.MeshLambertMaterial({color: 0xff0000, wireframe: true});  // sortCategory() here 
 		var pathNode = new THREE.Mesh(geometry, material);
 
-		pathNode.position.x = 0;
+		pathNode.position.x = getRandomInt(-300, 300) ;
 		pathNode.position.y = -200;
 		pathNode.position.z = -nodes[i].zPos -100;
 		scene.add(pathNode);
