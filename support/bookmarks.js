@@ -1,3 +1,44 @@
+var tempSite, tempFolder;
+
+var getPathSites = function(nodes) {
+
+	var pathSites = [];
+
+	for (var i=0; i<nodes.length; i++) {
+		if(nodes[i].url) {
+			tempSite = nodes[i];
+			pathSites.push(tempFolder);
+			
+	} else {
+			tempFolder = nodes[i];
+			folders.push(tempFolder);
+			
+		}
+	}
+	return pathSites;
+}
+
+
+var getPathFolders = function(nodes) {
+
+	var pathFolders = [];
+
+	for (var i=0; i<nodes.length; i++) {
+		if(nodes[i].url) {
+			tempSite = nodes[i];
+			pathSites.push(tempFolder);
+			
+	} else {
+			tempFolder = nodes[i];
+			pathFolders.push(tempFolder);
+			
+		}
+	}
+	return pathFolders;
+}
+
+
+
 
 
 var showFrame = function (site, x, y, z) {
@@ -43,15 +84,7 @@ var setupSearchBox = function (x, y, z) {
 }
 
 
-var returnDate = function getTime(epoch) {
-	var oldDate = epoch/10000;
-	var date = new Date(oldDate);
-	return date;
 
-	console.log(date);
-}
-
- 
 
 
 

@@ -1,6 +1,5 @@
 var colorArray = [0xAA8439, 0xAA9739, 0x887CAF, 0xFFE3AA, 0x2E4272, 0xD4B16A, 0x805C15, 0x553900, 0xFFF0AA, 0xD4C26A, 0x806D15, 0x554600, 0x403075, 0x615192, 0x261758, 0x13073A, 0x2E4272, 0x7887AB, 0x4F628E, 0x162955, 0x061539];
 
-var colorA = [0xAA8439, 0xFFE3AA];
 
 // by time
 /*
@@ -15,20 +14,8 @@ var colorA = [0xAA8439, 0xFFE3AA];
 
 
 
-// sort(a, b) {
-// 	return b.date_added < a.date_added ? 1 : -1;
-// }
-/*
-dates.push(d.date_added);
-
-// map date_added to z: 100 ~ -blah
-zTime = dates.map(function(double){
-	double = Math.floor((d.date_added/1000000)/86400);
-	return double;
-})
 
 
-*/
 
 var zTime = [];
 var dates = [];

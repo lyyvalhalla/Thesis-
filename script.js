@@ -35,23 +35,30 @@ d3.json("jsonbm.json", function(error, treeData) {
 	
 
 
-	// calll stages here:
-	/*
-	scene2.add(new setupSearchBox(0, 0, 0));
-	scene.add(Flipping_Wall);
-	/*
+	// ***************** calll stages here:***************** 
+	
+	// scene2.add(new setupSearchBox(0, 0, 0));
+	// scene.add(Flipping_Wall);
+	
 
 
-	// archive parts
-	/*
-	scene2.add(new showFrame(sites[30], 0, 100, -300));
-	scene2.add(new showFrame(sites[0], 500, 0, -1000));
-	scene2.add(new showFrame(sites[52], 700, -50, 0));	
-	*/
+	//  *****************  PATH parts ***************** 
+
+	createPath();
+	addPathNodes(nodes);
+	
+
+	// *****************  archive parts ***************** 
+	// scene2.add(new showFrame(sites[30], 0, 100, -300));
+	// scene2.add(new showFrame(sites[0], 500, 0, -1000));
+	// scene2.add(new showFrame(sites[52], 700, -50, 0));	
+	
 });
 
 
 
+
+var firstDay, totalDays;
 
 // d3 
 function update(source) {
@@ -59,25 +66,42 @@ function update(source) {
 	links = tree.links(nodes);
 
 	
-
+	var max = new Date(); 
+	var maxDate = dateFormat(max, "fullDate");
 
 	for (var i=0; i<nodes.length; i++) {
-		if(nodes[i].url) {
+		if(nodes[i].type == "url") {
 			site = nodes[i];
 			sites.push(site);
 			
-	} else {
+		} else {
 			folder = nodes[i];
 			folders.push(folder);
 			
 		}
+	
+		nodes[i].time = getTime(nodes[i].date_added);
+		// console.log(nodes[i].time)
 	}
 
-	// draw bookmarks particles
+
+
+	// ************* get total days >>> total length of path *************
+	firstDay = new Date(getMinTime(nodes).time);
+	
+	totalDays = Math.ceil((today.getTime()-firstDay.getTime())/(one_day));
+	
+	pathLength = totalDays * 10;
+	console.log(firstDay + "; " + today);
+	console.log(totalDays);
+
+
+
+	// ***************** draw bookmarks particles ***************** 
 	// generateNode(nodes);
 
-	sortTime(nodes);
-	sortCategory(root)
+	// sortTime(nodes);
+	// sortCategory(root)
 	
 }
 
@@ -123,6 +147,9 @@ function init() {
 	window.addEventListener( 'resize', onWindowResize, false );
 	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
+
+
+	// *****************  start stages***************** 
 	// startStage();
 
 
@@ -145,7 +172,8 @@ function onDocumentMouseMove( event ) {
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	raycaster.setFromCamera( mouse, camera );
-	// moveNode();
+	
+
 }
 
 
@@ -157,8 +185,8 @@ function animate() {
 	rendering();
 
 
-	// first stage ---- start
-	// composer.render();
+	// *****************  first stage ---- start *****************  (not using)
+	//composer.render();
 }
 
 function rendering() {
@@ -167,7 +195,7 @@ function rendering() {
 
 	camera.updateMatrixWorld();
 
-	// function to edit/remove nodes/json objects
+	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
 
 

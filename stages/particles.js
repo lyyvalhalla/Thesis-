@@ -18,7 +18,7 @@ function generateNode(nodes) {
 		// console.log("depth:" + d.depth + "; parent:" + d.parent + "; children:" + d.children);
 		// console.log("date_added: " + d.date_added + "; name: " + d.name);
 		boxGeo = new THREE.BoxGeometry(50, 50, 50);
-		boxMat = new THREE.MeshBasicMaterial({color: boxColor});
+		boxMat = new THREE.MeshLambertMaterial({color: boxColor});
 		nodeBox = new THREE.Mesh(boxGeo, boxMat);
 		d.particle = nodeBox;
 		d.particle.position.x = 2000 * Math.random() - 1000;
@@ -30,7 +30,7 @@ function generateNode(nodes) {
 		// Bookmark_Nodes.add(d.particle);
 		particles.push(d.particle);
 		// console.log(d.date_added/1000000000000);
-		console.log(d.particle.position.z);
+		// console.log(d.particle.position.z);
 	})
 
 	
