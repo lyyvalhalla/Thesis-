@@ -144,7 +144,10 @@ function setupCubes(object) {
 	if (counter > total_cubes) {
 		
 		// input div disable keyboard event
-	}	
+	}
+
+    // ****************** temp commented >> uncomment when doing the transitions******************
+    /* 
  	document.onkeydown = function(cube) {
 
  		
@@ -167,8 +170,8 @@ function setupCubes(object) {
 
         counter = counter +1;
  	}
-
-
+    */
+    
  	
 }
 

@@ -135,12 +135,6 @@ function generateParticle() {
 }
 */
 
-
-
-
-
-
-
 /*
 Array.prototype.removeValue = function(uuid, value) {
 	var array = $.map(this, function(v,i){

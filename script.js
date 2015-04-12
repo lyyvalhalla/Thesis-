@@ -9,6 +9,20 @@ var sites =[], folders=[];
 var container, stats;
 var camera, scene, renderer;
 var scene2, renderer2;
+var controls;
+var splineCamera;
+
+
+// controls
+var controlsEnabled = true;
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
+
+var prevTime = performance.now();
+var velocity = new THREE.Vector3();
+
 
 
 var raycaster;
@@ -42,10 +56,8 @@ d3.json("jsonbm.json", function(error, treeData) {
 	
 
 
-	//  *****************  PATH parts ***************** 
-
-	createPath();
-	addPathNodes(nodes);
+	
+	
 	
 
 	// *****************  archive parts ***************** 
@@ -69,6 +81,7 @@ function update(source) {
 	var max = new Date(); 
 	var maxDate = dateFormat(max, "fullDate");
 
+	// check bookmark nodes or folders 
 	for (var i=0; i<nodes.length; i++) {
 		if(nodes[i].type == "url") {
 			site = nodes[i];
@@ -121,11 +134,81 @@ function init() {
 	scene = new THREE.Scene();
 	scene2 = new THREE.Scene();
 
+	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
+	scene.add( splineCamera );
+
 	// drawings here
 	update(root);
 
+	//  *****************  PATH parts ***************** 
+	createPath();
+	addPathNodes(nodes);
 
 
+
+
+	controls = new THREE.PointerLockControls( splineCamera );
+	scene.add( controls.getObject() );
+
+	var onKeyDown = function ( event ) {
+
+		switch ( event.keyCode ) {
+
+			case 38: // up
+			case 87: // w
+				moveForward = true;
+				break;
+
+			case 37: // left
+			case 65: // a
+				moveLeft = true; break;
+
+			case 40: // down
+			case 83: // s
+				moveBackward = true;
+				break;
+
+			case 39: // right
+			case 68: // d
+				moveRight = true;
+				break;
+
+			case 32: // space
+				if ( canJump === true ) velocity.y += 350;
+				canJump = false;
+				break;
+
+		}
+	};
+
+	var onKeyUp = function ( event ) {
+
+		switch( event.keyCode ) {
+
+			case 38: // up
+			case 87: // w
+				moveForward = false;
+				break;
+
+			case 37: // left
+			case 65: // a
+				moveLeft = false;
+				break;
+
+			case 40: // down
+			case 83: // s
+				moveBackward = false;
+				break;
+
+			case 39: // right
+			case 68: // d
+				moveRight = false;
+				break;
+
+		}
+	};
+	document.addEventListener( 'keydown', onKeyDown, false );
+	document.addEventListener( 'keyup', onKeyUp, false );
 
 
 
@@ -176,11 +259,62 @@ function onDocumentMouseMove( event ) {
 
 }
 
-
+var cameraStep = 0;
 
 function animate() {
 
 	requestAnimationFrame( animate );
+
+	if ( controlsEnabled ) {
+		raycaster.ray.origin.copy( controls.getObject().position );
+		raycaster.ray.origin.y -= 10;
+
+		var intersections = raycaster.intersectObjects( scene.children );
+
+		var isOnObject = intersections.length > 0;
+
+		var time = performance.now();
+		var delta = ( time - prevTime ) / 1000;
+
+		velocity.x -= velocity.x * 10.0 * delta;
+		velocity.z -= velocity.z * 10.0 * delta;
+
+		velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+		if ( moveForward ) {
+			// velocity.z -= 2400.0 * delta;
+			cameraStep = cameraStep + 0.001;
+
+		}
+		if ( moveBackward ) velocity.z += 400.0 * delta;
+
+		if ( moveLeft ) velocity.x -= 400.0 * delta;
+		if ( moveRight ) velocity.x += 400.0 * delta;
+
+		if ( isOnObject === true ) {
+			velocity.y = Math.max( 0, velocity.y );
+
+			canJump = true;
+		}
+
+		controls.getObject().translateX( velocity.x * delta );
+		controls.getObject().translateY( velocity.y * delta );
+		controls.getObject().translateZ( velocity.z * delta );
+
+
+		if ( controls.getObject().position.y < 10 ) {
+
+			velocity.y = 0;
+			controls.getObject().position.y = 10;
+
+			canJump = true;
+
+		}
+
+		prevTime = time;
+
+	}
+
 
 	rendering();
 
@@ -197,9 +331,9 @@ function rendering() {
 
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
+	pathRender();
 
-
-	renderer.render( scene, camera );
+	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, camera );
 
 }
