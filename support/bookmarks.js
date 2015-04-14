@@ -1,5 +1,6 @@
 var tempSite, tempFolder;
 
+
 var getPathSites = function(nodes) {
 
 	var pathSites = [];
@@ -7,7 +8,7 @@ var getPathSites = function(nodes) {
 	for (var i=0; i<nodes.length; i++) {
 		if(nodes[i].url) {
 			tempSite = nodes[i];
-			pathSites.push(tempFolder);
+			pathSites.push(tempSite);
 			
 	} else {
 			tempFolder = nodes[i];
@@ -54,6 +55,7 @@ var showFrame = function (site, x, y, z) {
 	var webpage = document.createElement('iframe');
 	webpage.src = site.url;
 	webpage.className = "frame";
+	webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
 	dom.appendChild(webpage);
 
 

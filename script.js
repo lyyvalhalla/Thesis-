@@ -56,10 +56,6 @@ d3.json("jsonbm.json", function(error, treeData) {
 	
 
 
-	
-	
-	
-
 	// *****************  archive parts ***************** 
 	// scene2.add(new showFrame(sites[30], 0, 100, -300));
 	// scene2.add(new showFrame(sites[0], 500, 0, -1000));
@@ -332,9 +328,11 @@ function rendering() {
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
 	pathRender();
+	// pathFrame(pathNodes, tubePos);
+
 
 	renderer.render( scene, splineCamera );
-	renderer2.render( scene2, camera );
+	renderer2.render( scene2,splineCamera );
 
 }
 
