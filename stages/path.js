@@ -122,10 +122,10 @@ function pathRender() {
 
 	// Camera Orientation 2 - up orientation via normal
 	
-	splineCamera.matrix.lookAt(splineCamera.position, lookAt, normal);
-	// splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );	
+	// splineCamera.matrix.lookAt(splineCamera.position, lookAt, normal);
+	splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );	
 
-	// console.log(splineCamera.position);
+	// console.log(splineCamera.rotation.order);
 }
 
 
@@ -135,6 +135,8 @@ function addPathNodes(nodes) {
 
 	// get bookmarks (node folders)
 	pathNodes = getPathSites(nodes);
+	pathNodes = indexTime(pathNodes);
+	
 	var pathNode;
 	
 
@@ -154,39 +156,59 @@ function addPathNodes(nodes) {
 
 		
 	}
-	
-	var pathFrame = new showFrame(pathNodes[311], tubePos[311].x+500, tubePos[311].y-300, tubePos[311].z);
 
-	// scene2.add(pathFrame);
-	pathArray[311].material.wireframe = false;
+	var totalGroup = groupFrame(pathNodes, pathLength);
+	// console.log(totalGroup[108]);
 	
-	console.log(pathNodes.length);
-	groupFrame();
+
+	for (var i =0; i<totalGroup[11].length; i++) {
+		// console.log(totalGroup[108][i]);
+		var tubePosIndex = totalGroup[11][i].index; 
+		var pathFrame = new showFrame(totalGroup[11][i], tubePos[tubePosIndex].x+ getRandomInt(500, 800), tubePos[tubePosIndex].y-300, tubePos[tubePosIndex].z);
+		console.log(pathFrame.position);
+		scene2.add(pathFrame);
+	}
+
+
+	var pathFrameo = new showFrame(pathNodes[311], tubePos[311].x+ getRandomInt(500, 800), tubePos[311].y-300, tubePos[311].z);
+
+	// scene2.add(pathFrameo);
+
+	pathArray[328].material.wireframe = false;
+	
+
+
 }
 
 
 
-var nodeGroups =[];
 
-function groupFrame() {
+// divided down all bookmarks into groups for camera track and show < 2D Array
+function groupFrame(nodesArray, pathLength) {
+	var nodeGroups = [];
 	var offset = 100;
 	var lengthIntervals = Math.round(pathLength/offset);
-	
-	var nodeIntervals = Math.round(pathNodes.length/lengthIntervals);
+	var nodeIntervals = Math.floor(nodesArray.length/lengthIntervals);
+	var indexArray = [];
 
-	for (var i=0, j=0; i<pathNodes.length; i+=nodeIntervals, j++) {
-		// console.log(i + "; " + j);
+	console.log(nodesArray.length);
+
+	for (var i=0, j=0; i<nodesArray.length; i+=nodeIntervals, j++) {
+		
 		nodeGroups[j] = [];
 		for (var q =0; q<nodeIntervals; q++) {
+			indexArray.push(i+q);
+			// console.log(j + "; " + q + "; " + (i+q));
+			nodeGroups[j][q] = nodesArray[i+q];
+		}	
+	}
 
-			// change pathNodes >>> sorted Nodes by z index
-			nodeGroups[j][q] = pathNodes[i+q];
-			console.log(j + "; " + q + "; " + (i+q));
-		}
-
+	for (var i =0; i<nodesArray.length; i++) {
+		nodesArray[i].index = indexArray[i];
+		// console.log(nodesArray[i]);
 	}
 	
-
+	return nodeGroups;
 }
 
 

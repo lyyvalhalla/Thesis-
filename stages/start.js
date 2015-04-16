@@ -213,6 +213,27 @@ function startStage() {
 
 
 
+var setupSearchBox = function (x, y, z) {
+
+    var box = document.createElement('div');
+    var searchBox = new THREE.CSS3DObject(box);
+
+    searchBox.position.x = x;
+    searchBox.position.y = y;
+    searchBox.position.z = z;
+
+    var searchInput = document.createElement('input');
+    searchInput.id = "startType";
+    searchInput.type = "search";
+    // searchInput.type = "text";   
+    box.appendChild(searchInput);
+
+
+    return searchBox;
+
+    
+}
+
 
 
 

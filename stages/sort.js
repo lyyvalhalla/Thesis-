@@ -36,11 +36,22 @@ function sortTime(nodes) {
 
 	for(var i=0; i<nodes.length; i++) {
 		nodes[i].zTime = zTime[i];
-		// console.log(nodes[i].date_added + "; " + nodes[i].zTime);
-		// console.log(nodes[i]);
+		console.log(nodes[i].date_added + "; " + nodes[i].zTime);
+	
 	}
 }
 
+
+// sorting nodes based on dates
+function indexTime(nodes) {
+
+
+	nodes.sort(function(a, b) {
+		return a.date_added -b.date_added;
+	});
+	
+	return nodes;
+}
 
 
 
@@ -78,14 +89,16 @@ function sortCategory(source) {
 	}
 }
 
-/*
-function sortTime(nodes) {
 
-	nodes.sort(function(a,b) {
-		renturn b.date_added < a.date_added ? 1 : -1;	
-	}) 
-}
-*/
+
+
+// function sortZ(nodes) {
+
+// 	nodes.sort(function(a,b) {
+// 		renturn b.date_added < a.date_added ? 1 : -1;	
+// 	}) 
+// }
+
 
 
 

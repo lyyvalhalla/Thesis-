@@ -111,7 +111,9 @@ function update(source) {
 
 	// sortTime(nodes);
 	// sortCategory(root)
-	
+
+
+	//  ***************** compute fact sheets here *****************
 }
 
 

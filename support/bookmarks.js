@@ -1,4 +1,5 @@
 var tempSite, tempFolder;
+var titleArray = [];
 
 
 var getPathSites = function(nodes) {
@@ -55,7 +56,8 @@ var showFrame = function (site, x, y, z) {
 	var webpage = document.createElement('iframe');
 	webpage.src = site.url;
 	webpage.className = "frame";
-	webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
+	webpage.sandbox = "allow-same-origin allow-scripts";
+	// webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
 	dom.appendChild(webpage);
 
 
@@ -63,27 +65,30 @@ var showFrame = function (site, x, y, z) {
 }
 
 
+/****************  fast sheet here ************************/
 
-var setupSearchBox = function (x, y, z) {
-
-	var box = document.createElement('div');
-	var searchBox = new THREE.CSS3DObject(box);
-
-	searchBox.position.x = x;
-	searchBox.position.y = y;
-	searchBox.position.z = z;
-
-	var searchInput = document.createElement('input');
-	searchInput.id = "startType";
-	searchInput.type = "search";
-	// searchInput.type = "text";	
-	box.appendChild(searchInput);
-
-
-	return searchBox;
-
+function wordFrequency(nodes){
+	for (var i=0; i<nodes.length; i++) {
+		titleArray.push(nodes[i].name);
+	}
+	var frequency = {};
+	titleArray.forEach(function(value){
+		frequency[value] = 0;
+	});
+	var uniques = titleArray.filter(
+		function(value) { return ++frequency[value] == 1; }
+	);
 	
+	uniques.sort(
+		// console.log(frequency);
+		function(a, b) { 
+			return frequency[b] - frequency[a]; 
+		}
+	);
+	// console.log(frequency);
 }
+
+
 
 
 
