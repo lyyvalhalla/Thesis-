@@ -56,7 +56,8 @@ var showFrame = function (site, x, y, z) {
 	var webpage = document.createElement('iframe');
 	webpage.src = site.url;
 	webpage.className = "frame";
-	webpage.sandbox = "allow-same-origin allow-scripts";
+	// webpage.sandbox = "allow-same-origin allow-scripts";
+	webpage.sandbox = "allow-same-origin";
 	// webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
 	dom.appendChild(webpage);
 

@@ -281,10 +281,13 @@ function animate() {
 
 		if ( moveForward ) {
 			// velocity.z -= 2400.0 * delta;
-			cameraStep = cameraStep + 0.001;
-
+			cameraStep = cameraStep + 0.0001;
+			
 		}
-		if ( moveBackward ) velocity.z += 400.0 * delta;
+		if ( moveBackward ) {
+			// velocity.z += 1000.0 * delta;
+			cameraStep = cameraStep - 0.001;
+		}
 
 		if ( moveLeft ) velocity.x -= 400.0 * delta;
 		if ( moveRight ) velocity.x += 400.0 * delta;
@@ -330,11 +333,13 @@ function rendering() {
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
 	pathRender();
-	// pathFrame(pathNodes, tubePos);
+	
+
+	updateFrame();
 
 
 	renderer.render( scene, splineCamera );
-	renderer2.render( scene2,splineCamera );
+	renderer2.render( scene2, splineCamera );
 
 }
 
