@@ -9,6 +9,7 @@ var pathNodes = [];
 var pathArray=[];
 var tempFrames=[];
 var totalGroup = [];
+var checkArray = [];
 var tube, tubeMesh;
 // var tubePos = [];
 
@@ -17,10 +18,8 @@ var tube, tubeMesh;
 function createPath() {
 	camera.position.set(0, -180, 0);
 
-
 	// compute length
 	getTempTime(nodes);
-
 
 	var xLine, zLine = -200;
 
@@ -71,7 +70,6 @@ function createPath() {
 		new THREE.Vector3(arrayX[6], -200, arrayZ[6]),
 		new THREE.Vector3(0, -200, zLine-pathLength),
     	]);
-
 
 
 	tube = new THREE.TubeGeometry(pipeSpline, 50, 20, 12, false);
@@ -148,85 +146,53 @@ function addPathNodes(nodes) {
 		var material =  new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});  // sortCategory() here 
 		pathNode = new THREE.Mesh(geometry, material);
 		pathArray.push(pathNode);
-		pathNode.position.x = getRandomInt(position.x-200, position.x+200) ;
+		// pathNode.position.x = getRandomInt(position.x-200, position.x+200) ;
+		pathNode.position.x = position.x;
 		pathNode.position.y = position.y + 25;
 		pathNode.position.z = position.z;
-		scene.add(pathNode);
-
-		
+		scene.add(pathNode);	
 	}
-	// console.log(pathArray);
+	// totalGroup = groupFrame(pathNodes, pathLength);
 
-	totalGroup = groupFrame(pathNodes, pathLength);
-	
-
+	/*
 	for (var i =0; i<totalGroup[30].length; i++) {
-		// console.log(totalGroup[108][i]);
 		var tubePosIndex = totalGroup[30][i].index; 
-		// var pathFrame = new showFrame(totalGroup[30][i], tubePos[tubePosIndex].x+ getRandomInt(400, 800), tubePos[tubePosIndex].y-300, tubePos[tubePosIndex].z);
-		// console.log(pathArray[tubePosIndex]);
+		var pathFrame = new showFrame(totalGroup[30][i], tubePos[tubePosIndex].x+ getRandomInt(400, 800), tubePos[tubePosIndex].y-300, tubePos[tubePosIndex].z);
 		var pathFrame = new showFrame(totalGroup[30][i], pathArray[tubePosIndex].position.x+ getRandomInt(400, 800), pathArray[tubePosIndex].position.y-300, pathArray[tubePosIndex].position.z);
 		tempFrames.push(pathFrame);
-		// scene2.add(pathFrame);
+		scene2.add(pathFrame);
 	}
+	*/
+	var pathFrame = new showFrame(pathNodes[222], pathArray[222].position.x+getRandomInt(400, 800), pathArray[222].position.y-300, pathArray[222].position.z);	
+	// scene2.add(pathFrame);
+
 }
 
-var checkArray = [];
 
 // add & delete in realtime according to camera position
 function updateFrame(){
-	
-	  for (var i=0; i<scene.children.length; i++) {
-	  	
-		if (splineCamera.position.distanceTo(scene.children[i].position) <100) {
+	for (var i=0; i<pathArray.length; i++) {
+		if (splineCamera.position.distanceTo(scene.children[i].position) <50) {
 			if (checkArray.indexOf(i) === -1) {
-				scene2.add(new showFrame(pathNodes[i], pathArray[i].position.x+ getRandomInt(400, 800), pathArray[i].position.y-300, pathArray[i].position.z));
+				// scene2.add(new showFrame(pathNodes[i], pathArray[i].position.x+ getRandomInt(400, 800), pathArray[i].position.y, pathArray[i].position.z-300));
 				checkArray.push(i);
-				console.log(checkArray);
-			} else {
-				
-			}
-		} else {
+			} 
+		} else if (splineCamera.position.distanceTo(scene.children[i].position) > 50) {
 			// console.log(scene2.children);
-			// if in array >> remove it from array
-			if (checkArray.indexOf(i) != -1) {
+			if (scene2.children.includes[scene.children[0]] === true) {
 				scene2.remove(scene2.children[i]);
-				checkArray.remove(i);
-				
-			} else {
-				
-
-
 			}
+
+
+			// if (checkArray.indexOf(i) != -1) {
+				// scene2.remove(scene2.children[i]);
+				// checkArray.delete(i);				
+			// } 
 		} 
-	  }
-	// console.log(splineCamera.position.distanceTo(scene2.children[0].position) );
-	
-
-	
-	
-	// group.forEach(function(d){
-		
-	// })
-
-	// for (var i=0; i < group.length; i++) {
-		// console.log((splineCamera.position.z - (-group[i][0].zPos)));
-		// if ((splineCamera.position.z - (-group[i][0].zPos)) > 300  && (splineCamera.position.z - (-group[i][0].zPos)) < 600) {
-		// 	console.log("wang");
-		// 	for (var j =0, p=0; j<scene2.children.length, p<group[i].length; j++, p++) {
-		
-		// 		if (scene2.children[j] === group[i][p]) {
-		// 			console.log("wang");
-		// 		} else {
-		// 			scene2.add(group[i][p]);
-		// 		}
-
-				
-		// 	}
-		// }
-	// }
-
-	
+	}
+	//console.log(scene2.children.length);
+	console.log(checkArray);
+	//console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
 
 
@@ -239,10 +205,8 @@ function groupFrame(nodesArray, pathLength) {
 	var nodeIntervals = Math.floor(nodesArray.length/lengthIntervals);
 	var indexArray = [];
 
-	console.log(nodesArray.length);
 
-	for (var i=0, j=0; i<nodesArray.length; i+=nodeIntervals, j++) {
-		
+	for (var i=0, j=0; i<nodesArray.length; i+=nodeIntervals, j++) {	
 		nodeGroups[j] = [];
 		for (var q =0; q<nodeIntervals; q++) {
 			indexArray.push(i+q);
@@ -250,26 +214,20 @@ function groupFrame(nodesArray, pathLength) {
 			nodeGroups[j][q] = nodesArray[i+q];
 		}	
 	}
-
 	for (var i =0; i<nodesArray.length; i++) {
 		nodesArray[i].index = indexArray[i];
-		// console.log(nodesArray[i]);
 	}
-	
 	return nodeGroups;
 }
 
-
-
-
-
+	
 function cameraTransit() {
 
 }
 
 
 
-Array.prototype.remove = function() {
+Array.prototype.delete = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
         what = a[--L];

@@ -43,23 +43,11 @@ d3.json("jsonbm.json", function(error, treeData) {
 	animate();
 	
 
-	
-
-	// current function
-	
-
 
 	// ***************** calll stages here:***************** 
 	
 	// scene2.add(new setupSearchBox(0, 0, 0));
 	// scene.add(Flipping_Wall);
-	
-
-
-	// *****************  archive parts ***************** 
-	// scene2.add(new showFrame(sites[30], 0, 100, -300));
-	// scene2.add(new showFrame(sites[0], 500, 0, -1000));
-	// scene2.add(new showFrame(sites[52], 700, -50, 0));	
 	
 });
 
@@ -95,15 +83,18 @@ function update(source) {
 
 
 
+
+
+
 	// ************* get total days >>> total length of path *************
 	firstDay = new Date(getMinTime(nodes).time);
 	
 	totalDays = Math.ceil((today.getTime()-firstDay.getTime())/(one_day));
 	
-	pathLength = totalDays * 10;
+	pathLength = totalDays * 50;
 	console.log(firstDay + "; " + today);
 	console.log(totalDays);
-
+	
 
 
 	// ***************** draw bookmarks particles ***************** 
@@ -114,6 +105,13 @@ function update(source) {
 
 
 	//  ***************** compute fact sheets here *****************
+
+
+
+
+
+	// ************* path menu ******************	
+	
 }
 
 
@@ -334,7 +332,7 @@ function rendering() {
 	// moveNode();
 	pathRender();
 	
-
+	// ***************** path move interaction here *****************
 	updateFrame();
 
 
