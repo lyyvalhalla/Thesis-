@@ -60,7 +60,7 @@ var firstDay, totalDays;
 function update(source) {
 	nodes = tree.nodes(root);
 	links = tree.links(nodes);
-
+	
 	
 	var max = new Date(); 
 	var maxDate = dateFormat(max, "fullDate");

@@ -163,7 +163,7 @@ var counter = 0;
 // add & delete in realtime according to camera position
 function updateFrame(){
 	for (var i=0, j=0; i<pathArray.length; i++) {
-		if (splineCamera.position.distanceTo(scene.children[i].position) <50) {
+		if (splineCamera.position.distanceTo(scene.children[i].position) <100) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x+ getRandomInt(400, 800), pathArray[i].position.y, pathArray[i].position.z-300)
 				scene2.add(newFrame);
@@ -172,14 +172,13 @@ function updateFrame(){
 			} 
 		} else {
 			if (scene2.children[j] != -1 && checkArray.indexOf(i) != -1) {
-				// 	var toDelete = scene2.children[scene2.children.indexOf[scene2.children[i]]];
 				scene2.remove(scene2.children[j]);
 				checkArray.delete(i);
 			}
 		} 
 	}
-	console.log(scene2.children.length);
- 	console.log(checkArray.length);
+	// console.log(scene2.children.length);
+ // 	console.log(checkArray.length);
 	//console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
 
@@ -206,14 +205,13 @@ function groupFrame(nodesArray, pathLength) {
 		nodesArray[i].indexID = indexArray[i];
 	}
 	return nodeGroups;
-
-
 }
 
 	
 function cameraTransit() {
 
 }
+
 
 
 
