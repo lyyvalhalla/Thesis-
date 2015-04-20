@@ -22,7 +22,7 @@ var moveRight = false;
 
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
-
+var cameraStep = 0;
 
 
 var raycaster;
@@ -31,19 +31,14 @@ var INTERSECTED, SELECTED;
 
 
 
-// d3.js to process data
+// d3.js to process data  *****无用
 d3.json("jsonbm.json", function(error, treeData) {
 	var site, folder;
 	root = treeData.roots.bookmark_bar;
 	
-
+	// init();
+	// animate();
 	
-
-	init();
-	animate();
-	
-
-
 	// ***************** calll stages here:***************** 
 	
 	// scene2.add(new setupSearchBox(0, 0, 0));
@@ -58,9 +53,9 @@ var firstDay, totalDays;
 
 // d3 
 function update(source) {
-	nodes = tree.nodes(root);
+	nodes = tree.nodes(bmParent);
 	links = tree.links(nodes);
-	
+	// console.log(nodes);
 	
 	var max = new Date(); 
 	var maxDate = dateFormat(max, "fullDate");
@@ -77,8 +72,10 @@ function update(source) {
 			
 		}
 	
-		nodes[i].time = getTime(nodes[i].date_added);
-		// console.log(nodes[i].time)
+		nodes[i].time = getTime(nodes[i].dateAdded);
+
+		var convertedDate = new Date(nodes[i].dateAdded);
+		// console.log(convertedDate);
 	}
 
 
@@ -87,12 +84,11 @@ function update(source) {
 
 
 	// ************* get total days >>> total length of path *************
-	firstDay = new Date(getMinTime(nodes).time);
+	firstDay = getMinTime(nodes).dateAdded;
+	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
 	
-	totalDays = Math.ceil((today.getTime()-firstDay.getTime())/(one_day));
 	
 	pathLength = totalDays * 50;
-	console.log(firstDay + "; " + today);
 	console.log(totalDays);
 	
 
@@ -255,7 +251,7 @@ function onDocumentMouseMove( event ) {
 
 }
 
-var cameraStep = 0;
+
 
 function animate() {
 
@@ -333,7 +329,7 @@ function rendering() {
 	pathRender();
 	
 	// ***************** path move interaction here *****************
-	updateFrame();
+	// updateFrame();
 
 
 	renderer.render( scene, splineCamera );

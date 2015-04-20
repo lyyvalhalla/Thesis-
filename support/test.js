@@ -1,3 +1,5 @@
+var bmParent;
+
 function parseTree(parent) {
     var hasNonLeafNodes = false;
     var childCount = 0;
@@ -29,8 +31,10 @@ function parseTree(parent) {
         // This is a leaf item, so return 1:
         return 1;
     }
-
-    
 }
 
-console.log(parseTree(jsonObject));
+
+function bmInit(object) {
+
+    bmParent = object[0].children[0];
+}

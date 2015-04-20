@@ -1,49 +1,26 @@
 var one_day=1000*60*60*24;
 var today = new Date();
 
-function getTime(microseconds) {
-
-    // var microseconds = miliseconds/1000;
-    var seconds = Math.floor(microseconds/1000000);
-    var microseconds = microseconds % 1000000;
-    var days = Math.floor(seconds/86400);
-    var seconds = seconds % 86400;
-
-    var ref = new Date(1601, 0, 1);
-
-    var add = new Date(0, 0, days, 0, 0, seconds, microseconds);
-
-
-    function addDate(ref, days) {
-        var result = ref;
-        result.setDate(ref.getDate() + days);
-        var date = dateFormat(result, "fullDate");
-
-        return date;
-        
-    }
-
-    return addDate(ref, days);
-
-
-
-    // console.log(secondsToTime(seconds));
+function getTime(miliseconds) {
+    return new Date(miliseconds);
 }
 
 // var min = new Date();
 
 function getMinTime(nodes) {
     var minDay; 
-   
-    for (var i=0; i<nodes.length; i++) {
+    var min = nodes[0].dateAdded;
+  
+    for (var i=0; i< nodes.length; i++) {
 
-        var min = nodes[0].date_added;
-
-        if (nodes[i].date_added < min) {
-            min = nodes[i].date_added;
+        
+        if (nodes[i].dateAdded <= min) {
+            min = nodes[i].dateAdded;
             minDay = nodes[i];
+        }  else {
+            min = min;
+            minDay = minDay;
         }
-
     }
     return minDay;
 
