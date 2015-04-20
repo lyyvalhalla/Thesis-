@@ -152,46 +152,34 @@ function addPathNodes(nodes) {
 		pathNode.position.z = position.z;
 		scene.add(pathNode);	
 	}
-	// totalGroup = groupFrame(pathNodes, pathLength);
-
-	/*
-	for (var i =0; i<totalGroup[30].length; i++) {
-		var tubePosIndex = totalGroup[30][i].index; 
-		var pathFrame = new showFrame(totalGroup[30][i], tubePos[tubePosIndex].x+ getRandomInt(400, 800), tubePos[tubePosIndex].y-300, tubePos[tubePosIndex].z);
-		var pathFrame = new showFrame(totalGroup[30][i], pathArray[tubePosIndex].position.x+ getRandomInt(400, 800), pathArray[tubePosIndex].position.y-300, pathArray[tubePosIndex].position.z);
-		tempFrames.push(pathFrame);
-		scene2.add(pathFrame);
-	}
-	*/
-	var pathFrame = new showFrame(pathNodes[222], pathArray[222].position.x+getRandomInt(400, 800), pathArray[222].position.y-300, pathArray[222].position.z);	
+	totalGroup = groupFrame(pathNodes, pathLength);
+	//var pathFrame = new showFrame(pathNodes[222], pathArray[222].position.x+getRandomInt(400, 800), pathArray[222].position.y-300, pathArray[222].position.z);	
 	// scene2.add(pathFrame);
 
+	// console.log(scene.children.indexOf(scene.children[400]));
 }
 
-
+var counter = 0;
 // add & delete in realtime according to camera position
 function updateFrame(){
-	for (var i=0; i<pathArray.length; i++) {
+	for (var i=0, j=0; i<pathArray.length; i++) {
 		if (splineCamera.position.distanceTo(scene.children[i].position) <50) {
 			if (checkArray.indexOf(i) === -1) {
-				// scene2.add(new showFrame(pathNodes[i], pathArray[i].position.x+ getRandomInt(400, 800), pathArray[i].position.y, pathArray[i].position.z-300));
+				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x+ getRandomInt(400, 800), pathArray[i].position.y, pathArray[i].position.z-300)
+				scene2.add(newFrame);
 				checkArray.push(i);
+				j++;
 			} 
-		} else if (splineCamera.position.distanceTo(scene.children[i].position) > 50) {
-			// console.log(scene2.children);
-			if (scene2.children.includes[scene.children[0]] === true) {
-				scene2.remove(scene2.children[i]);
+		} else {
+			if (scene2.children[j] != -1 && checkArray.indexOf(i) != -1) {
+				// 	var toDelete = scene2.children[scene2.children.indexOf[scene2.children[i]]];
+				scene2.remove(scene2.children[j]);
+				checkArray.delete(i);
 			}
-
-
-			// if (checkArray.indexOf(i) != -1) {
-				// scene2.remove(scene2.children[i]);
-				// checkArray.delete(i);				
-			// } 
 		} 
 	}
-	//console.log(scene2.children.length);
-	console.log(checkArray);
+	console.log(scene2.children.length);
+ 	console.log(checkArray.length);
 	//console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
 
@@ -215,9 +203,11 @@ function groupFrame(nodesArray, pathLength) {
 		}	
 	}
 	for (var i =0; i<nodesArray.length; i++) {
-		nodesArray[i].index = indexArray[i];
+		nodesArray[i].indexID = indexArray[i];
 	}
 	return nodeGroups;
+
+
 }
 
 	
