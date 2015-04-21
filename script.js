@@ -30,69 +30,33 @@ var mouse = new THREE.Vector2(), offset = new THREE.Vector3();
 var INTERSECTED, SELECTED;
 
 
-
-// d3.js to process data  *****无用
-d3.json("jsonbm.json", function(error, treeData) {
-	var site, folder;
-	root = treeData.roots.bookmark_bar;
-	
-	// init();
-	// animate();
-	
-	// ***************** calll stages here:***************** 
-	
-	// scene2.add(new setupSearchBox(0, 0, 0));
-	// scene.add(Flipping_Wall);
-	
-});
-
-
-
-
-var firstDay, totalDays;
-
 // d3 
 function update(source) {
-	nodes = tree.nodes(bmParent);
+	nodes = tree.nodes(source);
 	links = tree.links(nodes);
-	// console.log(nodes);
+	
 	
 	var max = new Date(); 
 	var maxDate = dateFormat(max, "fullDate");
 
-	// check bookmark nodes or folders 
+	// add formatted date attribute "time" to the nodes array
 	for (var i=0; i<nodes.length; i++) {
-		if(nodes[i].type == "url") {
-			site = nodes[i];
-			sites.push(site);
-			
-		} else {
-			folder = nodes[i];
-			folders.push(folder);
-			
-		}
-	
 		nodes[i].time = getTime(nodes[i].dateAdded);
-
 		var convertedDate = new Date(nodes[i].dateAdded);
-		// console.log(convertedDate);
+
+		if (nodes[i].url == null) {
+			folders.push(nodes[i]);
+		}
 	}
 
-
-
-
-
-
+	var firstDay, totalDays;
 	// ************* get total days >>> total length of path *************
 	firstDay = getMinTime(nodes).dateAdded;
 	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
 	
 	
 	pathLength = totalDays * 50;
-	console.log(totalDays);
 	
-
-
 	// ***************** draw bookmarks particles ***************** 
 	// generateNode(nodes);
 
@@ -107,7 +71,7 @@ function update(source) {
 
 
 	// ************* path menu ******************	
-	
+	initMenu();
 }
 
 
@@ -127,6 +91,7 @@ function init() {
 	scene2 = new THREE.Scene();
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
+	splineCamera.position.set( 0, 0, 500 );
 	scene.add( splineCamera );
 
 	// drawings here
@@ -228,6 +193,11 @@ function init() {
 	// startStage();
 
 
+	// ***************** call stages here:***************** 
+	
+	// scene2.add(new setupSearchBox(0, 0, 0));
+	// scene.add(Flipping_Wall);
+
 }
 
 function onWindowResize() {
@@ -326,10 +296,10 @@ function rendering() {
 
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
-	pathRender();
+	// pathRender();
 	
 	// ***************** path move interaction here *****************
-	// updateFrame();
+	// updateFrame(pathNodes, pathArray);
 
 
 	renderer.render( scene, splineCamera );

@@ -1,5 +1,3 @@
-var bmParent;
-
 function parseTree(parent) {
     var hasNonLeafNodes = false;
     var childCount = 0;
@@ -36,5 +34,6 @@ function parseTree(parent) {
 
 function bmInit(object) {
 
-    bmParent = object[0].children[0];
+    root = object[0].children[0];
+    // console.log(bmParent);
 }

@@ -155,17 +155,15 @@ function addPathNodes(nodes) {
 	totalGroup = groupFrame(pathNodes, pathLength);
 	//var pathFrame = new showFrame(pathNodes[222], pathArray[222].position.x+getRandomInt(400, 800), pathArray[222].position.y-300, pathArray[222].position.z);	
 	// scene2.add(pathFrame);
-
-	// console.log(scene.children.indexOf(scene.children[400]));
 }
 
-var counter = 0;
-// add & delete in realtime according to camera position
-function updateFrame(){
+
+// add & delete in realtime according to camera position: pathNodes--nodes, pathArray--geometries
+function updateFrame(pathNodes, pathArray){
 	for (var i=0, j=0; i<pathArray.length; i++) {
 		if (splineCamera.position.distanceTo(scene.children[i].position) <100) {
 			if (checkArray.indexOf(i) === -1) {
-				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x+ getRandomInt(400, 800), pathArray[i].position.y, pathArray[i].position.z-300)
+				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y, pathArray[i].position.z-300)
 				scene2.add(newFrame);
 				checkArray.push(i);
 				j++;
@@ -177,8 +175,8 @@ function updateFrame(){
 			}
 		} 
 	}
-	// console.log(scene2.children.length);
- // 	console.log(checkArray.length);
+	//console.log(scene2.children.length);
+ 	//console.log(checkArray.length);
 	//console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
 

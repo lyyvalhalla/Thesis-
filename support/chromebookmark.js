@@ -11,17 +11,17 @@ window.onload = function() {
             jsonObject = JSON.parse(jsonHtml);  // the actual object
             // console.log(jsonHtml);                
             // console.log(jsonObject);
-            console.log(parseTree(jsonObject)); 
+            // console.log(parseTree(jsonObject)); 
 
 
             bmInit(jsonObject);
 
 
-            
+
             init();
             animate();
+            initMenu();
 
-            
             // ...
             // did a bunch of stuff, modified the jsonObject
             // now ready to send it back, call sendBookmarkToExtension here

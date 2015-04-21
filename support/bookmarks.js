@@ -1,39 +1,27 @@
 var tempSite, tempFolder;
 var titleArray = [];
+var pathSites = [];
+var pathFolders = [];
 
 
 var getPathSites = function(nodes) {
 
-	var pathSites = [];
-
 	for (var i=0; i<nodes.length; i++) {
 		if(nodes[i].url) {
 			tempSite = nodes[i];
-			pathSites.push(tempSite);
-			
-	} else {
-			tempFolder = nodes[i];
-			folders.push(tempFolder);
-			
-		}
+			pathSites.push(tempSite);	
+		} 
 	}
 	return pathSites;
 }
 
 
 var getPathFolders = function(nodes) {
-
-	var pathFolders = [];
-
 	for (var i=0; i<nodes.length; i++) {
-		if(nodes[i].url) {
-			tempSite = nodes[i];
-			pathSites.push(tempFolder);
+		if(nodes[i].url === null) {
 			
-	} else {
-			tempFolder = nodes[i];
-			pathFolders.push(tempFolder);
 			
+			pathFolders.push(nodes[i]);		
 		}
 	}
 	return pathFolders;

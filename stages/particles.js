@@ -12,11 +12,7 @@ function generateNode(nodes) {
 	var parent;
 	var x, y, z;
 	
-
-
 	nodes.forEach(function(d) {
-		// console.log("depth:" + d.depth + "; parent:" + d.parent + "; children:" + d.children);
-		// console.log("date_added: " + d.date_added + "; name: " + d.name);
 		boxGeo = new THREE.BoxGeometry(50, 50, 50);
 		boxMat = new THREE.MeshLambertMaterial({color: boxColor});
 		nodeBox = new THREE.Mesh(boxGeo, boxMat);
@@ -29,9 +25,7 @@ function generateNode(nodes) {
 		scene.add(d.particle);
 		// Bookmark_Nodes.add(d.particle);
 		particles.push(d.particle);
-		// console.log(d.date_added/1000000000000);
-		// console.log(d.particle.position.z);
-	})
+	});
 
 	
 	// scene.add(Bookmark_Nodes);
@@ -41,8 +35,6 @@ function generateNode(nodes) {
 			particleObjects = scene.children[i];
 		}
 	}
-
-	
 }
 
 
@@ -98,20 +90,13 @@ function moveNode() {
 
 			if(INTERSECTED)  {
 				INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-			}
-			
+			}			
 			INTERSECTED = null;
 		}
-
 		// delete(trackID);
 	}
-
-
 }
 	
-
-
-
 
 
 
