@@ -34,7 +34,7 @@ var INTERSECTED, SELECTED;
 function update(source) {
 	nodes = tree.nodes(source);
 	links = tree.links(nodes);
-	
+
 	
 	var max = new Date(); 
 	var maxDate = dateFormat(max, "fullDate");
@@ -101,7 +101,7 @@ function init() {
 	createPath();
 	// addPathNodes(nodes);
 
-
+	
 
 
 	controls = new THREE.PointerLockControls( splineCamera );

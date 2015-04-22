@@ -6,7 +6,7 @@ var addClick = [];
 
 
 function initMenu() {
-
+	createPath();
 
 	pathMenu = document.createElement('div');
 	pathMenu.id = "cssMenu";
@@ -16,6 +16,7 @@ function initMenu() {
 	createMenuNodes(folders);
 
 	scene2.add(menu);
+	addPathNodes(nodes);
 }
 
 
@@ -46,7 +47,6 @@ function createMenuNodes(folders) {
 	for (var i=0; i<menuNodes.length; i++) {
 		addClick[i] = (function(index){
 			return function() {
-
 				menuNodes[index].addEventListener("click", function(event) {updateMenu(index);}, false);
 			};
     	}(i));
@@ -55,17 +55,25 @@ function createMenuNodes(folders) {
 	for (var j = 0; j < menuNodes.length; j++) {
 		addClick[j]();
 	}
-
 }
 
 
 
 // call in addEventListener("click")
 function updateMenu(i) {
-	
-	tempFolder = folders[i];
-	currentNodes(tempFolder);
-	
+
+	// remove current scene children first
+
+	var tempFolder = folders[i];
+	var tempDepth = folders[i].depth + 1;
+
+	// ***********************************************************************************************
+	// ******************* change this to move to the tube path **************************************
+	// ****** and it has to be here to get the right current nodes w/ toggle affect ******************
+	// ***********************************************************************************************
+	//addPathNodes(currentNodes(tempFolder));
+	console.log(currentNodes(tempFolder));
+
 	//toggle children on click
 	if(folders[i].children) {
 		folders[i]._children = folders[i].children;
@@ -75,8 +83,7 @@ function updateMenu(i) {
 		folders[i]._children = null;
 	}
 	
-	var tempDepth = folders[i].depth + 1;
-	
+	// toggle display
 	for (var j=0; j<folders.length; j++) {
 		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
 			menuNodes[j].style.display = 'block';
@@ -85,21 +92,13 @@ function updateMenu(i) {
 		}
 	}
 	menuNodes[i].style.display = 'block';
-
-	
-
-	// addPathNodes(nodes);
 }
 
 
 var currentNodes = function(folder) {
 	var tempNodes = [];
-	// var tempFolder;
-	// tempFolder = folder;
 	tempNodes = tree.nodes(folder);
-	
-	console.log(folder.children + "; and the nodes: " + tempNodes);
-	// console.log(folder);
+	// console.log(folder.children + "; and the nodes: " + tempNodes);
 	return tempNodes;
 }
 

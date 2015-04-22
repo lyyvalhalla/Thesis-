@@ -158,7 +158,7 @@ function addPathNodes(nodes) {
 }
 
 
-// add & delete in realtime according to camera position: pathNodes--nodes, pathArray--geometries
+// add & delete in realtime according to camera position: pathNodes--nodes, pathArray
 function updateFrame(pathNodes, pathArray){
 	for (var i=0, j=0; i<pathArray.length; i++) {
 		if (splineCamera.position.distanceTo(scene.children[i].position) <100) {
