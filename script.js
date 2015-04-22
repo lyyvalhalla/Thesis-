@@ -91,7 +91,7 @@ function init() {
 	scene2 = new THREE.Scene();
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
-	splineCamera.position.set( 0, 0, 500 );
+	splineCamera.position.set( 0, 0, 300 );
 	scene.add( splineCamera );
 
 	// drawings here

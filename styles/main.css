@@ -44,9 +44,24 @@ iframe{
 
 
 .menuNode {
+    display: none;
+}
+
+.nodeIco {
     border-radius: 100%;
-    width: 200px;
-    height: 200px;
+    width: 20px;
+    height: 20px;
+}
+
+.nodeTitle {
+    width: 20px;
+    height: 20px;
+    color: red;
+}
+
+#default-node {
+    display: block;
+    opacity: 1;
 }
 
 
