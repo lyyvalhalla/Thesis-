@@ -16,7 +16,6 @@ function initMenu() {
 	createMenuNodes(folders);
 
 	scene2.add(menu);
-	addPathNodes(nodes);
 }
 
 
@@ -62,17 +61,19 @@ function createMenuNodes(folders) {
 // call in addEventListener("click")
 function updateMenu(i) {
 
+	removeBookmark('296');
 	// remove current scene children first
 
 	var tempFolder = folders[i];
 	var tempDepth = folders[i].depth + 1;
-
+	// console.log(folders[i]);
 	// ***********************************************************************************************
 	// ******************* change this to move to the tube path **************************************
 	// ****** and it has to be here to get the right current nodes w/ toggle affect ******************
 	// ***********************************************************************************************
-	//addPathNodes(currentNodes(tempFolder));
-	console.log(currentNodes(tempFolder));
+	addPathNodes(currentNodes(tempFolder));
+	// console.log(currentNodes(tempFolder));
+	console.log(scene.children.length);
 
 	//toggle children on click
 	if(folders[i].children) {

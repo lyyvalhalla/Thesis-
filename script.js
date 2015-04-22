@@ -68,10 +68,8 @@ function update(source) {
 
 
 
-
-
 	// ************* path menu ******************	
-	initMenu();
+	// initMenu();
 }
 
 
@@ -101,7 +99,7 @@ function init() {
 	createPath();
 	// addPathNodes(nodes);
 
-	
+
 
 
 	controls = new THREE.PointerLockControls( splineCamera );
@@ -296,10 +294,11 @@ function rendering() {
 
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
-	// pathRender();
+	pathRender();
 	
 	// ***************** path move interaction here *****************
 	// updateFrame(pathNodes, pathArray);
+
 
 
 	renderer.render( scene, splineCamera );

@@ -31,7 +31,7 @@ window.onload = function() {
              * Needs to update harccode value to make it work
              ******************************************************************************/
             $("#remove").click(function() {
-                removeBookmark('39');
+                removeBookmark('405');
             });
             $("#create").click(function() {
                 createBookmark('29', 0, 'google', "http://www.google.com");

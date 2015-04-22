@@ -33,7 +33,7 @@ function createPath() {
 	}); 
 
 	for(var i=0; i<7; i++) {
-		vertexX = getRandomInt(-500, 500);
+		vertexX = getRandomInt(-1000, 1000);
 		arrayX.push(vertexX);
 	}
 	
@@ -48,7 +48,7 @@ function createPath() {
 	var geometry = new THREE.Geometry();
 
 	geometry.vertices.push(new THREE.Vector3(0, -200, zLine));
-    geometry.vertices.push(new THREE.Vector3(getRandomInt(-200, 200), -200, arrayZ[0]));
+    geometry.vertices.push(new THREE.Vector3(getRandomInt(-1000, 1000), -200, arrayZ[0]));
     geometry.vertices.push(new THREE.Vector3(arrayX[1], -200, arrayZ[1]));
     geometry.vertices.push(new THREE.Vector3(arrayX[2], -200, arrayZ[2]));
     geometry.vertices.push(new THREE.Vector3(arrayX[3], -200, arrayZ[3]));
@@ -72,7 +72,7 @@ function createPath() {
     	]);
 
 
-	tube = new THREE.TubeGeometry(pipeSpline, 50, 20, 12, false);
+	tube = new THREE.TubeGeometry(pipeSpline, 500, 20, 12, false);
 	tubeMesh = new THREE.SceneUtils.createMultiMaterialObject(tube, [
 		new THREE.MeshBasicMaterial({
 			color: 0xE3E086
@@ -98,6 +98,7 @@ function pathRender() {
 	var t = ( time % looptime ) / looptime;
 	*/
 	var pos = tube.parameters.path.getPointAt( cameraStep );
+	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.0001);
 
 	// interpolation
 	var segments = tube.tangents.length;
@@ -116,14 +117,14 @@ function pathRender() {
 
 	splineCamera.position.copy( new THREE.Vector3(pos.x, (pos.y+20), pos.z) );
 
+
 	// Using arclength for stablization in look ahead.
 	var lookAt = tube.parameters.path.getPointAt( ( cameraStep + 30 / tube.parameters.path.getLength() ) % 1 );
 
 	// Camera Orientation 2 - up orientation via normal
 	
-	// splineCamera.matrix.lookAt(splineCamera.position, lookAt, normal);
+	splineCamera.matrix.lookAt(splineCamera.position, new THREE.Vector3(posNext.x, posNext.y + 20, posNext.z ), new THREE.Vector3(0, 1, 0));
 	splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );	
-
 	// console.log(splineCamera.rotation.order);
 }
 
@@ -131,6 +132,12 @@ function pathRender() {
 
 
 function addPathNodes(nodes) {
+
+	console.log(scene.children);
+	for(var i=1; i<scene.children.length; i++) {
+		scene.remove(scene.children[i]);
+	}
+
 
 	// get bookmarks (node folders)
 	pathNodes = getPathSites(nodes);
@@ -150,9 +157,10 @@ function addPathNodes(nodes) {
 		pathNode.position.x = position.x;
 		pathNode.position.y = position.y + 25;
 		pathNode.position.z = position.z;
+		pathNode.visible = true;
 		scene.add(pathNode);	
 	}
-	totalGroup = groupFrame(pathNodes, pathLength);
+	// totalGroup = groupFrame(pathNodes, pathLength);
 	//var pathFrame = new showFrame(pathNodes[222], pathArray[222].position.x+getRandomInt(400, 800), pathArray[222].position.y-300, pathArray[222].position.z);	
 	// scene2.add(pathFrame);
 }
@@ -164,13 +172,13 @@ function updateFrame(pathNodes, pathArray){
 		if (splineCamera.position.distanceTo(scene.children[i].position) <100) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y, pathArray[i].position.z-300)
-				scene2.add(newFrame);
+				// scene2.add(newFrame);
 				checkArray.push(i);
 				j++;
 			} 
 		} else {
 			if (scene2.children[j] != -1 && checkArray.indexOf(i) != -1) {
-				scene2.remove(scene2.children[j]);
+				// scene2.remove(scene2.children[j]);
 				checkArray.delete(i);
 			}
 		} 
