@@ -66,7 +66,7 @@ function createMenuNodes(folders) {
 
 // call in addEventListener("click")
 function updateMenu(i) {
-	console.log(i);
+	
 	//toggle children on click
 	// console.log(folders[index].children);
 	if(folders[i].children) {
@@ -82,7 +82,7 @@ function updateMenu(i) {
 	for (var j=0; j<folders.length; j++) {
 		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
 			menuNodes[j].style.display = 'block';
-		} else {
+		} else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
 			menuNodes[j].style.display = 'none';
 		}
 	}
