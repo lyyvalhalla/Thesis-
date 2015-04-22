@@ -1,28 +1,23 @@
 var pathMenu, menu;
 var menuNodes = [];
 var menuNode, nodeIco, nodeTitle;
+var addClick = [];
+
 
 
 function initMenu() {
+
 
 	pathMenu = document.createElement('div');
 	pathMenu.id = "cssMenu";
 	menu = new THREE.CSS3DObject(pathMenu);
 	menu.position.set(0, 0, 0);
 	
-
 	createMenuNodes(folders);
 
 	scene2.add(menu);
-
-	
 }
 
-
-
-
-
-var addClick = [];
 
 function createMenuNodes(folders) {
 	// console.log(folders);
@@ -41,16 +36,17 @@ function createMenuNodes(folders) {
 		nodeTitle.className = "nodeTitle";
 		nodeTitle.textContent = d.title;
 		menuNode.appendChild(nodeTitle);
-
-
 	})
-	menuNodes[0].id = "default-node";
-	
 
-	// closure inside loop
+	menuNodes[0].id = "default-node";
+
+
+	
+	// closure inside loop**
 	for (var i=0; i<menuNodes.length; i++) {
 		addClick[i] = (function(index){
 			return function() {
+
 				menuNodes[index].addEventListener("click", function(event) {updateMenu(index);}, false);
 			};
     	}(i));
@@ -67,8 +63,10 @@ function createMenuNodes(folders) {
 // call in addEventListener("click")
 function updateMenu(i) {
 	
+	tempFolder = folders[i];
+	currentNodes(tempFolder);
+	
 	//toggle children on click
-	// console.log(folders[index].children);
 	if(folders[i].children) {
 		folders[i]._children = folders[i].children;
 		folders[i].children = null;
@@ -76,7 +74,7 @@ function updateMenu(i) {
 		folders[i].children = folders[i]._children;
 		folders[i]._children = null;
 	}
-	console.log(folders[i].children);
+	
 	var tempDepth = folders[i].depth + 1;
 	
 	for (var j=0; j<folders.length; j++) {
@@ -87,43 +85,23 @@ function updateMenu(i) {
 		}
 	}
 	menuNodes[i].style.display = 'block';
+
+	
+
+	// addPathNodes(nodes);
 }
 
 
-
-
-
-
-function collapse(d) {
-    if (d.children) {
-      d._children = d.children;
-      d._children.forEach(collapse);
-      d.children = null;
-    }
-  }
-
-  // root.children.forEach(collapse);
-
-
-
-
- // Toggle children on click.
-function click(d) {
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
-  }
-
-  // redraw here: 
-  // update(d);
+var currentNodes = function(folder) {
+	var tempNodes = [];
+	// var tempFolder;
+	// tempFolder = folder;
+	tempNodes = tree.nodes(folder);
+	
+	console.log(folder.children + "; and the nodes: " + tempNodes);
+	// console.log(folder);
+	return tempNodes;
 }
-
-
-
-
 
 
 

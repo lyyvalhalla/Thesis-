@@ -99,7 +99,7 @@ function init() {
 
 	//  *****************  PATH parts ***************** 
 	createPath();
-	addPathNodes(nodes);
+	// addPathNodes(nodes);
 
 
 

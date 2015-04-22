@@ -20,7 +20,7 @@ window.onload = function() {
 
             init();
             animate();
-            
+           
 
             // ...
             // did a bunch of stuff, modified the jsonObject
