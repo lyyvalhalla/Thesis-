@@ -25,18 +25,18 @@ function createPath() {
 
 	var arrayZ = [], vertexZ, arrayX = [], vertexX;
 	for(var i =0; i<7; i++) {
-		vertexZ = getRandomInt(zLine, zLine-pathLength);
-		arrayZ.push(vertexZ);
+		arrayZ[i] = -(pathLength/7)*(i+1);
 	}
+	
 	arrayZ.sort(function(a, b) {
 	  return b - a ;
 	}); 
 
 	for(var i=0; i<7; i++) {
-		vertexX = getRandomInt(-1000, 1000);
+		vertexX = getRandomInt(-pathLength/2, pathLength/2);
 		arrayX.push(vertexX);
 	}
-	
+	console.log(arrayZ);
 
 	//0x2E2E2E
 	var material = new THREE.MeshBasicMaterial({
@@ -48,7 +48,7 @@ function createPath() {
 	var geometry = new THREE.Geometry();
 
 	geometry.vertices.push(new THREE.Vector3(0, -200, zLine));
-    geometry.vertices.push(new THREE.Vector3(getRandomInt(-1000, 1000), -200, arrayZ[0]));
+    geometry.vertices.push(new THREE.Vector3(arrayX[0], -200, arrayZ[0]));
     geometry.vertices.push(new THREE.Vector3(arrayX[1], -200, arrayZ[1]));
     geometry.vertices.push(new THREE.Vector3(arrayX[2], -200, arrayZ[2]));
     geometry.vertices.push(new THREE.Vector3(arrayX[3], -200, arrayZ[3]));
@@ -148,7 +148,6 @@ function addPathNodes(nodes) {
 		scene.add(pathNode);	
 	}
 	// totalGroup = groupFrame(pathNodes, pathLength);
-	chooseFrame();
 }
 
 
@@ -156,7 +155,7 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=0; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(scene.children[i].position) <100 && scene.children[i].visible) {
+		if (splineCamera.position.distanceTo(scene.children[i].position) > 30 && splineCamera.position.distanceTo(scene.children[i].position) < 120 && scene.children[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z-300)
 				scene2.add(newFrame);

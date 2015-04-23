@@ -247,7 +247,7 @@ function animate() {
 		}
 		if ( moveBackward ) {
 			// velocity.z += 1000.0 * delta;
-			cameraStep = cameraStep - 0.001;
+			cameraStep = cameraStep - 0.0001;
 		}
 
 		if ( moveLeft ) velocity.x -= 400.0 * delta;
@@ -290,11 +290,11 @@ function rendering() {
 	// moveNode();
 	pathRender();
 	
-	chooseFrame();
+	// chooseFrame();
 	
 	// ***************** path move interaction here *****************
 
-	updateFrame(pathNodes, pathArray);
+	// updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

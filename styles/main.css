@@ -39,9 +39,10 @@ canvas {
 iframe{
     width:592px;
     height:100%;
+
     border:none;
     opacity: .999;
-    /*transform: scale(0.303125);*/
+    transform: scale(0.703125);
    
 }
 
