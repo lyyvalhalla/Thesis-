@@ -13,14 +13,12 @@ window.onload = function() {
             // console.log(jsonObject);
             // console.log(parseTree(jsonObject)); 
 
-
             bmInit(jsonObject);
-
 
 
             init();
             animate();
-            
+
 
             // ...
             // did a bunch of stuff, modified the jsonObject

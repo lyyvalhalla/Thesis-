@@ -1,14 +1,12 @@
 var tempSite, tempFolder;
 var titleArray = [];
-var pathSites = [];
-var pathFolders = [];
 
 
-var getPathSites = function(nodes) {
-
-	for (var i=0; i<nodes.length; i++) {
-		if(nodes[i].url) {
-			tempSite = nodes[i];
+var getPathSites = function(n) {
+	var pathSites = [];
+	for (var i=0; i<n.length; i++) {
+		if(n[i].url) {
+			tempSite = n[i];
 			pathSites.push(tempSite);	
 		} 
 	}
@@ -17,10 +15,9 @@ var getPathSites = function(nodes) {
 
 
 var getPathFolders = function(nodes) {
+	var pathFolders =[];
 	for (var i=0; i<nodes.length; i++) {
 		if(nodes[i].url === null) {
-			
-			
 			pathFolders.push(nodes[i]);		
 		}
 	}

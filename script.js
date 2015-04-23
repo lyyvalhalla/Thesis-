@@ -69,7 +69,7 @@ function update(source) {
 
 
 	// ************* path menu ******************	
-	// initMenu();
+	initMenu();
 }
 
 
@@ -287,19 +287,13 @@ function animate() {
 }
 
 function rendering() {
-
-
-
 	camera.updateMatrixWorld();
-
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
-	pathRender();
+	// pathRender();
 	
 	// ***************** path move interaction here *****************
 	// updateFrame(pathNodes, pathArray);
-
-
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

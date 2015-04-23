@@ -14,6 +14,7 @@ function initMenu() {
 	menu.position.set(0, 0, 0);
 	
 	createMenuNodes(folders);
+	addPathNodes(nodes);
 
 	scene2.add(menu);
 }
@@ -40,7 +41,6 @@ function createMenuNodes(folders) {
 
 	menuNodes[0].id = "default-node";
 
-
 	
 	// closure inside loop**
 	for (var i=0; i<menuNodes.length; i++) {
@@ -50,7 +50,6 @@ function createMenuNodes(folders) {
 			};
     	}(i));
 	}
-
 	for (var j = 0; j < menuNodes.length; j++) {
 		addClick[j]();
 	}
@@ -61,19 +60,19 @@ function createMenuNodes(folders) {
 // call in addEventListener("click")
 function updateMenu(i) {
 
-	removeBookmark('296');
-	// remove current scene children first
-
 	var tempFolder = folders[i];
 	var tempDepth = folders[i].depth + 1;
-	// console.log(folders[i]);
-	// ***********************************************************************************************
-	// ******************* change this to move to the tube path **************************************
-	// ****** and it has to be here to get the right current nodes w/ toggle affect ******************
-	// ***********************************************************************************************
-	addPathNodes(currentNodes(tempFolder));
-	// console.log(currentNodes(tempFolder));
-	console.log(scene.children.length);
+	
+	// ***** toggle visiblity *****
+	// clear > invisible everything
+	var readyNodes = getPathSites(nodes);
+	for (var x=0; x<readyNodes.length; x++) {
+		readyNodes[x].particle.visible = false;
+	}
+	// add > visible current fodler
+	toggleViz(currentNodes(tempFolder));
+
+
 
 	//toggle children on click
 	if(folders[i].children) {
@@ -96,10 +95,10 @@ function updateMenu(i) {
 }
 
 
+// under clicked folder
 var currentNodes = function(folder) {
 	var tempNodes = [];
-	tempNodes = tree.nodes(folder);
-	// console.log(folder.children + "; and the nodes: " + tempNodes);
+	tempNodes = getPathSites(tree.nodes(folder));
 	return tempNodes;
 }
 

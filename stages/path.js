@@ -11,7 +11,6 @@ var tempFrames=[];
 var totalGroup = [];
 var checkArray = [];
 var tube, tubeMesh;
-// var tubePos = [];
 
 
 
@@ -109,35 +108,32 @@ function pathRender() {
 	binormal.subVectors( tube.binormals[ pickNext ], tube.binormals[ pick ] );
 	binormal.multiplyScalar( pickt - pick ).add( tube.binormals[ pick ] );
 
-
 	var dir = tube.parameters.path.getTangentAt( cameraStep );
 	var offset = 1;
 	normal.copy( binormal ).cross( dir );
 	pos.add( normal.clone().multiplyScalar( offset ) );
 
 	splineCamera.position.copy( new THREE.Vector3(pos.x, (pos.y+20), pos.z) );
-
-
 	// Using arclength for stablization in look ahead.
 	var lookAt = tube.parameters.path.getPointAt( ( cameraStep + 30 / tube.parameters.path.getLength() ) % 1 );
 
-	// Camera Orientation 2 - up orientation via normal
-	
+	// Camera Orientation 2 - up orientation via normal	
 	splineCamera.matrix.lookAt(splineCamera.position, new THREE.Vector3(posNext.x, posNext.y + 20, posNext.z ), new THREE.Vector3(0, 1, 0));
 	splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );	
-	// console.log(splineCamera.rotation.order);
 }
 
 
 
+function toggleViz(temp) {
+	console.log(temp.length);
+	for (var i = 0; i<temp.length;  i++) {
+		temp[i].particle.visible = true;
+		console.log(temp[i].particle.visible);
+	}
+}
+
 
 function addPathNodes(nodes) {
-
-	console.log(scene.children);
-	for(var i=1; i<scene.children.length; i++) {
-		scene.remove(scene.children[i]);
-	}
-
 
 	// get bookmarks (node folders)
 	pathNodes = getPathSites(nodes);
@@ -148,10 +144,10 @@ function addPathNodes(nodes) {
 	for (var i =0; i<pathNodes.length; i++) {
 
 		var position = tube.parameters.path.getPointAt(pathNodes[i].zPos/10000);
-		// tubePos.push(position);
 		var geometry =  new THREE.BoxGeometry(10, 10, 10);
 		var material =  new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});  // sortCategory() here 
 		pathNode = new THREE.Mesh(geometry, material);
+		pathNodes[i].particle = pathNode;
 		pathArray.push(pathNode);
 		// pathNode.position.x = getRandomInt(position.x-200, position.x+200) ;
 		pathNode.position.x = position.x;
@@ -161,15 +157,13 @@ function addPathNodes(nodes) {
 		scene.add(pathNode);	
 	}
 	// totalGroup = groupFrame(pathNodes, pathLength);
-	//var pathFrame = new showFrame(pathNodes[222], pathArray[222].position.x+getRandomInt(400, 800), pathArray[222].position.y-300, pathArray[222].position.z);	
-	// scene2.add(pathFrame);
 }
 
 
 // add & delete in realtime according to camera position: pathNodes--nodes, pathArray
 function updateFrame(pathNodes, pathArray){
 	for (var i=0, j=0; i<pathArray.length; i++) {
-		if (splineCamera.position.distanceTo(scene.children[i].position) <100) {
+		if (splineCamera.position.distanceTo(scene.children[i].position && scene.children[i].display === true) <100) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y, pathArray[i].position.z-300)
 				// scene2.add(newFrame);
@@ -183,8 +177,6 @@ function updateFrame(pathNodes, pathArray){
 			}
 		} 
 	}
-	//console.log(scene2.children.length);
- 	//console.log(checkArray.length);
 	//console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
 
