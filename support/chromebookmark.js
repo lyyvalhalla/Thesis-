@@ -18,6 +18,12 @@ window.onload = function() {
             animate();
 
 
+
+
+            /*  add delete function here */
+
+
+
             /*hard-coded examples*/
             $("#remove").click(function() {
                 removeBookmark('405');

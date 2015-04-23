@@ -98,7 +98,7 @@ function init() {
 	createPath();
 	/*have called it in menuInit(), enable it when test only on path*/
 	addPathNodes(nodes);  
-	
+
 
 
 	controls = new THREE.PointerLockControls( splineCamera );
@@ -289,6 +289,8 @@ function rendering() {
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
 	pathRender();
+	
+	chooseFrame();
 	
 	// ***************** path move interaction here *****************
 

@@ -32,14 +32,31 @@ canvas {
 
 }
 
+.domFrame {
+    background: #00ff00;
+}
 
 iframe{
     width:592px;
     height:100%;
     border:none;
     opacity: .999;
-    transform: scale(0.303125);
+    /*transform: scale(0.303125);*/
    
+}
+
+.timeTag {
+    width: 500px;
+    heigh: 100px;
+    background: #ff0000;
+}
+
+.deleteButton {
+    top: 0;
+    left: 0;
+    width:500px;
+    height: 300px;
+    background: #3498db;
 }
 
 

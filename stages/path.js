@@ -11,6 +11,7 @@ var tempFrames=[];
 var totalGroup = [];
 var checkArray = [];
 var tube, tubeMesh;
+var frameClick = [];
 
 
 
@@ -118,7 +119,7 @@ function pathRender() {
 	var lookAt = tube.parameters.path.getPointAt( ( cameraStep + 30 / tube.parameters.path.getLength() ) % 1 );
 
 	// Camera Orientation 2 - up orientation via normal	
-	splineCamera.matrix.lookAt(splineCamera.position, new THREE.Vector3(posNext.x, posNext.y + 20, posNext.z ), new THREE.Vector3(0, 1, 0));
+	splineCamera.matrix.lookAt(splineCamera.position, new THREE.Vector3(posNext.x, posNext.y + 19, posNext.z ), new THREE.Vector3(0, 1, 0));
 	splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );	
 }
 
@@ -147,17 +148,17 @@ function addPathNodes(nodes) {
 		scene.add(pathNode);	
 	}
 	// totalGroup = groupFrame(pathNodes, pathLength);
+	chooseFrame();
 }
 
 
 // add & delete frames in realtime according to camera position: pathNodes--nodes, pathArray
 function updateFrame(pathNodes, pathArray){
-	//&& scene.children[i].visible === true
 	
 	for (var i=0, j=0; i<pathArray.length; i++ ) {
 		if (splineCamera.position.distanceTo(scene.children[i].position) <100 && scene.children[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
-				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y, pathArray[i].position.z-300)
+				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z-300)
 				scene2.add(newFrame);
 				checkArray.push(i);
 				j++;
@@ -171,6 +172,7 @@ function updateFrame(pathNodes, pathArray){
 	}
 	// console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
+
 
 
 

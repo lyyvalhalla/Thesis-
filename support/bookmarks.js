@@ -1,5 +1,6 @@
 var tempSite, tempFolder;
 var titleArray = [];
+var dom, object;
 
 
 var getPathSites = function(n) {
@@ -28,13 +29,12 @@ var getPathFolders = function(nodes) {
 var showFrame = function (site, x, y, z) {
 
 	// console.log(site.time);
-	var dom = document.createElement('div');
-	var object = new THREE.CSS3DObject(dom);
+	dom = document.createElement('div');
+	dom.className = "domFrame";
+	object = new THREE.CSS3DObject(dom);
 	object.position.x = x;
 	object.position.y = y;
 	object.position.z = z;
-
-
 
 	var webpage = document.createElement('iframe');
 	webpage.src = site.url;
@@ -44,8 +44,23 @@ var showFrame = function (site, x, y, z) {
 	// webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
 	dom.appendChild(webpage);
 
+
+	var deleteButton = document.createElement('button');
+	var t = document.createTextNode("CLICK ME");      
+	deleteButton.appendChild(t);                          
+	deleteButton.className = "deleteButton";
+	dom.appendChild(deleteButton);
+
+	deleteButton.onclick = function() {
+		console.log(site.id);
+		removeBookmark(site.id);
+	}
+
 	// add time tag
-	var bmTime = document.createElement('iframe');
+	var timeTag = document.createElement('div');
+	timeTag.textContent = site.time;
+	timeTag.className = "timeTag";
+	dom.appendChild(timeTag);
 
 
 
