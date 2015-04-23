@@ -4,7 +4,7 @@ var menuNode, nodeIco, nodeTitle;
 var addClick = [];
 
 
-
+// call in main init()
 function initMenu() {
 	createPath();
 
@@ -102,7 +102,14 @@ var currentNodes = function(folder) {
 	return tempNodes;
 }
 
-
+// toggle visibility each click
+function toggleViz(temp) {
+	console.log(temp.length);
+	for (var i = 0; i<temp.length;  i++) {
+		temp[i].particle.visible = true;
+		console.log(temp[i].particle.visible);
+	}
+}
 
 
 

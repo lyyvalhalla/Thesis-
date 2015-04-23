@@ -16,8 +16,7 @@ function sortTime(nodes) {
 
 	for(var i=0; i<nodes.length; i++) {
 		nodes[i].zTime = zTime[i];
-		console.log(nodes[i].date_added + "; " + nodes[i].zTime);
-	
+		console.log(nodes[i].date_added + "; " + nodes[i].zTime);	
 	}
 }
 
@@ -29,52 +28,43 @@ function indexTime(nodes) {
 	nodes.sort(function(a, b) {
 		return a.date_added -b.date_added;
 	});
-	
 	return nodes;
 }
 
 
 
 // by category >>> big folders only
-/*
-go through root children (array[x]), for each children array, create particles in the same color
-*/
-
+/*go through root children (array[x]), for each children array, create particles in the same color*/
 function sortCategory(source) {
-
 	
 	var childCategory, childNodes;
 	for(var i=0; i<source.children.length; i++) {
 		childCategory = source.children[i];
-		childNodes = tree.nodes(childCategory);
-
-		
+		childNodes = tree.nodes(childCategory);		
 	
 		childNodes.forEach(function(d){
 			// console.log(d);
 			boxGeo = new THREE.BoxGeometry(50, 50, 50);
 			boxMat = new THREE.MeshBasicMaterial({color: colorArray[i]});
 			nodeBox = new THREE.Mesh(boxGeo, boxMat);
-
-			
+		
 			d.particle = nodeBox;
 			d.particle.position.x = 2000 * i/10 - 1000;
 			d.particle.position.y = 2000 * Math.random() - 1000;
 			d.particle.position.z = -2000 * (d.zTime/1000);
 			// d.particle.position.z = 2000 * Math.random() - 1000;
 			console.log(d.particle.position.z);
-			scene.add(d.particle);
-			
+			scene.add(d.particle);			
 		});		
 	}
 }
 
 
-
-// 	nodes.sort(function(a,b) {
-// 		renturn b.date_added < a.date_added ? 1 : -1;	
-// 	}) 
-
+/*
+	nodes.sort(function(a,b) {
+		renturn b.date_added < a.date_added ? 1 : -1;	
+	}) 
+*/
 
 
 

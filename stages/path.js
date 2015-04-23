@@ -1,4 +1,4 @@
-var pathLengt;
+var pathLength;
 
 var splineCamera;
 var binormal = new THREE.Vector3();
@@ -89,7 +89,7 @@ function createPath() {
 }
 
 
-
+// *** camera follow path ***
 function pathRender() {
 	/*
 	var time = Date.now();
@@ -122,17 +122,7 @@ function pathRender() {
 	splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );	
 }
 
-
-
-function toggleViz(temp) {
-	console.log(temp.length);
-	for (var i = 0; i<temp.length;  i++) {
-		temp[i].particle.visible = true;
-		console.log(temp[i].particle.visible);
-	}
-}
-
-
+// add geometries at the beginning
 function addPathNodes(nodes) {
 
 	// get bookmarks (node folders)
@@ -160,24 +150,26 @@ function addPathNodes(nodes) {
 }
 
 
-// add & delete in realtime according to camera position: pathNodes--nodes, pathArray
+// add & delete frames in realtime according to camera position: pathNodes--nodes, pathArray
 function updateFrame(pathNodes, pathArray){
-	for (var i=0, j=0; i<pathArray.length; i++) {
-		if (splineCamera.position.distanceTo(scene.children[i].position && scene.children[i].display === true) <100) {
+	//&& scene.children[i].visible === true
+	
+	for (var i=0, j=0; i<pathArray.length; i++ ) {
+		if (splineCamera.position.distanceTo(scene.children[i].position) <100 && scene.children[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y, pathArray[i].position.z-300)
-				// scene2.add(newFrame);
+				scene2.add(newFrame);
 				checkArray.push(i);
 				j++;
 			} 
 		} else {
 			if (scene2.children[j] != -1 && checkArray.indexOf(i) != -1) {
-				// scene2.remove(scene2.children[j]);
+				scene2.remove(scene2.children[j]);
 				checkArray.delete(i);
 			}
 		} 
 	}
-	//console.log(splineCamera.position.distanceTo(scene.children[0].position));	
+	// console.log(splineCamera.position.distanceTo(scene.children[0].position));	
 }
 
 
@@ -209,8 +201,6 @@ function groupFrame(nodesArray, pathLength) {
 function cameraTransit() {
 
 }
-
-
 
 
 Array.prototype.delete = function() {

@@ -32,8 +32,4 @@ function parseTree(parent) {
 }
 
 
-function bmInit(object) {
 
-    root = object[0].children[0];
-    // console.log(bmParent);
-}

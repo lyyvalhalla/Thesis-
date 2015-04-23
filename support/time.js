@@ -5,15 +5,11 @@ function getTime(miliseconds) {
     return new Date(miliseconds);
 }
 
-// var min = new Date();
-
 function getMinTime(nodes) {
     var minDay; 
     var min = nodes[0].dateAdded;
   
-    for (var i=0; i< nodes.length; i++) {
-
-        
+    for (var i=0; i< nodes.length; i++) {     
         if (nodes[i].dateAdded <= min) {
             min = nodes[i].dateAdded;
             minDay = nodes[i];
@@ -23,32 +19,21 @@ function getMinTime(nodes) {
         }
     }
     return minDay;
-
 }
 
 
 var tempDays = function (node, today) {
-
     return Math.ceil((today.getTime()-(new Date(node.time)).getTime())/(one_day));
 }
 
 
 function getTempTime(nodes) {
-
     for (var i=0; i<nodes.length; i++) {
 
         var result = tempDays(nodes[i], today);
-        nodes[i].zPos = result * 10;
-        
+        nodes[i].zPos = result * 10;   
     }
-
 }
-
-
-
-
-
-
 
 
 function parseDate(str) {
@@ -61,10 +46,7 @@ function daydiff(first, second) {
 }
 
 
-
-
-function secondsToTime(secs)
-{
+function secondsToTime(secs) {
     var hours = Math.floor(secs / (60 * 60));
    
     var divisor_for_minutes = secs % (60 * 60);
@@ -85,7 +67,6 @@ function secondsToTime(secs)
 
 
 /*
-
 def getFiletime(dt):
     microseconds = int(dt, 16) / 10
     seconds, microseconds = divmod(microseconds, 1000000)
@@ -97,6 +78,4 @@ def getFiletime(dt):
 
 if __name__ == "__main__":
 	print format(getFiletime(hex(int(sys.argv[1])*10)[2:17]), '%a, %d %B %Y %H:%M:%S %Z')
-
-
 */

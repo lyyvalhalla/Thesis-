@@ -1,9 +1,7 @@
 extension_id = "fkdnjmgfbbdflepjdlkbekemkaaahkei"
 var jsonHtml, jsonObject;
 
-// watch the html element that should contain the json string for change
-// when it's changed, it means the extension has sent us the json string via
-// the middleman, now we can use that json string to do stuff
+
 window.onload = function() {
     $('#json').bind('DOMSubtreeModified', function(e) {
         if (e.target.innerHTML.length > 0) {
@@ -20,14 +18,7 @@ window.onload = function() {
             animate();
 
 
-            // ...
-            // did a bunch of stuff, modified the jsonObject
-            // now ready to send it back, call sendBookmarkToExtension here
-
-            /***** NOTE ********************************************************************
-             * Below are hard-coded examples of how to use the above 4 utility functions
-             * Needs to update harccode value to make it work
-             ******************************************************************************/
+            /*hard-coded examples*/
             $("#remove").click(function() {
                 removeBookmark('405');
             });
@@ -44,12 +35,14 @@ window.onload = function() {
     });
 };
 
-/****** NOTE *******************************************************************
- * These functions below are utility functions to manipulate the user bookmarks,
- * calling these will permanently and irreversibly change the user's bookmarks.
- * We provide 4 functionalities, remove, create, move and update.
- * If you need more capabilities, talk to dayu first, for example delete folder
- ******************************************************************************/
+/* get right directory from chrome json*/
+function bmInit(object) {
+    root = object[0].children[0];
+    // console.log(bmParent);
+}
+
+
+
 //  remove bookmark by id
 function removeBookmark(id) {
     chrome.runtime.sendMessage(extension_id, 

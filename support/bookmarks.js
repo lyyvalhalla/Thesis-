@@ -25,11 +25,9 @@ var getPathFolders = function(nodes) {
 }
 
 
-
-
-
 var showFrame = function (site, x, y, z) {
 
+	// console.log(site.time);
 	var dom = document.createElement('div');
 	var object = new THREE.CSS3DObject(dom);
 	object.position.x = x;
@@ -45,6 +43,11 @@ var showFrame = function (site, x, y, z) {
 	webpage.sandbox = "allow-same-origin";
 	// webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
 	dom.appendChild(webpage);
+
+	// add time tag
+	var bmTime = document.createElement('iframe');
+
+
 
 
 	return object;

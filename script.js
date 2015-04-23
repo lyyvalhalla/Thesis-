@@ -59,7 +59,6 @@ function update(source) {
 	
 	// ***************** draw bookmarks particles ***************** 
 	// generateNode(nodes);
-
 	// sortTime(nodes);
 	// sortCategory(root)
 
@@ -68,8 +67,8 @@ function update(source) {
 
 
 
-	// ************* path menu ******************	
-	initMenu();
+	/************* path menu ******************/
+	// initMenu();
 }
 
 
@@ -95,11 +94,11 @@ function init() {
 	// drawings here
 	update(root);
 
-	//  *****************  PATH parts ***************** 
+	/*****************  PATH parts *****************/
 	createPath();
-	// addPathNodes(nodes);
-
-
+	/*have called it in menuInit(), enable it when test only on path*/
+	addPathNodes(nodes);  
+	
 
 
 	controls = new THREE.PointerLockControls( splineCamera );
@@ -281,7 +280,6 @@ function animate() {
 
 	rendering();
 
-
 	// *****************  first stage ---- start *****************  (not using)
 	//composer.render();
 }
@@ -290,10 +288,11 @@ function rendering() {
 	camera.updateMatrixWorld();
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
-	// pathRender();
+	pathRender();
 	
 	// ***************** path move interaction here *****************
-	// updateFrame(pathNodes, pathArray);
+
+	updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );
