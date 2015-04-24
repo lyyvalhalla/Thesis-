@@ -101,72 +101,17 @@ function init() {
 	addPathNodes(nodes);  
 
 
-
 	controls = new THREE.PointerLockControls( splineCamera );
 	scene.add( controls.getObject() );
 
-	var onKeyDown = function ( event ) {
-
-		switch ( event.keyCode ) {
-
-			case 38: // up
-			case 87: // w
-				moveForward = true;
-				break;
-
-			case 37: // left
-			case 65: // a
-				moveLeft = true; break;
-
-			case 40: // down
-			case 83: // s
-				moveBackward = true;
-				break;
-
-			case 39: // right
-			case 68: // d
-				moveRight = true;
-				break;
-
-			case 32: // space
-				if ( canJump === true ) velocity.y += 350;
-				canJump = false;
-				break;
-
-		}
-	};
-
-	var onKeyUp = function ( event ) {
-
-		switch( event.keyCode ) {
-
-			case 38: // up
-			case 87: // w
-				moveForward = false;
-				break;
-
-			case 37: // left
-			case 65: // a
-				moveLeft = false;
-				break;
-
-			case 40: // down
-			case 83: // s
-				moveBackward = false;
-				break;
-
-			case 39: // right
-			case 68: // d
-				moveRight = false;
-				break;
-
-		}
-	};
-	document.addEventListener( 'keydown', onKeyDown, false );
-	document.addEventListener( 'keyup', onKeyUp, false );
+	// *****************  start stages***************** 
+	// startStage();
 
 
-
+	// ***************** call stages here:***************** 
+	
+	// scene2.add(new setupSearchBox(0, 0, 0));
+	// scene.add(Flipping_Wall);
 	raycaster = new THREE.Raycaster();
 
 	renderer = new THREE.WebGLRenderer();
@@ -181,21 +126,10 @@ function init() {
 	renderer2.domElement.style.top = 0;
 	container.appendChild( renderer2.domElement );
 
-
 	window.addEventListener( 'resize', onWindowResize, false );
-	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
-
-
-
-	// *****************  start stages***************** 
-	// startStage();
-
-
-	// ***************** call stages here:***************** 
-	
-	// scene2.add(new setupSearchBox(0, 0, 0));
-	// scene.add(Flipping_Wall);
-
+	// window.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	document.addEventListener( 'mousewheel', mousewheel, false );
+	document.addEventListener( 'DOMMouseScroll', mousewheel, false ); // firefox
 }
 
 function onWindowResize() {
@@ -215,69 +149,34 @@ function onDocumentMouseMove( event ) {
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	raycaster.setFromCamera( mouse, camera );
-	
-
 }
+
+var delta;
+
+function mousewheel( event ) {
+
+	if ( this.enabled === false ) return;
+
+	event.preventDefault();
+	event.stopPropagation();
+	
+	delta = 0;
+	if ( event.wheelDelta ) { // WebKit / Opera / Explorer 9
+		delta = event.wheelDelta / 4000000;
+	} else if (event.detail) { // Firefox
+		delta = - event.detail / 300000;
+	}	
+	cameraStep = cameraStep + delta;
+}
+
+
+
 
 
 
 function animate() {
 
 	requestAnimationFrame( animate );
-
-	if ( controlsEnabled ) {
-		raycaster.ray.origin.copy( controls.getObject().position );
-		raycaster.ray.origin.y -= 10;
-
-		var intersections = raycaster.intersectObjects( scene.children );
-
-		var isOnObject = intersections.length > 0;
-
-		var time = performance.now();
-		var delta = ( time - prevTime ) / 1000;
-
-		velocity.x -= velocity.x * 10.0 * delta;
-		velocity.z -= velocity.z * 10.0 * delta;
-
-		velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
-
-		if ( moveForward ) {
-			// velocity.z -= 2400.0 * delta;
-			cameraStep = cameraStep + 0.0001;
-			
-		}
-		if ( moveBackward ) {
-			// velocity.z += 1000.0 * delta;
-			cameraStep = cameraStep - 0.0001;
-		}
-
-		if ( moveLeft ) velocity.x -= 400.0 * delta;
-		if ( moveRight ) velocity.x += 400.0 * delta;
-
-		if ( isOnObject === true ) {
-			velocity.y = Math.max( 0, velocity.y );
-
-			canJump = true;
-		}
-
-		controls.getObject().translateX( velocity.x * delta );
-		controls.getObject().translateY( velocity.y * delta );
-		controls.getObject().translateZ( velocity.z * delta );
-
-
-		if ( controls.getObject().position.y < 10 ) {
-
-			velocity.y = 0;
-			controls.getObject().position.y = 10;
-
-			canJump = true;
-
-		}
-
-		prevTime = time;
-
-	}
-
 
 	rendering();
 
@@ -290,8 +189,6 @@ function rendering() {
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
 	pathRender();
-	
-	
 	
 	// ***************** path move interaction here *****************
 

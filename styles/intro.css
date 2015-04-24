@@ -1,0 +1,10 @@
+body { 
+    overflow: hidden; 
+}
+
+#startType {
+    position: relative;
+    margin: 0 auto;
+    display: block;
+   
+}

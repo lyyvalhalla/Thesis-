@@ -1,5 +1,5 @@
-body {
-
+body { 
+    overflow: hidden; 
 }
 
 canvas {
@@ -27,7 +27,7 @@ canvas {
     transform-origin: 0 0;*/
 
     /*transform: rotateX(50deg);*/
-    
+
     transform-style: preserve-3d;
 
 }
@@ -87,9 +87,3 @@ iframe{
 }
 
 
-#startType {
-    position: relative;
-    margin: 0 auto;
-    display: block;
-   
-}

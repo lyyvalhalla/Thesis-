@@ -33,7 +33,7 @@ function createPath() {
 	}); 
 
 	for(var i=0; i<7; i++) {
-		vertexX = getRandomInt(-100, 100);
+		vertexX = getRandomInt(-500, 500);
 		arrayX.push(vertexX);
 	}
 
@@ -96,6 +96,7 @@ function pathRender() {
 	var looptime = 20 * 1000;
 	var t = ( time % looptime ) / looptime;
 	*/
+
 	var pos = tube.parameters.path.getPointAt( cameraStep );
 	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.001);
 
@@ -145,7 +146,6 @@ function addPathNodes(nodes) {
 		pathNode.position.z = position.z - 1000;
 		pathNode.visible = true;
 		scene.add(pathNode);
-		console.log(pathNode.position.z);
 	}
 	// totalGroup = groupFrame(pathNodes, pathLength);
 }
@@ -155,7 +155,7 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=0; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(pathArray[i].position) > 700 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
+		if (splineCamera.position.distanceTo(pathArray[i].position) > 770 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
 				scene2.add(newFrame);
@@ -168,7 +168,8 @@ function updateFrame(pathNodes, pathArray){
 				checkArray.delete(i);
 			}
 		} 
-	}	
+	}
+	// console.log(scene2.children.length);	
 }
 
 
