@@ -33,10 +33,9 @@ function createPath() {
 	}); 
 
 	for(var i=0; i<7; i++) {
-		vertexX = getRandomInt(-pathLength/2, pathLength/2);
+		vertexX = getRandomInt(-100, 100);
 		arrayX.push(vertexX);
 	}
-	console.log(arrayZ);
 
 	//0x2E2E2E
 	var material = new THREE.MeshBasicMaterial({
@@ -98,7 +97,7 @@ function pathRender() {
 	var t = ( time % looptime ) / looptime;
 	*/
 	var pos = tube.parameters.path.getPointAt( cameraStep );
-	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.0001);
+	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.001);
 
 	// interpolation
 	var segments = tube.tangents.length;
@@ -143,9 +142,10 @@ function addPathNodes(nodes) {
 		// pathNode.position.x = getRandomInt(position.x-200, position.x+200) ;
 		pathNode.position.x = position.x;
 		pathNode.position.y = position.y + 25;
-		pathNode.position.z = position.z;
+		pathNode.position.z = position.z - 1000;
 		pathNode.visible = true;
-		scene.add(pathNode);	
+		scene.add(pathNode);
+		console.log(pathNode.position.z);
 	}
 	// totalGroup = groupFrame(pathNodes, pathLength);
 }
@@ -155,9 +155,9 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=0; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(scene.children[i].position) > 30 && splineCamera.position.distanceTo(scene.children[i].position) < 120 && scene.children[i].visible) {
+		if (splineCamera.position.distanceTo(pathArray[i].position) > 700 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
-				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z-300)
+				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
 				scene2.add(newFrame);
 				checkArray.push(i);
 				j++;
@@ -168,8 +168,7 @@ function updateFrame(pathNodes, pathArray){
 				checkArray.delete(i);
 			}
 		} 
-	}
-	// console.log(splineCamera.position.distanceTo(scene.children[0].position));	
+	}	
 }
 
 

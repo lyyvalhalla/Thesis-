@@ -41,12 +41,11 @@ var showFrame = function (site, x, y, z) {
 	webpage.className = "frame";
 	// webpage.sandbox = "allow-same-origin allow-scripts";
 	webpage.sandbox = "allow-same-origin";
-	// webpage.style.transform ='scale(' + 0.1 + ',' + 0.1 + ')';
 	dom.appendChild(webpage);
 
 
 	var deleteButton = document.createElement('button');
-	var t = document.createTextNode("CLICK ME");      
+	var t = document.createTextNode(site.title);      
 	deleteButton.appendChild(t);                          
 	deleteButton.className = "deleteButton";
 	dom.appendChild(deleteButton);

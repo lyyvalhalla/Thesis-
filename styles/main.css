@@ -26,14 +26,14 @@ canvas {
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;*/
 
-    /*transform: rotateX(60deg) */
+    /*transform: rotateX(50deg);*/
     
     transform-style: preserve-3d;
 
 }
 
 .domFrame {
-    background: #00ff00;
+    background: #000000;
 }
 
 iframe{
@@ -42,7 +42,7 @@ iframe{
 
     border:none;
     opacity: .999;
-    transform: scale(0.703125);
+    transform: scale(0.8);
    
 }
 

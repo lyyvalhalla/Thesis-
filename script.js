@@ -89,6 +89,7 @@ function init() {
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
 	splineCamera.position.set( 0, 0, 300 );
+
 	scene.add( splineCamera );
 
 	// drawings here
@@ -290,11 +291,11 @@ function rendering() {
 	// moveNode();
 	pathRender();
 	
-	// chooseFrame();
+	
 	
 	// ***************** path move interaction here *****************
 
-	// updateFrame(pathNodes, pathArray);
+	updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );
