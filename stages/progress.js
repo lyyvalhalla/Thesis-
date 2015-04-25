@@ -1,8 +1,8 @@
 /*progress bar on the PATH page */
 var bar;
 function initProgress() {
-	var widthStamps = [], timeStamps = [], amount, barInterval;
-
+	var widthStamps = [], timeStamps = [], amount, barInterval, intervalMili;
+	var progressMonths = [];
 
 	var progress= document.getElementById( "progress" );
 	var barHolder = document.getElementById("bar-holder");
@@ -23,10 +23,19 @@ function initProgress() {
 
 	var barLength = 1120 - 80;
 	barInterval = Math.round(barLength/amount);
+	var totalMili = (new Date()).getTime() - firstDay;
+	intervalMili = totalMili/amount;
+
 	for (var i=0; i<amount; i++) {
 		widthStamps.push(i*barInterval);
+		var progressTime = (new Date((new Date()).getTime() - intervalMili*i)).toDateString();
+		progressMonths.push(progressTime);
 	}
 
+	console.log(progressMonths);
+
+
+	/* for mousemove event */
 	var divPos, dePos;
 	var offset = $(barHolder).offset();
 	// var ofs = $(progress).offset();
@@ -54,7 +63,7 @@ function initProgress() {
 	function checkStamp() {
 		for (var i=0; i<widthStamps.length; i++) {
 			if (divPos > widthStamps[i] && divPos <  widthStamps[i] + barInterval) {
-				barTime.innerHTML = widthStamps[i];
+				barTime.innerHTML = progressMonths[i];
 			}
 		}
 	}
@@ -64,7 +73,7 @@ function initProgress() {
 	
 	console.log(widthStamps);
 
-	var progressTime;
+	
 
 	/*
 	$(progress).mousemove(function(e) {
