@@ -39,7 +39,7 @@ var showFrame = function (site, x, y, z) {
 	var webpage = document.createElement('iframe');
 	webpage.src = site.url;
 	webpage.className = "frame";
-	webpage.sandbox = "allow-same-origin allow-scripts";
+	webpage.sandbox = "allow-same-origin allow-scripts allow-top-navigation";
 	// webpage.sandbox = "allow-same-origin";
 	dom.appendChild(webpage);
 
