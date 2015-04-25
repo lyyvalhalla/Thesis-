@@ -52,6 +52,7 @@ function update(source) {
 	
 	// ************* get total days >>> total length of path *************
 	firstDay = getMinTime(nodes).dateAdded;
+
 	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
 	console.log(new Date(firstDay) + "; " + totalDays);
 	
@@ -192,11 +193,13 @@ function rendering() {
 	camera.updateMatrixWorld();
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
+	clickCallTime();
 	pathRender();
 	
 	// ***************** path move interaction here *****************
 
 	updateFrame(pathNodes, pathArray);
+
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

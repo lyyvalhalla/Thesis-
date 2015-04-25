@@ -1,15 +1,18 @@
 /*progress bar on the PATH page */
-var bar;
+var progress, bar, barHolder, barTime;
+var timeValues =[], pathValues=[];
+var progressMonths = [];
+var amount;
 function initProgress() {
-	var widthStamps = [], timeStamps = [], amount, barInterval, intervalMili;
-	var progressMonths = [];
+	var widthStamps = [], timeStamps = [], barInterval, intervalMili;
+	
 
-	var progress= document.getElementById( "progress" );
-	var barHolder = document.getElementById("bar-holder");
+	progress= document.getElementById( "progress" );
+	barHolder = document.getElementById("bar-holder");
 	bar = document.getElementById("bar");
 	bar.style.width = "1%";
 
-	var barTime = document.getElementById("bar-time");
+	barTime = document.getElementById("bar-time");
 	barTime.innerHTML  = "today";
 
 	var endTime = document.getElementById("end-time");
@@ -28,11 +31,15 @@ function initProgress() {
 
 	for (var i=0; i<amount; i++) {
 		widthStamps.push(i*barInterval);
-		var progressTime = (new Date((new Date()).getTime() - intervalMili*i)).toDateString();
-		progressMonths.push(progressTime);
+		timeValues.push((new Date()).getTime() - intervalMili*i);
+		var progressTime = new Date((new Date()).getTime() - intervalMili*i);
+		var mm = progressTime.getMonth()+1;
+		var yy = progressTime.getFullYear();
+		var tt = mm + "/" + yy;
+		progressMonths.push(tt);
 	}
 
-	console.log(progressMonths);
+	// console.log(timeValues);
 
 
 	/* for mousemove event */
@@ -69,12 +76,7 @@ function initProgress() {
 	}
 
 
-
-	
-	console.log(widthStamps);
-
-	
-
+	callTime();
 	/*
 	$(progress).mousemove(function(e) {
 		var pos = e.pageX - ofs.left;
@@ -84,7 +86,25 @@ function initProgress() {
 }
 
 
+/* click timeline to go back to a month to view bookmarks */
+function callTime() {
+	var pathInterval = 1/amount;
+	for (var i=0; i<amount; i++) {
+		pathValues.push(i*pathInterval);
+	}
+	console.log(pathValues);
+}
 
+
+function clickCallTime() {
+	$(bar).click(function() {
+		for (var i=0; i<progressMonths.length; i++) {
+			if(barTime.innerHTML === progressMonths[i]) {			
+				cameraStep = pathValues[i];
+			}
+		}
+	});
+}
 
 
 

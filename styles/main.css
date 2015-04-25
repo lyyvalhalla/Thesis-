@@ -133,6 +133,10 @@ iframe{
     top: 5%;
     width: 10%;
     height: 50px;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
 }
 
 
