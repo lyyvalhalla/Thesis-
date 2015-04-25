@@ -12,11 +12,12 @@ window.onload = function() {
             // console.log(parseTree(jsonObject)); 
 
             bmInit(jsonObject);
-
+            // initProgress();
 
             init();
             animate();
 
+            
 
 
 

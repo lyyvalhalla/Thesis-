@@ -61,9 +61,6 @@ var showFrame = function (site, x, y, z) {
 	timeTag.className = "timeTag";
 	dom.appendChild(timeTag);
 
-
-
-
 	return object;
 }
 
@@ -90,13 +87,6 @@ function wordFrequency(nodes){
 	);
 	// console.log(frequency);
 }
-
-
-
-
-
-
-
 
 
 

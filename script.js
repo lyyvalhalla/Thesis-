@@ -3,7 +3,7 @@ var root;
 var nodes, links;
 var tree = d3.layout.tree();
 var sites =[], folders=[];
-
+var firstDay, totalDays;
 
 // declare 3D
 var container, stats;
@@ -49,11 +49,11 @@ function update(source) {
 		}
 	}
 
-	var firstDay, totalDays;
+	
 	// ************* get total days >>> total length of path *************
 	firstDay = getMinTime(nodes).dateAdded;
 	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
-	
+	console.log(firstDay + "; " + totalDays);
 	
 	pathLength = totalDays * 50;
 	
@@ -78,9 +78,12 @@ function update(source) {
 function init() {
 
 
-	var container = document.createElement('div');
-	document.body.appendChild( container);
+	// var container = document.createElement('div');
+	container = document.getElementById('container');
+	// document.body.appendChild( container);
 
+
+	/*  init progress bar */
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.set( 0, 0, 500 );
 
@@ -89,7 +92,6 @@ function init() {
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
 	splineCamera.position.set( 0, 0, 300 );
-
 	scene.add( splineCamera );
 
 	// drawings here
@@ -104,9 +106,11 @@ function init() {
 	controls = new THREE.PointerLockControls( splineCamera );
 	scene.add( controls.getObject() );
 
+
 	// *****************  start stages***************** 
 	// startStage();
 
+	            initProgress();
 
 	// ***************** call stages here:***************** 
 	
@@ -162,7 +166,7 @@ function mousewheel( event ) {
 	
 	delta = 0;
 	if ( event.wheelDelta ) { // WebKit / Opera / Explorer 9
-		delta = event.wheelDelta / 4000000;
+		delta = event.wheelDelta / 8000000;
 	} else if (event.detail) { // Firefox
 		delta = - event.detail / 300000;
 	}	

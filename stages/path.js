@@ -12,7 +12,7 @@ var totalGroup = [];
 var checkArray = [];
 var tube, tubeMesh;
 var frameClick = [];
-
+var plane;
 
 
 function createPath() {
@@ -44,17 +44,17 @@ function createPath() {
         // wireframe:true,
         fog: true
     });
-	var geometry = new THREE.Geometry();
+	// var geometry = new THREE.Geometry();
 
-	geometry.vertices.push(new THREE.Vector3(0, -200, zLine));
-    geometry.vertices.push(new THREE.Vector3(arrayX[0], -200, arrayZ[0]));
-    geometry.vertices.push(new THREE.Vector3(arrayX[1], -200, arrayZ[1]));
-    geometry.vertices.push(new THREE.Vector3(arrayX[2], -200, arrayZ[2]));
-    geometry.vertices.push(new THREE.Vector3(arrayX[3], -200, arrayZ[3]));
-    geometry.vertices.push(new THREE.Vector3(arrayX[4], -200, arrayZ[4]));
-    geometry.vertices.push(new THREE.Vector3(arrayX[5], -200, arrayZ[5]));
-    geometry.vertices.push(new THREE.Vector3(arrayX[6], -200, arrayZ[6]));
-    geometry.vertices.push(new THREE.Vector3(0, -200, zLine-pathLength));
+	// geometry.vertices.push(new THREE.Vector3(0, -200, zLine));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[0], -200, arrayZ[0]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[1], -200, arrayZ[1]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[2], -200, arrayZ[2]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[3], -200, arrayZ[3]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[4], -200, arrayZ[4]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[5], -200, arrayZ[5]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[6], -200, arrayZ[6]));
+ //    geometry.vertices.push(new THREE.Vector3(0, -200, zLine-pathLength));
 
 
     var pipeSpline = new THREE.SplineCurve3([
@@ -86,6 +86,16 @@ function createPath() {
 	scene.add(tubeMesh);
 	// tempTube.scale.set( 1, 1, 1 );
     scene.fog = new THREE.Fog( 0xA9E2F3, 500, pathLength*2/3);
+
+
+
+    // create a back wall
+    var planeGeo = new THREE.PlaneBufferGeometry(50, 50);
+    var planeMat = new THREE.MeshBasicMaterial();
+    plane = new THREE.Mesh(planeGeo, planeMat);
+    plane.position.set(0, -170, -195);
+    scene.add(plane);
+
 }
 
 
@@ -114,7 +124,7 @@ function pathRender() {
 	normal.copy( binormal ).cross( dir );
 	pos.add( normal.clone().multiplyScalar( offset ) );
 
-	splineCamera.position.copy( new THREE.Vector3(pos.x, (pos.y+20), pos.z) );
+	splineCamera.position.copy( new THREE.Vector3(pos.x, (pos.y+20), pos.z-10) );
 	// Using arclength for stablization in look ahead.
 	var lookAt = tube.parameters.path.getPointAt( ( cameraStep + 30 / tube.parameters.path.getLength() ) % 1 );
 
@@ -155,7 +165,7 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=0; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(pathArray[i].position) > 770 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
+		if (splineCamera.position.distanceTo(pathArray[i].position) > 730 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
 				scene2.add(newFrame);
