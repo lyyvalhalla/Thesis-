@@ -1,10 +1,12 @@
 /*progress bar on the PATH page */
-var progress, bar, barHolder, barTime;
-var timeValues =[], pathValues=[];
+var progress, bar, barHolder, barTime, tempStep;
+var timeValues =[], pathValues=[], widthStamps = [];
 var progressMonths = [];
 var amount;
+var pathInterval, barInterval;
+
 function initProgress() {
-	var widthStamps = [], timeStamps = [], barInterval, intervalMili;
+	var timeStamps = [], intervalMili;
 	
 
 	progress= document.getElementById( "progress" );
@@ -39,7 +41,7 @@ function initProgress() {
 		progressMonths.push(tt);
 	}
 
-	// console.log(timeValues);
+	console.log(widthStamps);
 
 
 	/* for mousemove event */
@@ -75,7 +77,6 @@ function initProgress() {
 		}
 	}
 
-
 	callTime();
 	/*
 	$(progress).mousemove(function(e) {
@@ -88,11 +89,10 @@ function initProgress() {
 
 /* click timeline to go back to a month to view bookmarks */
 function callTime() {
-	var pathInterval = 1/amount;
+	pathInterval = 1/amount;
 	for (var i=0; i<amount; i++) {
 		pathValues.push(i*pathInterval);
 	}
-	console.log(pathValues);
 }
 
 
@@ -101,6 +101,7 @@ function clickCallTime() {
 		for (var i=0; i<progressMonths.length; i++) {
 			if(barTime.innerHTML === progressMonths[i]) {			
 				cameraStep = pathValues[i];
+				tempStep = cameraStep;
 			}
 		}
 	});

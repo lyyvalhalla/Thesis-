@@ -99,13 +99,25 @@ function pathRender() {
 
 	clickCallTime();
 
-	var pos = tube.parameters.path.getPointAt( cameraStep );
-	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.001);
+	// if (cameraStep > tempStep + pathInterval) {
+	// 	console.log("woof");
+	// 	bar.style.width = bar.style.width + barInterval;
+	// }
 
-	var oo = tube.parameters.path.getPointAt( 1);
+
+
+	// for (var i=0; i<pathValues.length; i++) {
+	// 	if(cameraStep > pathValues[i] && cameraStep < pathValues[i+1]) {
+	// 		bar.style.width = widthStamps[i];
+	// 		console.log(pathValues[i] + "; " + widthStamps[i])
+	// 	} 
+	// }
 	
 
 
+
+	var pos = tube.parameters.path.getPointAt( cameraStep );
+	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.001);
 
 	// interpolation
 	var segments = tube.tangents.length;

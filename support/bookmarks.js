@@ -28,6 +28,8 @@ var getPathFolders = function(nodes) {
 
 var showFrame = function (site, x, y, z) {
 
+
+
 	// console.log(site.time);
 	dom = document.createElement('div');
 	dom.className = "domFrame";
@@ -39,7 +41,7 @@ var showFrame = function (site, x, y, z) {
 	var webpage = document.createElement('iframe');
 	webpage.src = site.url;
 	webpage.className = "frame";
-	webpage.sandbox = "allow-same-origin allow-scripts allow-top-navigation";
+	webpage.sandbox = "allow-same-origin allow-scripts";
 	// webpage.sandbox = "allow-same-origin";
 	dom.appendChild(webpage);
 
