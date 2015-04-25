@@ -53,7 +53,7 @@ function update(source) {
 	// ************* get total days >>> total length of path *************
 	firstDay = getMinTime(nodes).dateAdded;
 	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
-	console.log(firstDay + "; " + totalDays);
+	console.log(new Date(firstDay) + "; " + totalDays);
 	
 	pathLength = totalDays * 50;
 	
@@ -120,7 +120,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setClearColor( 0x000000 );
+	renderer.setClearColor( 0x333333 );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
 

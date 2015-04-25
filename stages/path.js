@@ -44,6 +44,17 @@ function createPath() {
         // wireframe:true,
         fog: true
     });
+	// var geometry = new THREE.Geometry();
+
+	// geometry.vertices.push(new THREE.Vector3(0, -200, zLine));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[0], -200, arrayZ[0]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[1], -200, arrayZ[1]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[2], -200, arrayZ[2]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[3], -200, arrayZ[3]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[4], -200, arrayZ[4]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[5], -200, arrayZ[5]));
+ //    geometry.vertices.push(new THREE.Vector3(arrayX[6], -200, arrayZ[6]));
+ //    geometry.vertices.push(new THREE.Vector3(0, -200, zLine-pathLength));
 
 
     var pipeSpline = new THREE.SplineCurve3([
@@ -60,10 +71,10 @@ function createPath() {
     	]);
 
 
-	tube = new THREE.TubeGeometry(pipeSpline, 500, 10, 12, false);
+	tube = new THREE.TubeGeometry(pipeSpline, 500, 25, 12, false);
 	tubeMesh = new THREE.SceneUtils.createMultiMaterialObject(tube, [
 		new THREE.MeshBasicMaterial({
-			color: 0xCC9900
+			color: 0xd6954a
 		}),
 		new THREE.MeshBasicMaterial({
 			color: 0x000000,
@@ -74,7 +85,7 @@ function createPath() {
 		]);
 	scene.add(tubeMesh);
 	// tempTube.scale.set( 1, 1, 1 );
-    scene.fog = new THREE.Fog( 0xA9E2F3, 500, pathLength*2/3);
+    scene.fog = new THREE.Fog( 0x333333, 100, 300);
 
 
 
