@@ -58,7 +58,20 @@ function createPath() {
 		new THREE.Vector3(arrayX[6], -200, arrayZ[6]),
 		new THREE.Vector3(arrayX[6], -200, arrayZ[6]),
 		new THREE.Vector3(0, -200, zLine-pathLength),
-    	]);
+    ]);
+
+
+
+	// var path = new THREE.Path( curve.getPoints( 50 ) );
+
+	// var geometry = path.createPointsGeometry( 50 );
+	// var material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+
+	// // Create the final Object3d to add to the scene
+	// var splineObject = new THREE.Line( geometry, material );
+
+
+
 
 
 	tube = new THREE.TubeGeometry(pipeSpline, 500, 25, 12, false);
@@ -71,11 +84,13 @@ function createPath() {
 			opacity: 0.3,
 			wireframe: true,
 			transparent: true
-	})
-		]);
+		})
+	]);
+
+
 	scene.add(tubeMesh);
 	// tempTube.scale.set( 1, 1, 1 );
-    scene.fog = new THREE.Fog( 0x333333, 100, 1000);
+    scene.fog = new THREE.Fog( 0x333333, 500, 1000);
 
 
 

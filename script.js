@@ -7,7 +7,7 @@ var firstDay, totalDays;
 
 // declare 3D
 var container, stats;
-var camera, scene, renderer;
+var camera, scene, renderer, light;
 var scene2, renderer2;
 var controls;
 var splineCamera;
@@ -23,11 +23,12 @@ var moveRight = false;
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var cameraStep = 0;
+var delta;
 
-
-var raycaster;
+var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2(), offset = new THREE.Vector3();
 var INTERSECTED, SELECTED;
+var intersects, intersected;
 
 
 // d3 
@@ -93,7 +94,9 @@ function init() {
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
 	splineCamera.position.set( 0, 0, 0 );
-	scene.add( splineCamera );
+
+	light = new THREE.AmbientLight(0xffffff);
+	scene.add(light);
 
 	// drawings here
 	update(root);
@@ -105,19 +108,23 @@ function init() {
 
 
 	controls = new THREE.PointerLockControls( splineCamera );
-	scene.add( controls.getObject() );
+
+	/********************************************************************/
+	/**********   delete in Menu mode, add in Path mode **********/
+	/********************************************************************/
+	// scene.add( controls.getObject() );
+
 
 
 	// *****************  start stages***************** 
 	// startStage();
 
-	            initProgress();
+	            // initProgress();
 
 	// ***************** call stages here:***************** 
 	
 	// scene2.add(new setupSearchBox(0, 0, 0));
 	// scene.add(Flipping_Wall);
-	raycaster = new THREE.Raycaster();
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -133,14 +140,17 @@ function init() {
 
 	window.addEventListener( 'resize', onWindowResize, false );
 	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
-	document.addEventListener( 'mousewheel', mousewheel, false );
-	document.addEventListener( 'DOMMouseScroll', mousewheel, false ); // firefox
+	window.addEventListener( 'mousewheel', mousewheel, false );
+	window.addEventListener( 'DOMMouseScroll', mousewheel, false ); // firefox
+	window.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
 function onWindowResize() {
 
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
+	splineCamera.updateProjectionMatrix();
+	splineCamera.aspect = window.innerWidth / window.innerHeight;
 
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -153,22 +163,29 @@ function onDocumentMouseMove( event ) {
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
-	raycaster.setFromCamera( mouse, camera );
-
-	// sphere.rotation.x +=0.02;
-	// sphere.rotation.y +=0.02;
-	// sphere.rotation.z +=0.02;
-
-	
 
 	new TWEEN.Tween( sphere.rotation ).to( {  
 		x: mouse.x/10,
 		y: mouse.y/10,
 		z: mouse.x/10
-		}, 2000 ).easing(  TWEEN.Easing.Quintic.Out).start();
+		}, 2000 ).easing(TWEEN.Easing.Quintic.Out).start();
 }
 
-var delta;
+
+
+function onDocumentMouseDown(event) {
+	event.preventDefault();
+
+	for (var i =0; i<convexArray.length; i++) {
+		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
+			console.log(folders[i]);
+			updateMenu(i);
+		}
+	}
+}
+
+
+
 
 function mousewheel( event ) {
 
@@ -194,31 +211,33 @@ function mousewheel( event ) {
 function animate() {
 
 	requestAnimationFrame( animate );
-
-	rendering();
-
+	render();
 	// *****************  first stage ---- start *****************  (not using)
 	//composer.render();
 }
 
-function rendering() {
+function render() {
 	TWEEN.update();
 	camera.updateMatrixWorld();
-	//  ***************** function to edit/remove nodes/json objects ***************** 
-	// moveNode();
+	splineCamera.updateMatrixWorld();
+	raycaster.setFromCamera( mouse, splineCamera );
+
+	intersects = raycaster.intersectObjects(convexArray);
+	intersected = intersects[ 0 ];
 	
 	// pathRender();
 
 	/*some updates*/
 	sphere.position.z = splineCamera.position.z - 500;
-	// sphere.rotation.x = mouse.x/50;
-	// sphere.rotation.y = mouse.y/50;
+	light.position.z = splineCamera.position.z;
+	light.position.x = splineCamera.position.x;
+	for (var i = 0; i<convexArray.length; i++) {
+		convexArray[i].rotation.x  += Math.random()/100;
+		convexArray[i].rotation.y  += Math.random()/100;
+		convexArray[i].rotation.z  += Math.random()/100;
+	}
+
 	
-
-	// console.log(mouse.x + "; " + mouse.y);
-
-	// ***************** path move interaction here *****************
-
 	// updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
