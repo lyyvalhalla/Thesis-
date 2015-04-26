@@ -2,7 +2,7 @@ var titles =[], titleObjects=[], convexArray = [];
 // call in main init()
 function initMenu() {
 	createPath();
-	createMenuNodes(folders);
+	// createMenuNodes(folders);
 	addPathNodes(nodes);
 
 }
@@ -19,7 +19,7 @@ function createMenuNodes(folders) {
 		var conGeo = new THREE.ConvexGeometry(points);
 		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(-200, 200),getRandomInt(-200, 200),getRandomInt(-200, -300) )
+		convex.position.set(getRandomInt(-200, 200),getRandomInt(-200, 200),getRandomInt(-100, -200) )
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);
@@ -30,26 +30,27 @@ function createMenuNodes(folders) {
 		var nodeTitle = document.createElement('div');
 		var menuTitle = new THREE.CSS3DObject(nodeTitle);
 		nodeTitle.className = "nodeTitle";
-		nodeTitle.textContent = d.title;
-		// scene2.add(menuTitle);
+		nodeTitle.innerHTML = d.title;
 		titles.push(nodeTitle);
 		titleObjects.push(menuTitle);
 		nodeTitle.style.display = "none";
+		scene2.add(menuTitle);
 	});
 
-
-	for (var i=0; i<convexArray.length; i++) {
-		
-		titleObjects[i].position.x = convexArray[i].position.x;
-		titleObjects[i].position.y = convexArray[i].position.y;
-		titleObjects[i].position.z = convexArray[i].position.z;
-		scene2.add(titleObjects[i]);
-	}
-
-	titles[0].style.display = "block";
 	var mainMenu = convexArray[0];
 	mainMenu.position.set(0, 0, -100);
 	mainMenu.visible = true;
+
+	for (var i=0; i<convexArray.length; i++) {
+		
+		titleObjects[i].position.x = convexArray[i].position.x+20;
+		titleObjects[i].position.y = convexArray[i].position.y;
+		titleObjects[i].position.z = convexArray[i].position.z;
+		
+	}
+
+	titles[0].style.display = "block";
+	
 }
 
 
@@ -97,7 +98,6 @@ function onDocumentMouseDown(event) {
 
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
-			console.log(folders[i]);
 			updateMenu(i);
 		}
 	}
@@ -115,7 +115,6 @@ var currentNodes = function(folder) {
 
 // toggle visibility each click
 function toggleViz(temp) {
-	console.log(temp.length);
 	for (var i = 0; i<temp.length;  i++) {
 		temp[i].particle.visible = true;
 		console.log(temp[i].particle.visible);
@@ -132,31 +131,3 @@ function randomPointInSphere( radius ) {
 }
 
 
-
-
-
-
-/*
-1. get all folders, run through them if (children), click to get children
-
-2. attach design geometries to them
-
-
-
-
-menu.child.click(clickedfolder) {
-
-	//	css layer
-	showChildrenInMenu();
-	// webGL layer
-	addCurrentNodesToPath();
-}
-
-
-*/
-
-/*
-menu.element.onclick = function(){
-	
-}
-*/

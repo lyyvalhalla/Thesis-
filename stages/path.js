@@ -49,14 +49,14 @@ function createPath() {
 
     var pipeSpline = new THREE.SplineCurve3([
     	new THREE.Vector3(0, -200, zLine),
-    	new THREE.Vector3(arrayX[0], -200, arrayZ[0]),
-		new THREE.Vector3(arrayX[1], -200, arrayZ[1]),
+    	new THREE.Vector3(arrayX[0], -400, arrayZ[0]),
+		new THREE.Vector3(arrayX[1], -300, arrayZ[1]),
 		new THREE.Vector3(arrayX[2], -200, arrayZ[2]),
-		new THREE.Vector3(arrayX[3], -200, arrayZ[3]),
-		new THREE.Vector3(arrayX[4], -200, arrayZ[4]),
+		new THREE.Vector3(arrayX[3], -400, arrayZ[3]),
+		new THREE.Vector3(arrayX[4], -300, arrayZ[4]),
 		new THREE.Vector3(arrayX[5], -200, arrayZ[5]),
-		new THREE.Vector3(arrayX[6], -200, arrayZ[6]),
-		new THREE.Vector3(arrayX[6], -200, arrayZ[6]),
+		new THREE.Vector3(arrayX[6], -300, arrayZ[6]),
+		new THREE.Vector3(arrayX[6], -500, arrayZ[6]),
 		new THREE.Vector3(0, -200, zLine-pathLength),
     ]);
 
@@ -80,7 +80,7 @@ function createPath() {
 			color: 0xd6954a
 		}),
 		new THREE.MeshBasicMaterial({
-			color: 0x000000,
+			color: 0xffffff,
 			opacity: 0.3,
 			wireframe: true,
 			transparent: true
@@ -193,7 +193,7 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=0; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(pathArray[i].position) > 730 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
+		if (splineCamera.position.distanceTo(pathArray[i].position) > 740 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
 				scene2.add(newFrame);
@@ -207,7 +207,8 @@ function updateFrame(pathNodes, pathArray){
 			}
 		} 
 	}
-	// console.log(scene2.children.length);	
+	// console.log(splineCamera.position.distanceTo(pathArray[0].position));	
+	console.log(scene2.children.length);
 }
 
 

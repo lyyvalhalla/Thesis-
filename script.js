@@ -173,16 +173,16 @@ function onDocumentMouseMove( event ) {
 
 
 
-function onDocumentMouseDown(event) {
-	event.preventDefault();
+// function onDocumentMouseDown(event) {
+// 	event.preventDefault();
 
-	for (var i =0; i<convexArray.length; i++) {
-		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
-			console.log(folders[i]);
-			updateMenu(i);
-		}
-	}
-}
+// 	for (var i =0; i<convexArray.length; i++) {
+// 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
+// 			console.log(folders[i]);
+// 			updateMenu(i);
+// 		}
+// 	}
+// }
 
 
 
@@ -225,7 +225,7 @@ function render() {
 	intersects = raycaster.intersectObjects(convexArray);
 	intersected = intersects[ 0 ];
 	
-	// pathRender();
+	pathRender();
 
 	/*some updates*/
 	sphere.position.z = splineCamera.position.z - 500;
@@ -235,10 +235,13 @@ function render() {
 		convexArray[i].rotation.x  += Math.random()/100;
 		convexArray[i].rotation.y  += Math.random()/100;
 		convexArray[i].rotation.z  += Math.random()/100;
+
+		//titleObjects[i].position.x += mouse.x/10;
+		//titleObjects[i].position.y += mouse.y/10;
 	}
 
 	
-	// updateFrame(pathNodes, pathArray);
+	updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

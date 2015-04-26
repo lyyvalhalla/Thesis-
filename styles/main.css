@@ -70,30 +70,16 @@ iframe{
 }
 
 
-.menuNode {
-    display: none;
-    width: 50px;
-    height: 50px;
-    cursor: default;
-}
-
-.nodeIco {
-    border-radius: 100%;
-    width: 20px;
-    height: 20px;
-}
 
 .nodeTitle {
-    width: 70px;
-    height: 20px;
-    color: red;
-    display: inline;
+    width: 10px;
+    height: 10px;
+    font-size: 5px;
+    color: #ffffff;
+    backface-visibility: hidden;
 }
 
-#default-node {
-    display: block;
-    opacity: 1;
-}
+
 
 
 #progress {
