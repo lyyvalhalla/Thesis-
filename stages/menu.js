@@ -11,7 +11,7 @@ function initMenu() {
 	pathMenu = document.createElement('div');
 	pathMenu.id = "cssMenu";
 	menu = new THREE.CSS3DObject(pathMenu);
-	menu.position.set(0, 0, 0);
+	menu.position.z = splineCamera.position.z -300;
 	
 	createMenuNodes(folders);
 	addPathNodes(nodes);

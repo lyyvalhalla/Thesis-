@@ -7,8 +7,7 @@ var pathInterval, barInterval;
 
 function initProgress() {
 	var timeStamps = [], intervalMili;
-	
-
+	 
 	progress= document.getElementById( "progress" );
 	barHolder = document.getElementById("bar-holder");
 	bar = document.getElementById("bar");
@@ -19,6 +18,12 @@ function initProgress() {
 
 	var endTime = document.getElementById("end-time");
 	endTime.innerHTML = (new Date(firstDay)).toDateString();
+
+
+	// progress.style.visibility = "visible"; 
+	// barHolder.style.visibility = "visible";
+	// bar.style.visibility = "visible";
+
 
 	var startInterval = 30 - (new Date()).getDate(); 
 	var endInterval = (new Date(firstDay)).getDate();
@@ -40,9 +45,6 @@ function initProgress() {
 		var tt = mm + "/" + yy;
 		progressMonths.push(tt);
 	}
-
-	console.log(widthStamps);
-
 
 	/* for mousemove event */
 	var divPos, dePos;

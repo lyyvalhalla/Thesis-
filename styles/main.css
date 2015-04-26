@@ -15,7 +15,7 @@ canvas {
 
 
 
-
+/* frame size transform */
 .frame {
 	width: 1280px;
     height: 786px;
@@ -107,6 +107,7 @@ iframe{
     opacity: 0.9;
     margin: 0;
     padding: 0;
+    visibility:  hidden;
 }
 
 

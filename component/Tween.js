@@ -7,28 +7,16 @@
  * Thank you all, you're awesome!
  */
 
-// performance.now polyfill
-( function ( root ) {
+// Date.now shim for (ahem) Internet Explo(d|r)er
+if ( Date.now === undefined ) {
 
-	if ( 'performance' in root === false ) {
-		root.performance = {};
-	}
+	Date.now = function () {
 
-	// IE 8
-	Date.now = ( Date.now || function () {
-		return new Date().getTime();
-	} );
+		return new Date().valueOf();
 
-	if ( 'now' in root.performance === false ) {
-		var offset = root.performance.timing && root.performance.timing.navigationStart ? performance.timing.navigationStart
-		                                                                                : Date.now();
+	};
 
-		root.performance.now = function () {
-			return Date.now() - offset;
-		};
-	}
-
-} )( this );
+}
 
 var TWEEN = TWEEN || ( function () {
 
@@ -74,7 +62,7 @@ var TWEEN = TWEEN || ( function () {
 
 			var i = 0;
 
-			time = time !== undefined ? time : window.performance.now();
+			time = time !== undefined ? time : ( typeof window !== 'undefined' && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now() );
 
 			while ( i < _tweens.length ) {
 
@@ -148,7 +136,7 @@ TWEEN.Tween = function ( object ) {
 
 		_onStartCallbackFired = false;
 
-		_startTime = time !== undefined ? time : window.performance.now();
+		_startTime = time !== undefined ? time : ( typeof window !== 'undefined' && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now() );
 		_startTime += _delayTime;
 
 		for ( var property in _valuesEnd ) {
@@ -765,27 +753,3 @@ TWEEN.Interpolation = {
 	}
 
 };
-
-// UMD (Universal Module Definition)
-( function ( root ) {
-
-	if ( typeof define === 'function' && define.amd ) {
-
-		// AMD
-		define( [], function () {
-			return TWEEN;
-		} );
-
-	} else if ( typeof exports === 'object' ) {
-
-		// Node.js
-		module.exports = TWEEN;
-
-	} else {
-
-		// Global variable
-		root.TWEEN = TWEEN;
-
-	}
-
-} )( this );

@@ -12,7 +12,7 @@ var totalGroup = [];
 var checkArray = [];
 var tube, tubeMesh;
 var frameClick = [];
-var plane;
+var plane, sphere;
 
 
 function createPath() {
@@ -84,8 +84,12 @@ function createPath() {
     var planeMat = new THREE.MeshBasicMaterial();
     plane = new THREE.Mesh(planeGeo, planeMat);
     plane.position.set(0, -170, -195);
+    plane.visible = false;
     scene.add(plane);
 
+
+    // env
+    addSphereEnv();
 }
 
 
@@ -99,12 +103,12 @@ function pathRender() {
 
 	clickCallTime();
 
+	/* 进度条跟进进度 */
+
 	// if (cameraStep > tempStep + pathInterval) {
 	// 	console.log("woof");
 	// 	bar.style.width = bar.style.width + barInterval;
 	// }
-
-
 
 	// for (var i=0; i<pathValues.length; i++) {
 	// 	if(cameraStep > pathValues[i] && cameraStep < pathValues[i+1]) {
@@ -193,6 +197,21 @@ function updateFrame(pathNodes, pathArray){
 
 
 
+/* add sphere environment */
+
+function addSphereEnv() {
+
+	var sphereGeo = new THREE.SphereGeometry( 1230, 24, 18);
+	var sphereMat = new THREE.MeshBasicMaterial({wireframe: true, color: 0xffffff});
+	sphere = new THREE.Mesh(sphereGeo, sphereMat);
+	scene.add(sphere);
+}
+
+
+
+
+
+
 
 // divided down all bookmarks into groups for camera track and show < 2D Array
 function groupFrame(nodesArray, pathLength) {
@@ -218,10 +237,6 @@ function groupFrame(nodesArray, pathLength) {
 }
 
 	
-function cameraTransit() {
-
-}
-
 
 Array.prototype.delete = function() {
     var what, a = arguments, L = a.length, ax;

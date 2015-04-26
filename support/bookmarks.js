@@ -82,12 +82,10 @@ function wordFrequency(nodes){
 	);
 	
 	uniques.sort(
-		// console.log(frequency);
 		function(a, b) { 
 			return frequency[b] - frequency[a]; 
 		}
 	);
-	// console.log(frequency);
 }
 
 

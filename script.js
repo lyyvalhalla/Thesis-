@@ -54,7 +54,7 @@ function update(source) {
 	firstDay = getMinTime(nodes).dateAdded;
 
 	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
-	console.log(new Date(firstDay) + "; " + totalDays);
+	// console.log(new Date(firstDay) + "; " + totalDays);
 	
 	pathLength = totalDays * 50;
 	
@@ -69,7 +69,7 @@ function update(source) {
 
 
 	/************* path menu ******************/
-	// initMenu();
+	initMenu();
 }
 
 
@@ -92,16 +92,16 @@ function init() {
 	scene2 = new THREE.Scene();
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
-	splineCamera.position.set( 0, 0, 300 );
+	splineCamera.position.set( 0, 0, 0 );
 	scene.add( splineCamera );
 
 	// drawings here
 	update(root);
 
 	/*****************  PATH parts *****************/
-	createPath();
+	// createPath();
 	/*have called it in menuInit(), enable it when test only on path*/
-	addPathNodes(nodes);  
+	// addPathNodes(nodes);  
 
 
 	controls = new THREE.PointerLockControls( splineCamera );
@@ -132,7 +132,7 @@ function init() {
 	container.appendChild( renderer2.domElement );
 
 	window.addEventListener( 'resize', onWindowResize, false );
-	// window.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	document.addEventListener( 'mousewheel', mousewheel, false );
 	document.addEventListener( 'DOMMouseScroll', mousewheel, false ); // firefox
 }
@@ -154,6 +154,18 @@ function onDocumentMouseMove( event ) {
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	raycaster.setFromCamera( mouse, camera );
+
+	// sphere.rotation.x +=0.02;
+	// sphere.rotation.y +=0.02;
+	// sphere.rotation.z +=0.02;
+
+	
+
+	new TWEEN.Tween( sphere.rotation ).to( {  
+		x: mouse.x/10,
+		y: mouse.y/10,
+		z: mouse.x/10
+		}, 2000 ).easing(  TWEEN.Easing.Quintic.Out).start();
 }
 
 var delta;
@@ -190,16 +202,24 @@ function animate() {
 }
 
 function rendering() {
+	TWEEN.update();
 	camera.updateMatrixWorld();
 	//  ***************** function to edit/remove nodes/json objects ***************** 
 	// moveNode();
-	clickCallTime();
-	pathRender();
 	
+	// pathRender();
+
+	/*some updates*/
+	sphere.position.z = splineCamera.position.z - 500;
+	// sphere.rotation.x = mouse.x/50;
+	// sphere.rotation.y = mouse.y/50;
+	
+
+	// console.log(mouse.x + "; " + mouse.y);
+
 	// ***************** path move interaction here *****************
 
-	updateFrame(pathNodes, pathArray);
-
+	// updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );
