@@ -1,39 +1,17 @@
-var pathMenu, menu;
-var menuNodes = [];
-var menuNode, nodeIco, nodeTitle;
-var addClick = [];
-
-var menuTitle;
-
+var titles =[], titleObjects=[], convexArray = [];
 // call in main init()
 function initMenu() {
 	createPath();
-
-	pathMenu = document.createElement('div');
-	pathMenu.id = "cssMenu";
-	menu = new THREE.CSS3DObject(pathMenu);
-	menu.position.z = splineCamera.position.z -200;
-
-
-	
 	createMenuNodes(folders);
 	addPathNodes(nodes);
 
-	// scene2.add(menu);
-	// scene.add(convexMenu);
 }
 
-var titles =[], titleObjects=[];
-convexArray = [];
+
 function createMenuNodes(folders) {
 	var points = [];
 	
 	folders.forEach(function(d){
-		menuNode = document.createElement('div');
-		menuNode.className = "menuNode";
-		pathMenu.appendChild(menuNode);
-		menuNodes.push(menuNode);
-		
 
 		for ( var i = 0; i < 10; i ++ ) {
 			points.push( randomPointInSphere( 5 ) );
@@ -49,8 +27,8 @@ function createMenuNodes(folders) {
 		
 		
 
-		nodeTitle = document.createElement('div');
-		menuTitle = new THREE.CSS3DObject(nodeTitle);
+		var nodeTitle = document.createElement('div');
+		var menuTitle = new THREE.CSS3DObject(nodeTitle);
 		nodeTitle.className = "nodeTitle";
 		nodeTitle.textContent = d.title;
 		// scene2.add(menuTitle);
@@ -69,26 +47,9 @@ function createMenuNodes(folders) {
 	}
 
 	titles[0].style.display = "block";
-	console.log(titleObjects[0].position);
-	console.log(convexArray[0].position);
-
-	menuNodes[0].id = "default-node";
 	var mainMenu = convexArray[0];
 	mainMenu.position.set(0, 0, -100);
 	mainMenu.visible = true;
-	// scene.add(mainMenu);
-	
-	// closure inside loop**
-	for (var i=0; i<menuNodes.length; i++) {
-		addClick[i] = (function(index){
-			return function() {
-				menuNodes[index].addEventListener("click", function(event) {updateMenu(index);}, false);
-			};
-    	}(i));
-	}
-	for (var j = 0; j < menuNodes.length; j++) {
-		addClick[j]();
-	}
 }
 
 
@@ -106,8 +67,6 @@ function updateMenu(i) {
 	}
 	// add > visible current fodler
 	toggleViz(currentNodes(tempFolder));
-
-
 
 	//toggle children on click
 	if(folders[i].children) {
@@ -128,7 +87,6 @@ function updateMenu(i) {
 			titles[j].style.display = "none";
 		}	
 	}
-	// menuNodes[i].style.display = 'block';
 	convexArray[0].visible = true;
 	titles[0].style.display = "block";
 }
