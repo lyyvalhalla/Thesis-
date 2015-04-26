@@ -3,7 +3,7 @@ var menuNodes = [];
 var menuNode, nodeIco, nodeTitle;
 var addClick = [];
 
-var convexMenu;
+var menuTitle;
 
 // call in main init()
 function initMenu() {
@@ -23,7 +23,7 @@ function initMenu() {
 	// scene.add(convexMenu);
 }
 
-
+var titles =[], titleObjects=[];
 convexArray = [];
 function createMenuNodes(folders) {
 	var points = [];
@@ -44,23 +44,33 @@ function createMenuNodes(folders) {
 		convex.position.set(getRandomInt(-200, 200),getRandomInt(-200, 200),getRandomInt(-200, -300) )
 		convexArray.push(convex);
 		d.convex = convex;
-		// convexMenu.add(convex);
 		scene.add(convex);
 		convex.visible = false;
 		
-		nodeIco = document.createElement('div');
-		nodeIco.className = "nodeIco";
-		nodeIco.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
-		menuNode.appendChild(nodeIco);
+		
 
 		nodeTitle = document.createElement('div');
+		menuTitle = new THREE.CSS3DObject(nodeTitle);
 		nodeTitle.className = "nodeTitle";
 		nodeTitle.textContent = d.title;
-		menuNode.appendChild(nodeTitle);
+		// scene2.add(menuTitle);
+		titles.push(nodeTitle);
+		titleObjects.push(menuTitle);
+		nodeTitle.style.display = "none";
+	});
 
-	})
 
+	for (var i=0; i<convexArray.length; i++) {
+		
+		titleObjects[i].position.x = convexArray[i].position.x;
+		titleObjects[i].position.y = convexArray[i].position.y;
+		titleObjects[i].position.z = convexArray[i].position.z;
+		scene2.add(titleObjects[i]);
+	}
 
+	titles[0].style.display = "block";
+	console.log(titleObjects[0].position);
+	console.log(convexArray[0].position);
 
 	menuNodes[0].id = "default-node";
 	var mainMenu = convexArray[0];
@@ -81,16 +91,6 @@ function createMenuNodes(folders) {
 	}
 }
 
-function onDocumentMouseDown(event) {
-	event.preventDefault();
-
-	for (var i =0; i<convexArray.length; i++) {
-		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
-			console.log(folders[i]);
-			updateMenu(i);
-		}
-	}
-}
 
 // call in addEventListener("click")
 function updateMenu(i) {
@@ -121,16 +121,31 @@ function updateMenu(i) {
 	// toggle display
 	for (var j=0; j<folders.length; j++) {
 		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
-			// menuNodes[j].style.display = 'block';
 			convexArray[j].visible = true;
+			titles[j].style.display = "block";
 		} else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
-			// menuNodes[j].style.display = 'none';
 			convexArray[j].visible = false;
-		}
+			titles[j].style.display = "none";
+		}	
 	}
 	// menuNodes[i].style.display = 'block';
 	convexArray[0].visible = true;
+	titles[0].style.display = "block";
 }
+
+
+function onDocumentMouseDown(event) {
+	event.preventDefault();
+
+	for (var i =0; i<convexArray.length; i++) {
+		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
+			console.log(folders[i]);
+			updateMenu(i);
+		}
+	}
+}
+
+
 
 
 // under clicked folder
