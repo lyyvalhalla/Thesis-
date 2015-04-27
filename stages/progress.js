@@ -104,7 +104,7 @@ function clickCallTime() {
 		for (var i=0; i<progressMonths.length; i++) {
 			if(barTime.innerHTML === progressMonths[i]) {			
 				cameraStep = pathValues[i];
-				tempStep = cameraStep;
+				// tempStep = cameraStep;
 			}
 		}
 	});

@@ -1,4 +1,5 @@
 var titles =[], titleObjects=[], convexArray = [];
+var tempFolder;
 // call in main init()
 function initMenu() {
 	createPath();
@@ -50,15 +51,16 @@ function createMenuNodes(folders) {
 	}
 
 	titles[0].style.display = "block";
-	
 }
 
 
 // call in addEventListener("click")
 function updateMenu(i) {
 
-	var tempFolder = folders[i];
+	tempFolder = folders[i];
 	var tempDepth = folders[i].depth + 1;
+	
+	goStart(tempFolder);
 	
 	// ***** toggle visiblity of PATH nodes *****
 	// clear > invisible everything
@@ -68,6 +70,7 @@ function updateMenu(i) {
 	}
 	// add > visible current fodler
 	toggleViz(currentNodes(tempFolder));
+	
 
 	//toggle children on click
 	if(folders[i].children) {
@@ -102,7 +105,6 @@ function updateMenu(i) {
 	}
 	convexArray[0].visible = true;
 	titles[0].style.display = "block";
-
 }
 
 
@@ -112,17 +114,9 @@ function onDocumentMouseDown(event) {
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
 			updateMenu(i);
-			
-			// for (var j=0; j<folders[i]._children.length; j++) {
-			// 	var lineGeo = new THREE.Geometry();
-
-			// 	lineGeo.vertices.push(convexArray[i].position, folders[i]._children[j].convex.position);
-			// 	var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
-			// 	var line = new THREE.Line(lineGeo, lineMat);
-			// 	// scene.add(line);
-			// }
 		}
 	}
+
 }
 
 
@@ -134,6 +128,29 @@ var currentNodes = function(folder) {
 	tempNodes = getPathSites(tree.nodes(folder));
 	return tempNodes;
 }
+
+
+
+/* last node position in that folder, copy camera position to this later  */
+function goStart(folder) {
+
+	var tempNodes = [];
+	tempNodes = getPathSites(tree.nodes(folder));
+	if (tempNodes.length > 0) {
+		var selectPos = tempNodes[tempNodes.length-1].particle.position.z;
+
+		cameraStep = Math.abs(selectPos/pathLength);
+		console.log(cameraStep);
+		
+		/*change camera position here */
+		
+		// splineCamera.position.z = selectPos.z;
+	}	
+}
+
+
+
+
 
 // toggle visibility each click
 function toggleViz(temp) {

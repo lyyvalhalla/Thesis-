@@ -90,7 +90,7 @@ function createPath() {
 
 	scene.add(tubeMesh);
 	// tempTube.scale.set( 1, 1, 1 );
-    scene.fog = new THREE.Fog( 0x333333, 500, 1000);
+    scene.fog = new THREE.Fog( 0x333333, 800, 1000);
 
 
 
@@ -117,6 +117,8 @@ function pathRender() {
 	*/
 
 	clickCallTime();
+	
+
 
 	/* 进度条跟进进度 */
 

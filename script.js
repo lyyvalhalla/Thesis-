@@ -226,6 +226,7 @@ function render() {
 	intersected = intersects[ 0 ];
 	
 	// pathRender();
+	
 
 	/*some updates*/
 	sphere.position.z = splineCamera.position.z - 500;
