@@ -93,7 +93,7 @@ function init() {
 	scene2 = new THREE.Scene();
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
-	splineCamera.position.set( 0, 0, 0 );
+	splineCamera.position.set( 0, -200, -200 );
 
 	light = new THREE.AmbientLight(0xffffff);
 	scene.add(light);
@@ -119,7 +119,7 @@ function init() {
 	// *****************  start stages***************** 
 	// startStage();
 
-	            initProgress();
+	            // initProgress();
 
 	// ***************** call stages here:***************** 
 	
@@ -164,26 +164,25 @@ function onDocumentMouseMove( event ) {
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 
-	new TWEEN.Tween( sphere.rotation ).to( {  
-		x: mouse.x/10,
-		y: mouse.y/10,
-		z: mouse.x/10
-		}, 2000 ).easing(TWEEN.Easing.Quintic.Out).start();
+	// new TWEEN.Tween( tubeMesh.rotation ).to( {  
+	// 	x: mouse.x/10,
+	// 	y: mouse.y/50,
+		
+	// 	}, 2000 ).easing(TWEEN.Easing.Quintic.Out).start();
+
+
+	// menu part
+	for (var i =0; i<folders.length; i++) {
+		if (intersects.length > 0 && intersects[0].object === folders[i].convex) {
+			addGo(folders[i]);
+			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
+		} else {
+			folders[i].convex.material = new THREE.MeshLambertMaterial({color: 0x9E281B});
+		}
+
+	} 
+	
 }
-
-
-
-// function onDocumentMouseDown(event) {
-// 	event.preventDefault();
-
-// 	for (var i =0; i<convexArray.length; i++) {
-// 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
-// 			console.log(folders[i]);
-// 			updateMenu(i);
-// 		}
-// 	}
-// }
-
 
 
 
@@ -225,24 +224,25 @@ function render() {
 	intersects = raycaster.intersectObjects(convexArray);
 	intersected = intersects[ 0 ];
 	
-	// pathRender();
-	
+	pathRender();
+	updateFrame(pathNodes, pathArray);
+
 
 	/*some updates*/
-	sphere.position.z = splineCamera.position.z - 500;
-	light.position.z = splineCamera.position.z;
+	// sphere.position.z = splineCamera.position.z - 1200;
+	light.position.z = splineCamera.position.z -100;
 	light.position.x = splineCamera.position.x;
+	light.position.y = splineCamera.position.y +100;
 	for (var i = 0; i<convexArray.length; i++) {
 		convexArray[i].rotation.x  += Math.random()/100;
 		convexArray[i].rotation.y  += Math.random()/100;
 		convexArray[i].rotation.z  += Math.random()/100;
-
+		
 		//titleObjects[i].position.x += mouse.x/10;
 		//titleObjects[i].position.y += mouse.y/10;
 	}
-
 	
-	// updateFrame(pathNodes, pathArray);
+	
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

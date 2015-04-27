@@ -1,5 +1,6 @@
 var titles =[], titleObjects=[], convexArray = [];
-var tempFolder;
+var tempFolder, tempDepth;
+var goTitle, goPopup, isPopup = false;
 // call in main init()
 function initMenu() {
 	createPath();
@@ -18,9 +19,9 @@ function createMenuNodes(folders) {
 			points.push( randomPointInSphere( 5 ) );
 		}
 		var conGeo = new THREE.ConvexGeometry(points);
-		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B});
+		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B, shading: THREE.FlatShading});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(-100, 100),getRandomInt(-100, 100),getRandomInt(-100, -200) )
+		convex.position.set(getRandomInt(splineCamera.position.x-250, splineCamera.position.x+ 250),getRandomInt(splineCamera.position.y-200, splineCamera.position.y+200),getRandomInt(splineCamera.position.z-200, splineCamera.position.z-300) )
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);
@@ -39,8 +40,9 @@ function createMenuNodes(folders) {
 	});
 
 	var mainMenu = convexArray[0];
-	mainMenu.position.set(0, 0, -100);
+	mainMenu.position.set(splineCamera.position.x, splineCamera.position.y, splineCamera.position.z-100);
 	mainMenu.visible = true;
+	
 
 	for (var i=0; i<convexArray.length; i++) {
 		
@@ -51,17 +53,21 @@ function createMenuNodes(folders) {
 	}
 
 	titles[0].style.display = "block";
+
+	goPopup = document.getElementById("goPopup");
+		goPopup.innerHTML = "GO";
+		goPopup.style.display = "none";
 }
 
 
-// call in addEventListener("click")
-function updateMenu(i) {
+
+
+// call in addEventListener("click")  ******************************************>>>> ! BUGGY !
+function clickMenu(i) {
 
 	tempFolder = folders[i];
-	var tempDepth = folders[i].depth + 1;
-	
-	goStart(tempFolder);
-	
+	tempDepth = folders[i].depth + 1;
+
 	// ***** toggle visiblity of PATH nodes *****
 	// clear > invisible everything
 	var readyNodes = getPathSites(nodes);
@@ -113,11 +119,57 @@ function onDocumentMouseDown(event) {
 
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
-			updateMenu(i);
+			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
+			clickMenu(i);
 		}
 	}
+	goStart(tempFolder);
+	$(goPopup).click(function() {
+		cameraStep = Math.abs(selectPos/pathLength);
+		goPopup.style.display = "none";
+	});
 
 }
+
+
+function updateMenu() {
+	// addGo(tempFolder);
+	$(goPopup).click(function() {
+		console.log("woof");
+	});
+}
+
+
+var selectPos;
+
+
+/* last node position in that folder, copy camera position to this later  */
+function goStart(folder) {
+
+	var tempNodes = [];
+	tempNodes = getPathSites(tree.nodes(folder));
+	if (tempNodes.length > 0) {
+		selectPos = tempNodes[tempNodes.length-1].particle.position.z;
+
+		// cameraStep = Math.abs(selectPos/pathLength);
+		console.log(Math.abs(selectPos/pathLength));
+
+		goPopup.style.display = "inline";
+		
+		// pathRender();
+		/*change camera position here */
+	}	else {
+		goPopup.style.display = "none";
+	}
+}
+
+
+function addGo(folder) {
+	goTitle = document.getElementById("goTitle");
+	goTitle.textContent = folder.title;
+	goTitle.style.visibility = "visible";	
+}
+
 
 
 
@@ -128,28 +180,6 @@ var currentNodes = function(folder) {
 	tempNodes = getPathSites(tree.nodes(folder));
 	return tempNodes;
 }
-
-
-
-/* last node position in that folder, copy camera position to this later  */
-function goStart(folder) {
-
-	var tempNodes = [];
-	tempNodes = getPathSites(tree.nodes(folder));
-	if (tempNodes.length > 0) {
-		var selectPos = tempNodes[tempNodes.length-1].particle.position.z;
-
-		cameraStep = Math.abs(selectPos/pathLength);
-		console.log(cameraStep);
-		
-		/*change camera position here */
-		
-		// splineCamera.position.z = selectPos.z;
-	}	
-}
-
-
-
 
 
 // toggle visibility each click
