@@ -124,7 +124,7 @@ function pathRender() {
 
 
 	var pos = tube.parameters.path.getPointAt( cameraStep );
-	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.001);
+	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.005);
 
 	// interpolation
 	var segments = tube.tangents.length;
@@ -177,10 +177,11 @@ function addPathNodes(nodes) {
 }
 
 
+
 // add & delete frames in realtime according to camera position: pathNodes--nodes, pathArray
 function updateFrame(pathNodes, pathArray){
 	
-	for (var i=0, j=0; i<pathArray.length; i++ ) {
+	for (var i=0, j=45; i<pathArray.length; i++ ) {
 		if (splineCamera.position.distanceTo(pathArray[i].position) > 740 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
@@ -191,13 +192,11 @@ function updateFrame(pathNodes, pathArray){
 			} 
 		} else {
 			if (scene2.children[j] != -1 && checkArray.indexOf(i) != -1) {
-				scene2.remove(pathArray[j].frame);
+				scene2.remove((scene2.children[j]));
 				checkArray.delete(i);
 			}
 		} 
 	}
-	// console.log(splineCamera.position.distanceTo(pathArray[0].position));	
-	
 }
 
 

@@ -195,7 +195,7 @@ function mousewheel( event ) {
 	
 	delta = 0;
 	if ( event.wheelDelta ) { // WebKit / Opera / Explorer 9
-		delta = event.wheelDelta / 8000000;
+		delta = event.wheelDelta / 800000;
 	} else if (event.detail) { // Firefox
 		delta = - event.detail / 300000;
 	}	
