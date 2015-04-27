@@ -119,7 +119,7 @@ function init() {
 	// *****************  start stages***************** 
 	// startStage();
 
-	            // initProgress();
+	            initProgress();
 
 	// ***************** call stages here:***************** 
 	
@@ -128,7 +128,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setClearColor( 0x333333 );
+	renderer.setClearColor( 0x000000 );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
 
@@ -225,7 +225,7 @@ function render() {
 	intersects = raycaster.intersectObjects(convexArray);
 	intersected = intersects[ 0 ];
 	
-	pathRender();
+	// pathRender();
 
 	/*some updates*/
 	sphere.position.z = splineCamera.position.z - 500;
@@ -241,7 +241,7 @@ function render() {
 	}
 
 	
-	updateFrame(pathNodes, pathArray);
+	// updateFrame(pathNodes, pathArray);
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

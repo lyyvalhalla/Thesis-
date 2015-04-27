@@ -2,7 +2,7 @@ var titles =[], titleObjects=[], convexArray = [];
 // call in main init()
 function initMenu() {
 	createPath();
-	// createMenuNodes(folders);
+	createMenuNodes(folders);
 	addPathNodes(nodes);
 
 }
@@ -19,7 +19,7 @@ function createMenuNodes(folders) {
 		var conGeo = new THREE.ConvexGeometry(points);
 		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(-200, 200),getRandomInt(-200, 200),getRandomInt(-100, -200) )
+		convex.position.set(getRandomInt(-100, 100),getRandomInt(-100, 100),getRandomInt(-100, -200) )
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);
@@ -60,7 +60,7 @@ function updateMenu(i) {
 	var tempFolder = folders[i];
 	var tempDepth = folders[i].depth + 1;
 	
-	// ***** toggle visiblity *****
+	// ***** toggle visiblity of PATH nodes *****
 	// clear > invisible everything
 	var readyNodes = getPathSites(nodes);
 	for (var x=0; x<readyNodes.length; x++) {
@@ -77,19 +77,32 @@ function updateMenu(i) {
 		folders[i].children = folders[i]._children;
 		folders[i]._children = null;
 	}
-	
+
+
+	var lines =[];
 	// toggle display
 	for (var j=0; j<folders.length; j++) {
+		var lineGeo = new THREE.Geometry();
+		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
+		var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
+		var line = new THREE.Line(lineGeo, lineMat);	
+
+		// console.log(folders[i].children);
 		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
 			convexArray[j].visible = true;
 			titles[j].style.display = "block";
+			folders[j].line = line;
+			scene.add(line);
+						
 		} else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
 			convexArray[j].visible = false;
 			titles[j].style.display = "none";
+			scene.remove(folders[j].line);
 		}	
 	}
 	convexArray[0].visible = true;
 	titles[0].style.display = "block";
+
 }
 
 
@@ -99,6 +112,15 @@ function onDocumentMouseDown(event) {
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
 			updateMenu(i);
+			
+			// for (var j=0; j<folders[i]._children.length; j++) {
+			// 	var lineGeo = new THREE.Geometry();
+
+			// 	lineGeo.vertices.push(convexArray[i].position, folders[i]._children[j].convex.position);
+			// 	var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
+			// 	var line = new THREE.Line(lineGeo, lineMat);
+			// 	// scene.add(line);
+			// }
 		}
 	}
 }
@@ -117,7 +139,6 @@ var currentNodes = function(folder) {
 function toggleViz(temp) {
 	for (var i = 0; i<temp.length;  i++) {
 		temp[i].particle.visible = true;
-		console.log(temp[i].particle.visible);
 	}
 }
 

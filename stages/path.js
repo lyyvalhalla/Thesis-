@@ -76,9 +76,9 @@ function createPath() {
 
 	tube = new THREE.TubeGeometry(pipeSpline, 500, 25, 12, false);
 	tubeMesh = new THREE.SceneUtils.createMultiMaterialObject(tube, [
-		new THREE.MeshBasicMaterial({
-			color: 0xd6954a
-		}),
+		// new THREE.MeshBasicMaterial({
+		// 	color: 0xd6954a
+		// }),
 		new THREE.MeshBasicMaterial({
 			color: 0xffffff,
 			opacity: 0.3,
@@ -208,7 +208,6 @@ function updateFrame(pathNodes, pathArray){
 		} 
 	}
 	// console.log(splineCamera.position.distanceTo(pathArray[0].position));	
-	console.log(scene2.children.length);
 }
 
 
@@ -220,7 +219,7 @@ function addSphereEnv() {
 	var sphereGeo = new THREE.SphereGeometry( 1230, 24, 18);
 	var sphereMat = new THREE.MeshBasicMaterial({wireframe: true, color: 0xffffff});
 	sphere = new THREE.Mesh(sphereGeo, sphereMat);
-	scene.add(sphere);
+	// scene.add(sphere);
 }
 
 
