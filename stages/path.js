@@ -185,18 +185,19 @@ function updateFrame(pathNodes, pathArray){
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
 				scene2.add(newFrame);
+				pathArray[j].frame = newFrame;
 				checkArray.push(i);
 				j++;
 			} 
 		} else {
 			if (scene2.children[j] != -1 && checkArray.indexOf(i) != -1) {
-				scene2.remove(scene2.children[j]);
+				scene2.remove(pathArray[j].frame);
 				checkArray.delete(i);
 			}
 		} 
 	}
-	console.log(splineCamera.position.distanceTo(pathArray[0].position));	
-	// console.log(scene2.children.length);
+	// console.log(splineCamera.position.distanceTo(pathArray[0].position));	
+	
 }
 
 
