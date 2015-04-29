@@ -92,8 +92,8 @@ iframe{
     top: 5%;
     left: 8%;
     width: 10%;
-    height: 60%;
-    /*background: rgba(21, 85, 75, 0.5);*/
+    /*height: 60%;*/
+    background: rgba(158,40,27, 0.5);
     visibility:  hidden;
 }
 
@@ -105,6 +105,7 @@ iframe{
     /*height: 10%;*/
     display = "block";
 
+
 }
 
 #goPopup {
@@ -112,7 +113,7 @@ iframe{
     font-size = 12px;
     position: absolute;
    
-    background: #15554b;
+    background: #9E281B;
     left: 5%;
     top: 5%;
     cursor: default;
@@ -124,6 +125,25 @@ iframe{
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
+#goBack {
+    color: #ffffff;
+    font-size = 12px;
+    position: absolute;
+   
+    background: #9E281B;
+    left: 5%;
+    top: 5%;
+    cursor: default;
+
+    -webkit-animation-name: textPopup; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    animation-name: example;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+
 @-webkit-keyframes textPopup {
      from {
         opacity: 0.3;

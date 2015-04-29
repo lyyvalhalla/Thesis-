@@ -1,6 +1,6 @@
 var titles =[], titleObjects=[], convexArray = [];
 var tempFolder, tempDepth;
-var goTitle, goSubs, goPopup, isPopup = false;
+var goTitle, goSubs, goPopup, goBack, isPopup = false;
 var selectPos;
 var tempNodes = [];
 var showNodes = [];
@@ -79,14 +79,13 @@ function clickMenu(i) {
 	var lines =[];
 	var isOn;
 	// toggle display
-	tempNodes = getPathSites(tree.nodes(tempFolder));
-	showNodes = currentNodes(tempFolder);
-	lastDay = getLatest(tempNodes);
+	
+	// lastDay = getLatest(tempNodes);
 	
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
-		var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
+		var lineMat = new THREE.LineBasicMaterial({color: 0xffffff, linewidth: 0.3});
 		var line = new THREE.Line(lineGeo, lineMat);	
 		var previousFolder;
 		var eachTitle;
@@ -96,13 +95,15 @@ function clickMenu(i) {
 			folders[j].line = line;
 			scene.add(line);
 			goPopup.style.display = "inline";
-			
+			tempNodes = getPathSites(tree.nodes(tempFolder));
+			lastDay = getLatest(tempNodes);
+			showNodes = currentNodes(tempFolder);
 		} 
 		else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
 			convexArray[j].visible = false;
 			titles[j].style.display = "none";
 			scene.remove(folders[j].line);
-			goPopup.style.display = "none";
+			// goPopup.style.display = "none";
 		}	
 	}
 	
@@ -143,6 +144,11 @@ function onDocumentMouseDown(event) {
 		goStart(lastDay);
 	});
 
+	$(goBack).click(function() {
+		cameraStep = 0;
+		goBack.style.display= "none";
+	});
+
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
 			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
@@ -155,8 +161,11 @@ function onDocumentMouseDown(event) {
 
 /* last node position in that folder, copy camera position to this later  */
 function goStart(lastDay) {
-	selectPos = lastDay.particle.position.z + 1000;
-	console.log(selectPos);
+	selectPos = lastDay.particle.position.z + 1200;
+
+	goBack = document.getElementById("goBack");
+	goBack.style.display= "inline";
+	goBack.innerHTML = "BACK";
 	// pathRender();
 }
 
