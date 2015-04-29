@@ -35,7 +35,6 @@ var intersects, intersected;
 function update(source) {
 	nodes = tree.nodes(source);
 	links = tree.links(nodes);
-
 	
 	var max = new Date(); 
 	var maxDate = dateFormat(max, "fullDate");
@@ -242,7 +241,9 @@ function render() {
 		//titleObjects[i].position.y += mouse.y/10;
 	}
 	
-	
+	$(goPopup).click(function() {
+		
+	});
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

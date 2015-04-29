@@ -2,6 +2,8 @@ var titles =[], titleObjects=[], convexArray = [];
 var tempFolder, tempDepth;
 var goTitle, goSubs, goPopup, isPopup = false;
 var selectPos;
+var tempNodes = [];
+var showNodes = [];
 // call in main init()
 function initMenu() {
 	createPath();
@@ -79,7 +81,8 @@ function clickMenu(i) {
 	var lines =[];
 	var isOn;
 	// toggle display
-	
+	tempNodes = getPathSites(tree.nodes(tempFolder));
+	showNodes = currentNodes(tempFolder);
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
@@ -131,21 +134,21 @@ function clickMenu(i) {
 function onDocumentMouseDown(event) {
 	event.preventDefault();
 	
+	$(goPopup).click(function() {
+		cameraStep = Math.abs(selectPos/pathLength);
+		goPopup.style.display = "none";
+
+		// add > visible current fodler
+		toggleViz(showNodes);
+		goStart(tempFolder);
+	});
+
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
 			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
 			clickMenu(i);
 		}
 	}
-	// goStart(tempFolder);
-	$(goPopup).click(function() {
-		cameraStep = Math.abs(selectPos/pathLength);
-		goPopup.style.display = "none";
-
-		// add > visible current fodler
-		toggleViz(currentNodes(tempFolder));
-	});
-
 }
 
 
@@ -153,30 +156,17 @@ function onDocumentMouseDown(event) {
 
 /* last node position in that folder, copy camera position to this later  */
 function goStart(tempFolder) {
-	
-	var tempNodes = [];
-	tempNodes = getPathSites(tree.nodes(tempFolder));
-
-	var eachTitle;
-	if  (tempNodes.length >0)  {
-		
-		$(".eachTitle").remove();
-		selectPos = tempNodes[tempNodes.length-1].particle.position.z;
-	}
-	else {		
-		for (var g=0; g<tempFolder._children.length; g++) {
-		
-			eachTitle = document.createElement("p");
-			eachTitle.className = "eachTitle";
-			eachTitle.textContent = tempFolder._children[g].title;
-			eachTitle.style.position = "relative";
-			goSubs.appendChild(eachTitle);
-		}
-		
-		// pathRender();
-	}	
+	selectPos = tempNodes[tempNodes.length-1].particle.position.z;
+	// pathRender();
 }
 
+// toggle visibility each click
+function toggleViz(tempFolder) {
+	for (var i = 0; i<tempFolder.length;  i++) {
+		console.log(tempFolder[i]);
+		tempFolder[i].particle.visible = true;
+	}
+}
 
 function addGo(folder) {
 	goTitle = document.getElementById("goTitle");
@@ -184,12 +174,7 @@ function addGo(folder) {
 	goTitle.style.visibility = "visible";	
 
 	goSubs = document.getElementById("goSubs");
-
 }
-
-
-
-
 
 // under clicked folder
 var currentNodes = function(folder) {
@@ -197,15 +182,6 @@ var currentNodes = function(folder) {
 	tempNodes = getPathSites(tree.nodes(folder));
 	return tempNodes;
 }
-
-
-// toggle visibility each click
-function toggleViz(temp) {
-	for (var i = 0; i<temp.length;  i++) {
-		temp[i].particle.visible = true;
-	}
-}
-
 
 function randomPointInSphere( radius ) {
 	return new THREE.Vector3(
