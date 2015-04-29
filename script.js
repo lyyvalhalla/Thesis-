@@ -52,6 +52,8 @@ function update(source) {
 	
 	// ************* get total days >>> total length of path *************
 	firstDay = getMinTime(nodes).dateAdded;
+	// var getLast = getLatest(nodes);
+	// console.log(getLast);
 
 	totalDays = Math.ceil((today.getTime()-firstDay)/(one_day));
 	// console.log(new Date(firstDay) + "; " + totalDays);
@@ -241,9 +243,7 @@ function render() {
 		//titleObjects[i].position.y += mouse.y/10;
 	}
 	
-	$(goPopup).click(function() {
-		
-	});
+	
 
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );

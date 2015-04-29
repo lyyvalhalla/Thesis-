@@ -21,6 +21,22 @@ function getMinTime(nodes) {
     return minDay;
 }
 
+function getLatest(n) {
+    var maxDay;
+    var max = n[0].dateAdded;
+
+    for (var i=0; i< n.length; i++) {     
+        if (n[i].dateAdded >= max) {
+            max = n[i].dateAdded;
+            maxDay = n[i];
+        }  else {
+            max = max;
+            maxDay = maxDay;
+        }
+    }
+    return maxDay;
+}
+
 
 var tempDays = function (node, today) {
     return Math.ceil((today.getTime()-(new Date(node.time)).getTime())/(one_day));

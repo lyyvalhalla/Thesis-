@@ -4,12 +4,12 @@ var goTitle, goSubs, goPopup, isPopup = false;
 var selectPos;
 var tempNodes = [];
 var showNodes = [];
+var lastDay;
 // call in main init()
 function initMenu() {
 	createPath();
 	createMenuNodes(folders);
 	addPathNodes(nodes);
-
 }
 
 
@@ -45,13 +45,11 @@ function createMenuNodes(folders) {
 	mainMenu.position.set(splineCamera.position.x, splineCamera.position.y, splineCamera.position.z-150);
 	mainMenu.visible = true;
 	
-
 	for (var i=0; i<convexArray.length; i++) {
 		
 		titleObjects[i].position.x = convexArray[i].position.x+20;
 		titleObjects[i].position.y = convexArray[i].position.y;
-		titleObjects[i].position.z = convexArray[i].position.z;
-		
+		titleObjects[i].position.z = convexArray[i].position.z;		
 	}
 
 	titles[0].style.display = "block";
@@ -83,6 +81,8 @@ function clickMenu(i) {
 	// toggle display
 	tempNodes = getPathSites(tree.nodes(tempFolder));
 	showNodes = currentNodes(tempFolder);
+	lastDay = getLatest(tempNodes);
+	
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
@@ -140,7 +140,7 @@ function onDocumentMouseDown(event) {
 
 		// add > visible current fodler
 		toggleViz(showNodes);
-		goStart(tempFolder);
+		goStart(lastDay);
 	});
 
 	for (var i =0; i<convexArray.length; i++) {
@@ -153,17 +153,16 @@ function onDocumentMouseDown(event) {
 
 
 
-
 /* last node position in that folder, copy camera position to this later  */
-function goStart(tempFolder) {
-	selectPos = tempNodes[tempNodes.length-1].particle.position.z;
+function goStart(lastDay) {
+	selectPos = lastDay.particle.position.z + 1000;
+	console.log(selectPos);
 	// pathRender();
 }
 
 // toggle visibility each click
 function toggleViz(tempFolder) {
 	for (var i = 0; i<tempFolder.length;  i++) {
-		console.log(tempFolder[i]);
 		tempFolder[i].particle.visible = true;
 	}
 }
