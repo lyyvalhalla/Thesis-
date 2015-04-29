@@ -161,6 +161,7 @@ function addPathNodes(nodes) {
 	for (var i =0; i<pathNodes.length; i++) {
 
 		var position = tube.parameters.path.getPointAt(pathNodes[i].zPos/10000);
+		
 		var geometry =  new THREE.BoxGeometry(10, 10, 10);
 		var material =  new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});  // sortCategory() here 
 		pathNode = new THREE.Mesh(geometry, material);

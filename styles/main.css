@@ -92,9 +92,19 @@ iframe{
     left: 5%;
     top: 5%;
     width: 10%;
-    height: 10%;
+    height: 60%;
     /*background: rgba(21, 85, 75, 0.5);*/
     visibility:  hidden;
+}
+
+#goSubs {
+    color: #ffffff;
+    font-size = 12px;
+    position: absolute;
+    left: 5%;
+    top: 8%;
+    height: 10%;
+    goSubs.style.display = "block";
 }
 
 #goPopup {

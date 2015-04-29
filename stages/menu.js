@@ -1,6 +1,6 @@
 var titles =[], titleObjects=[], convexArray = [];
 var tempFolder, tempDepth;
-var goTitle, goPopup, isPopup = false;
+var goTitle, goSubs, goPopup, isPopup = false;
 // call in main init()
 function initMenu() {
 	createPath();
@@ -21,7 +21,7 @@ function createMenuNodes(folders) {
 		var conGeo = new THREE.ConvexGeometry(points);
 		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B, shading: THREE.FlatShading});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(splineCamera.position.x-250, splineCamera.position.x+ 250),getRandomInt(splineCamera.position.y-200, splineCamera.position.y+200),getRandomInt(splineCamera.position.z-200, splineCamera.position.z-300) )
+		convex.position.set(getRandomInt(splineCamera.position.x-250, splineCamera.position.x+ 250),getRandomInt(splineCamera.position.y-200, splineCamera.position.y+200),getRandomInt(splineCamera.position.z-100, splineCamera.position.z-200) )
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);
@@ -74,8 +74,8 @@ function clickMenu(i) {
 	for (var x=0; x<readyNodes.length; x++) {
 		readyNodes[x].particle.visible = false;
 	}
-	// add > visible current fodler
-	toggleViz(currentNodes(tempFolder));
+	// // add > visible current fodler
+	// toggleViz(currentNodes(tempFolder));
 	
 
 	//toggle children on click
@@ -127,17 +127,20 @@ function onDocumentMouseDown(event) {
 	$(goPopup).click(function() {
 		cameraStep = Math.abs(selectPos/pathLength);
 		goPopup.style.display = "none";
+
+		// add > visible current fodler
+		toggleViz(currentNodes(tempFolder));
 	});
 
 }
 
 
-function updateMenu() {
-	// addGo(tempFolder);
-	$(goPopup).click(function() {
-		console.log("woof");
-	});
-}
+// function updateMenu() {
+// 	// addGo(tempFolder);
+// 	$(goPopup).click(function() {
+// 		console.log("woof");
+// 	});
+// }
 
 
 var selectPos;
@@ -152,14 +155,28 @@ function goStart(folder) {
 		selectPos = tempNodes[tempNodes.length-1].particle.position.z;
 
 		// cameraStep = Math.abs(selectPos/pathLength);
-		console.log(Math.abs(selectPos/pathLength));
+		// console.log(Math.abs(selectPos/pathLength));
 
 		goPopup.style.display = "inline";
+
+		var eachTitle;
+		var subTitles =[];
+		for (var i=0; i<folder.children.length; i++) {
 		
+			eachTitle = document.createElement("p");
+			eachTitle.className = "eachTitle";
+			eachTitle.textContent = folder.children[i].title;
+			eachTitle.style.position = "relative";
+			// eachTitle.style.display = "block";
+			goSubs.appendChild(eachTitle);
+			subTitles.push(eachTitle);
+		}
+		eachTitle.style.display = "block";
 		// pathRender();
 		/*change camera position here */
 	}	else {
 		goPopup.style.display = "none";
+		$(".eachTitle").remove();
 	}
 }
 
@@ -168,6 +185,24 @@ function addGo(folder) {
 	goTitle = document.getElementById("goTitle");
 	goTitle.textContent = folder.title;
 	goTitle.style.visibility = "visible";	
+
+	
+	var eachTitle;
+	goSubs = document.getElementById("goSubs");
+	
+	// for (var i=0; i<folder.children.length; i++) {
+		
+	// 	var eachTitle = document.createElement("p");
+	// 	eachTitle.textContent = folder.children[i].title;
+	// 	eachTitle.style.position = "relative";
+	// 	eachTitle.style.display = "block";
+	// 	goSubs.appendChild(eachTitle);
+
+	// }
+
+	
+	// goSubs.textContent = '<p>' + '"subTitles"' + '</p>';
+	
 }
 
 
