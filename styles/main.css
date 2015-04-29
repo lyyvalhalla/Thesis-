@@ -89,8 +89,8 @@ iframe{
     color: #ffffff;
     font-size = 12px;
     position: absolute;
-    left: 5%;
     top: 5%;
+    left: 8%;
     width: 10%;
     height: 60%;
     /*background: rgba(21, 85, 75, 0.5);*/
@@ -104,6 +104,7 @@ iframe{
     top: 11%;
     /*height: 10%;*/
     display = "block";
+
 }
 
 #goPopup {
@@ -112,8 +113,9 @@ iframe{
     position: absolute;
    
     background: #15554b;
+    left: 5%;
     top: 5%;
-    left: 15%;
+    cursor: default;
 
     -webkit-animation-name: textPopup; /* Chrome, Safari, Opera */
     -webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
