@@ -174,7 +174,7 @@ function onDocumentMouseMove( event ) {
 
 	// menu part
 	for (var i =0; i<folders.length; i++) {
-		if (intersects.length > 0 && intersects[0].object === folders[i].convex) {
+		if (intersects.length > 0 && intersects[0].object === folders[i].convex && folders[i].convex.visible === true) {
 			addGo(folders[i]);
 			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
 		} else {
@@ -202,8 +202,6 @@ function mousewheel( event ) {
 	}	
 	cameraStep = cameraStep + delta;
 }
-
-
 
 
 

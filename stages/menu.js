@@ -138,7 +138,7 @@ function onDocumentMouseDown(event) {
 	$(goPopup).click(function() {
 		cameraStep = Math.abs(selectPos/pathLength);
 		goPopup.style.display = "none";
-
+		goSubs.style.display = "none";
 		// add > visible current fodler
 		toggleViz(showNodes);
 		goStart(lastDay);
@@ -147,6 +147,7 @@ function onDocumentMouseDown(event) {
 	$(goBack).click(function() {
 		cameraStep = 0;
 		goBack.style.display= "none";
+		goSubs.style.display = "block";
 	});
 
 	for (var i =0; i<convexArray.length; i++) {
@@ -156,7 +157,6 @@ function onDocumentMouseDown(event) {
 		}
 	}
 }
-
 
 
 /* last node position in that folder, copy camera position to this later  */
@@ -183,6 +183,15 @@ function addGo(folder) {
 
 	goSubs = document.getElementById("goSubs");
 }
+
+
+function camStepTransit() {
+
+}
+
+
+
+
 
 // under clicked folder
 var currentNodes = function(folder) {

@@ -28,9 +28,6 @@ var getPathFolders = function(nodes) {
 
 var showFrame = function (site, x, y, z) {
 
-
-
-	// console.log(site.time);
 	dom = document.createElement('div');
 	dom.className = "domFrame";
 	object = new THREE.CSS3DObject(dom);
