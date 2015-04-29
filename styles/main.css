@@ -76,9 +76,9 @@ iframe{
 
 
 .nodeTitle {
-    width: 10px;
-    height: 10px;
-    font-size: 5px;
+    width: 10%;
+    height: 5%;
+    font-size: 6px;
     color: #ffffff;
     backface-visibility: hidden;
 }
@@ -99,12 +99,11 @@ iframe{
 
 #goSubs {
     color: #ffffff;
-    font-size = 12px;
     position: absolute;
-    left: 5%;
-    top: 8%;
-    height: 10%;
-    goSubs.style.display = "block";
+    left: 8%;
+    top: 11%;
+    /*height: 10%;*/
+    display = "block";
 }
 
 #goPopup {

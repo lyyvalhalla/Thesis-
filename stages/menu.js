@@ -15,24 +15,23 @@ function createMenuNodes(folders) {
 	
 	folders.forEach(function(d){
 
-		for ( var i = 0; i < 10; i ++ ) {
+		for ( var i = 0; i < 8; i ++ ) {
 			points.push( randomPointInSphere( 5 ) );
 		}
 		var conGeo = new THREE.ConvexGeometry(points);
 		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B, shading: THREE.FlatShading});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(splineCamera.position.x-250, splineCamera.position.x+ 250),getRandomInt(splineCamera.position.y-200, splineCamera.position.y+200),getRandomInt(splineCamera.position.z-100, splineCamera.position.z-200) )
+		convex.position.set(getRandomInt(splineCamera.position.x-200, splineCamera.position.x+ 200),getRandomInt(splineCamera.position.y-100, splineCamera.position.y+100),getRandomInt(splineCamera.position.z-150, splineCamera.position.z-200) )
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);
 		convex.visible = false;
 		
-		
 
 		var nodeTitle = document.createElement('div');
-		var menuTitle = new THREE.CSS3DObject(nodeTitle);
 		nodeTitle.className = "nodeTitle";
-		nodeTitle.innerHTML = d.title;
+		var menuTitle = new THREE.CSS3DObject(nodeTitle);
+		nodeTitle.textContent = d.title;
 		titles.push(nodeTitle);
 		titleObjects.push(menuTitle);
 		nodeTitle.style.display = "none";
@@ -40,7 +39,7 @@ function createMenuNodes(folders) {
 	});
 
 	var mainMenu = convexArray[0];
-	mainMenu.position.set(splineCamera.position.x, splineCamera.position.y, splineCamera.position.z-100);
+	mainMenu.position.set(splineCamera.position.x, splineCamera.position.y, splineCamera.position.z-150);
 	mainMenu.visible = true;
 	
 
@@ -55,8 +54,8 @@ function createMenuNodes(folders) {
 	titles[0].style.display = "block";
 
 	goPopup = document.getElementById("goPopup");
-		goPopup.innerHTML = "GO";
-		goPopup.style.display = "none";
+	goPopup.innerHTML = "GO";
+	goPopup.style.display = "none";
 }
 
 
@@ -74,9 +73,33 @@ function clickMenu(i) {
 	for (var x=0; x<readyNodes.length; x++) {
 		readyNodes[x].particle.visible = false;
 	}
-	// // add > visible current fodler
-	// toggleViz(currentNodes(tempFolder));
 	
+
+
+	console.log(folders[i].children);
+	var lines =[];
+	// toggle display
+	for (var j=0; j<folders.length; j++) {
+		var lineGeo = new THREE.Geometry();
+		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
+		var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
+		var line = new THREE.Line(lineGeo, lineMat);	
+
+		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children) {
+			convexArray[j].visible = true;
+			titles[j].style.display = "block";
+			folders[j].line = line;
+			scene.add(line);
+			console.log("meow");
+		} 
+		else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
+			convexArray[j].visible = false;
+			titles[j].style.display = "none";
+			scene.remove(folders[j].line);
+			console.log("woof");
+		}	
+	}
+
 
 	//toggle children on click
 	if(folders[i].children) {
@@ -86,29 +109,7 @@ function clickMenu(i) {
 		folders[i].children = folders[i]._children;
 		folders[i]._children = null;
 	}
-
-
-	var lines =[];
-	// toggle display
-	for (var j=0; j<folders.length; j++) {
-		var lineGeo = new THREE.Geometry();
-		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
-		var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
-		var line = new THREE.Line(lineGeo, lineMat);	
-
-		// console.log(folders[i].children);
-		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
-			convexArray[j].visible = true;
-			titles[j].style.display = "block";
-			folders[j].line = line;
-			scene.add(line);
-						
-		} else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
-			convexArray[j].visible = false;
-			titles[j].style.display = "none";
-			scene.remove(folders[j].line);
-		}	
-	}
+	// console.log(folders[i].title + "; " + folders[i].children);
 	convexArray[0].visible = true;
 	titles[0].style.display = "block";
 }
@@ -123,7 +124,7 @@ function onDocumentMouseDown(event) {
 			clickMenu(i);
 		}
 	}
-	goStart(tempFolder);
+	// goStart(tempFolder);
 	$(goPopup).click(function() {
 		cameraStep = Math.abs(selectPos/pathLength);
 		goPopup.style.display = "none";
@@ -134,13 +135,6 @@ function onDocumentMouseDown(event) {
 
 }
 
-
-// function updateMenu() {
-// 	// addGo(tempFolder);
-// 	$(goPopup).click(function() {
-// 		console.log("woof");
-// 	});
-// }
 
 
 var selectPos;
@@ -160,16 +154,13 @@ function goStart(folder) {
 		goPopup.style.display = "inline";
 
 		var eachTitle;
-		var subTitles =[];
 		for (var i=0; i<folder.children.length; i++) {
 		
 			eachTitle = document.createElement("p");
 			eachTitle.className = "eachTitle";
 			eachTitle.textContent = folder.children[i].title;
 			eachTitle.style.position = "relative";
-			// eachTitle.style.display = "block";
 			goSubs.appendChild(eachTitle);
-			subTitles.push(eachTitle);
 		}
 		eachTitle.style.display = "block";
 		// pathRender();
@@ -186,23 +177,8 @@ function addGo(folder) {
 	goTitle.textContent = folder.title;
 	goTitle.style.visibility = "visible";	
 
-	
-	var eachTitle;
 	goSubs = document.getElementById("goSubs");
-	
-	// for (var i=0; i<folder.children.length; i++) {
-		
-	// 	var eachTitle = document.createElement("p");
-	// 	eachTitle.textContent = folder.children[i].title;
-	// 	eachTitle.style.position = "relative";
-	// 	eachTitle.style.display = "block";
-	// 	goSubs.appendChild(eachTitle);
 
-	// }
-
-	
-	// goSubs.textContent = '<p>' + '"subTitles"' + '</p>';
-	
 }
 
 
