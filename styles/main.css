@@ -224,36 +224,34 @@ canvas {
 #progress {
     position: absolute;
     width: 100%;
-    height: 100px;
+    height:10%;
     bottom: 0;
     left: 0;
-    background: #15554b; 
+    background: rgba(131, 166, 158, 0.5); 
     opacity: 0.9;
     margin: 0;
     padding: 0;
     visibility:  hidden;
+    color: #000000;
 }
 
 
 #progress #start-time {
-    top: 5%;
+    top: 50%;
     position: absolute;
     left: 8%;
-    color: #ffffff;
 
 }
 
 #progress #end-time {
-    top: 5%;
+    top: 50%;
     position: absolute;
     left: 90%;
-    color: #ffffff;
 }
 
 
 #progress #bar-time {
     position: absolute;
-    color: #ffffff;
     left: 10%;
     top: 5%;
     width: 10%;
@@ -288,11 +286,11 @@ canvas {
 
     display: block;
     left: 10%;
-    top: 30%;
-    height: 39px;
+    top: 40%;
+    height: 3%;
     width: 80%;
 
-    background: #bd513c;
+    background: #3D738B;
     cursor: pointer;
     z-index: 2;
 }
@@ -302,10 +300,10 @@ canvas {
     border-radius: 4px;
     position: absolute;
     left: 10%;
-    top: 30%;
-    height: 39px;
+    top: 40%;
+    height: 2%;
     width: 80%;
     z-index: 1;
-    background: #f2e6cf
+    background: rgba(0, 0, 0, 0.5);
 
 }

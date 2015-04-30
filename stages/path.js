@@ -62,9 +62,9 @@ function createPath() {
 
 	tube = new THREE.TubeGeometry(pipeSpline, 500, 100, 12, false);
 	tubeMesh = new THREE.SceneUtils.createMultiMaterialObject(tube, [
-		// new THREE.MeshBasicMaterial({
-		// 	color: 0xd6954a
-		// }),
+		new THREE.MeshBasicMaterial({
+			color: 0xd6954a
+		}),
 		new THREE.MeshBasicMaterial({
 			color: 0xDCD279,
 			opacity: 0.3,
@@ -162,18 +162,16 @@ function addPathNodes(nodes) {
 		var position = tube.parameters.path.getPointAt(pathNodes[i].zPos/10000);
 		
 		var geometry =  new THREE.BoxGeometry(10, 10, 10);
-		var material =  new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});  // sortCategory() here 
+		var material =  new THREE.MeshBasicMaterial({color: 0x83A69E, wireframe: true});  // sortCategory() here 
 		pathNode = new THREE.Mesh(geometry, material);
 		pathNodes[i].particle = pathNode;
 		pathArray.push(pathNode);
-		// pathNode.position.x = getRandomInt(position.x-200, position.x+200) ;
 		pathNode.position.x = position.x;
 		pathNode.position.y = position.y + 25;
 		pathNode.position.z = position.z - 1000;
 		pathNode.visible = true;
 		scene.add(pathNode);
 	}
-	// totalGroup = groupFrame(pathNodes, pathLength);
 }
 
 

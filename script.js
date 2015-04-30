@@ -128,7 +128,7 @@ function init() {
 	// *****************  start stages***************** 
 	// startStage();
 
-	            // initProgress();
+	            initProgress();
 
 	// ***************** call stages here:***************** 
 	
@@ -206,6 +206,7 @@ function onDocumentMouseMove( event ) {
 		new TWEEN.Tween(titleObjects[i].rotation).to({
 			x: mouse.x/10,
 			y: mouse.y/10,
+			
 		}, 1000).easing(TWEEN.Easing.Quintic.Out).start();
 	}
 
@@ -278,11 +279,6 @@ function render() {
 			convexArray[i].rotation.z  += Math.random()/100;
 	}
 	
-	for (var i=0; i<geoMeshes.length; i++) {	
-		// geoMeshes[i].position.z = splineCamera.position.z -1000;
-	}
-	
-
 	renderer.render( scene, splineCamera );
 	renderer2.render( scene2, splineCamera );
 
