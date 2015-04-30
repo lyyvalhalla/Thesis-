@@ -80,8 +80,6 @@ function clickMenu(i) {
 	var isOn;
 	// toggle display
 	
-	// lastDay = getLatest(tempNodes);
-	
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
@@ -89,21 +87,23 @@ function clickMenu(i) {
 		var line = new THREE.Line(lineGeo, lineMat);	
 		var previousFolder;
 		var eachTitle;
-		if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children) {
-			convexArray[j].visible = true;
-			titles[j].style.display = "block";
-			folders[j].line = line;
-			scene.add(line);
-			goPopup.style.display = "inline";
+		if (folders[i].children) {
 			tempNodes = getPathSites(tree.nodes(tempFolder));
-			lastDay = getLatest(tempNodes);
 			showNodes = currentNodes(tempFolder);
-		} 
+			lastDay = getLatest(tempNodes);
+			if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
+				convexArray[j].visible = true;
+				titles[j].style.display = "block";
+				folders[j].line = line;
+				scene.add(line);
+				goPopup.style.display = "inline";
+			} 
+		}	
 		else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
 			convexArray[j].visible = false;
 			titles[j].style.display = "none";
 			scene.remove(folders[j].line);
-			// goPopup.style.display = "none";
+			console.log("meow");
 		}	
 	}
 	
@@ -134,14 +134,15 @@ function clickMenu(i) {
 
 function onDocumentMouseDown(event) {
 	event.preventDefault();
-	
+
 	$(goPopup).click(function() {
+		
+		goStart(lastDay);
 		cameraStep = Math.abs(selectPos/pathLength);
 		goPopup.style.display = "none";
 		goSubs.style.display = "none";
 		// add > visible current fodler
 		toggleViz(showNodes);
-		goStart(lastDay);
 	});
 
 	$(goBack).click(function() {
@@ -152,11 +153,18 @@ function onDocumentMouseDown(event) {
 
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
-			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
 			clickMenu(i);
 		}
 	}
 }
+
+
+
+
+
+
+
+
 
 
 /* last node position in that folder, copy camera position to this later  */

@@ -183,7 +183,7 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=45; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(pathArray[i].position) > 740 && splineCamera.position.distanceTo(pathArray[i].position) < 800 && pathArray[i].visible) {
+		if (splineCamera.position.distanceTo(pathArray[i].position) > 700 && splineCamera.position.distanceTo(pathArray[i].position) < 760 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
 				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
 				scene2.add(newFrame);
@@ -211,9 +211,6 @@ function addSphereEnv() {
 	sphere = new THREE.Mesh(sphereGeo, sphereMat);
 	scene.add(sphere);
 }
-
-
-
 
 
 

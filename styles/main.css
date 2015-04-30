@@ -20,56 +20,63 @@ canvas {
 
 
 /* frame size transform */
-.frame {
-	width: 1280px;
-    height: 786px;
-    border: 2px solid #666561;
-    background: 
-    linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25));
-    box-shadow: -10px 10px 38px 0 rgba(1,1,1,.53);
-	/*-ms-transform: scale(0.45);
-    -moz-transform: scale(0.45);
-    -o-transform: scale(0.45);
-    -webkit-transform: scale(0.45);
-    transform: scale(0.45);*/
-    
-  /*  -ms-transform-origin: 0 0;
-    -moz-transform-origin: 0 0;
-    -o-transform-origin: 0 0;
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;*/
-
-    /*transform: rotateX(50deg);*/
-
-    transform-style: preserve-3d;
-
-}
-
 .domFrame {
-    background: rgba(255, 255, 255, .5);
+    $thickness: 10px;
+    width: 100%;
+    height: 100%;
+
+    -webkit-animation-name: framePop; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1; /* Chrome, Safari, Opera */
+    animation-name: framePop;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    transform-style: preserve-3d;
+}
+@-webkit-keyframes framePop {
+     from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+}
+@keyframes framePop {
+    from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
 }
 
-iframe{
-    width:592px;
-    height:100%;
 
-    border:none;
-    opacity: .999;
-    transform: scale(0.8);
-   
+.domFrame .frame {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #666561;
+    box-shadow: -10px 10px 38px 0 rgba(1,1,1,.53);
+ 
 }
+
+
+
 
 .timeTag {
     width: 500px;
-    heigh: 100px;
-    background: #ff0000;
+    /*heigh: 100px;*/
+    color: #ffffff;
+    position: absolute;
+    top: 5%;
+    left: 20%;
 }
 
 .deleteButton {
     top: 0;
     left: 0;
     width:500px;
-    height: 300px;
+    height: 100px;
     background: #3498db;
 }
 
@@ -104,8 +111,6 @@ iframe{
     top: 11%;
     /*height: 10%;*/
     display = "block";
-
-
 }
 
 #goPopup {
@@ -116,34 +121,15 @@ iframe{
     background: #9E281B;
     left: 5%;
     top: 5%;
-    cursor: default;
+    cursor: pointer;
 
     -webkit-animation-name: textPopup; /* Chrome, Safari, Opera */
     -webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
     -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
-    animation-name: example;
+    animation-name: textPopup;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
-#goBack {
-    color: #ffffff;
-    font-size = 12px;
-    position: absolute;
-   
-    background: #9E281B;
-    left: 5%;
-    top: 5%;
-    cursor: default;
-
-    -webkit-animation-name: textPopup; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
-    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
-    animation-name: example;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-}
-
-
 @-webkit-keyframes textPopup {
      from {
         opacity: 0.3;
@@ -162,6 +148,43 @@ iframe{
         opacity: 1;
       }
 }
+#goBack {
+    color: #ffffff;
+    font-size = 12px;
+    position: absolute;
+   
+    background: #9E281B;
+    left: 5%;
+    top: 5%;
+    cursor: pointer;
+
+    -webkit-animation-name: backPop; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    animation-name: backPop;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+@-webkit-keyframes backPop {
+     from {
+        opacity: 0.7;
+      }
+
+      to {
+        opacity: 1;
+      }
+}
+@keyframes backPop {
+    from {
+        opacity: 0.7;
+      }
+
+      to {
+        opacity: 1;
+      }
+}
+
+
 
 
 #goPopup:hover {

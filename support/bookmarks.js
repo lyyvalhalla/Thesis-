@@ -55,10 +55,9 @@ var showFrame = function (site, x, y, z) {
 	}
 
 	// add time tag
-	var timeTag = document.createElement('div');
+	var timeTag = document.getElementById('timeTag');
 	timeTag.textContent = site.time;
 	timeTag.className = "timeTag";
-	dom.appendChild(timeTag);
 
 	return object;
 }
