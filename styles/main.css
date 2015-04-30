@@ -1,10 +1,12 @@
 body { 
     overflow: hidden; 
+
     /*font-family: "Comic Sans MS", cursive, sans-serif;*/
     font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight:100; 
     font-stretch:normal;
     letter-spacing: 1px;
+    color: #000000;
 }
 
 canvas {
@@ -89,7 +91,6 @@ canvas {
 
 .timeTag {
     width: 500px;
-    color: #ffffff;
     position: absolute;
     top: 5%;
     left: 20%;
@@ -114,7 +115,6 @@ canvas {
     width: 20%;
     height: 5%;
     font-size: 6px;
-    color: #ffffff;
     backface-visibility: hidden;
 }
 
@@ -128,12 +128,12 @@ canvas {
     left: 8%;
     width: 10%;
     /*height: 60%;*/
-    background: rgba(158,40,27, 0.5);
+    background: rgba(61,115,139, 0.5);
     visibility:  hidden;
 }
 
 #goSubs {
-    color: #ffffff;
+    color: #000000;
     position: absolute;
     left: 8%;
     top: 11%;
@@ -146,7 +146,7 @@ canvas {
     font-size = 12px;
     position: absolute;
    
-    background: #9E281B;
+    background: rgba(61,115,139, 0.5);
     left: 5%;
     top: 5%;
     cursor: pointer;
@@ -181,7 +181,7 @@ canvas {
     font-size = 12px;
     position: absolute;
    
-    background: #9E281B;
+    background: rgba(61,115,139, 1);
     left: 5%;
     top: 5%;
     cursor: pointer;
@@ -216,7 +216,7 @@ canvas {
 
 
 #goPopup:hover {
-    background: #ffffff;
+    background: rgba(61,115,139);
     color: #000000;
 }
 

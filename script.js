@@ -31,6 +31,9 @@ var INTERSECTED, SELECTED;
 var intersects, intersected;
 
 
+var composer;
+
+
 // d3 
 function update(source) {
 	nodes = tree.nodes(source);
@@ -84,7 +87,7 @@ function init() {
 	// var container = document.createElement('div');
 	container = document.getElementById('container');
 	// document.body.appendChild( container);
-
+	isReverse = Math.random() >= 0.5;
 
 	/*  init progress bar */
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -96,9 +99,14 @@ function init() {
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
 	splineCamera.position.set( 0, -200, -200 );
 
-	light = new THREE.AmbientLight(0xffffff);
+	light = new THREE.AmbientLight(0x536DFE);
+	var dirLight = new THREE.DirectionalLight(0xFFA000);
+	dirLight.position.set(1, 1, 1);
+	dirLight2 = new THREE.DirectionalLight(0x607D8B);
+    dirLight2.position.set( -1, -1, -1 );
 	scene.add(light);
-
+	scene.add(dirLight);
+	scene.add(dirLight2);
 	// drawings here
 	update(root);
 
@@ -129,7 +137,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setClearColor( 0x000000 );
+	renderer.setClearColor( 0xFFECB3);
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
 
@@ -138,6 +146,28 @@ function init() {
 	renderer2.domElement.style.position = 'absolute';
 	renderer2.domElement.style.top = 0;
 	container.appendChild( renderer2.domElement );
+
+
+	// postprocessing
+
+
+	composer = new THREE.EffectComposer( renderer );
+	composer.addPass( new THREE.RenderPass( scene, splineCamera ) );
+
+	var effect = new THREE.ShaderPass( THREE.DotScreenShader );
+	effect.uniforms[ 'scale' ].value = 4;
+	composer.addPass( effect );
+
+	var effect = new THREE.ShaderPass( THREE.RGBShiftShader );
+	effect.uniforms[ 'amount' ].value = 0.0015;
+	effect.renderToScreen = true;
+	composer.addPass( effect );
+
+
+
+
+
+
 
 	window.addEventListener( 'resize', onWindowResize, false );
 	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -176,9 +206,9 @@ function onDocumentMouseMove( event ) {
 	for (var i =0; i<folders.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === folders[i].convex && folders[i].convex.visible === true) {
 			addGo(folders[i]);
-			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0xffffff});
+			intersects[0].object.material = new THREE.MeshLambertMaterial({color: 0x000000});
 		} else {
-			folders[i].convex.material = new THREE.MeshLambertMaterial({color: 0x9E281B});
+			folders[i].convex.material = new THREE.MeshLambertMaterial({color: 0xffffff});
 		}
 
 	} 
@@ -211,7 +241,7 @@ function animate() {
 	requestAnimationFrame( animate );
 	render();
 	// *****************  first stage ---- start *****************  (not using)
-	//composer.render();
+	// composer.render();
 }
 
 function render() {
@@ -232,10 +262,15 @@ function render() {
 	light.position.z = splineCamera.position.z -100;
 	light.position.x = splineCamera.position.x;
 	light.position.y = splineCamera.position.y +100;
+
 	for (var i = 0; i<convexArray.length; i++) {
-		convexArray[i].rotation.x  += Math.random()/100;
-		convexArray[i].rotation.y  += Math.random()/100;
-		convexArray[i].rotation.z  += Math.random()/100;
+	
+			convexArray[i].rotation.x  += Math.random()/100;
+			convexArray[i].rotation.y  += Math.random()/100;
+			convexArray[i].rotation.z  += Math.random()/100;
+		
+
+		
 		
 		//titleObjects[i].position.x += mouse.x/10;
 		//titleObjects[i].position.y += mouse.y/10;

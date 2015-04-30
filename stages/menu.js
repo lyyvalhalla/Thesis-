@@ -5,6 +5,7 @@ var selectPos;
 var tempNodes = [];
 var showNodes = [];
 var lastDay;
+var isReverse = Math.random() >= 0.5;
 // call in main init()
 function initMenu() {
 	createPath();
@@ -14,17 +15,19 @@ function initMenu() {
 
 
 function createMenuNodes(folders) {
-	var points = [];
 	
 	folders.forEach(function(d){
-
-		for ( var i = 0; i < 8; i ++ ) {
-			points.push( randomPointInSphere( 5 ) );
+		var points = [];
+		for ( var i = 0; i < 20; i ++ ) {
+			points.push( randomPointInSphere( 5) );
 		}
+		
+
 		var conGeo = new THREE.ConvexGeometry(points);
-		var conMat = new THREE.MeshLambertMaterial({color: 0x9E281B, shading: THREE.FlatShading});
+		// var conGeo = new THREE.CylinderGeometry( radiusTop, radiusBottom, height, sidesBottom, sidesTop )
+		var conMat = new THREE.MeshLambertMaterial({color: 0xffffff, shading: THREE.FlatShading});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(splineCamera.position.x-200, splineCamera.position.x+ 200),getRandomInt(splineCamera.position.y-100, splineCamera.position.y+100),getRandomInt(splineCamera.position.z-150, splineCamera.position.z-200) )
+		convex.position.set(getRandomInt(splineCamera.position.x-100, splineCamera.position.x+ 100),getRandomInt(splineCamera.position.y-50, splineCamera.position.y+50),splineCamera.position.z-150)
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);
@@ -47,10 +50,12 @@ function createMenuNodes(folders) {
 	
 	for (var i=0; i<convexArray.length; i++) {
 		
-		titleObjects[i].position.x = convexArray[i].position.x+20;
+		titleObjects[i].position.x = convexArray[i].position.x+100;
 		titleObjects[i].position.y = convexArray[i].position.y;
 		titleObjects[i].position.z = convexArray[i].position.z;		
 	}
+	// console.log(titleObjects[0].position);
+	// console.log(convexArray[0].position);
 
 	titles[0].style.display = "block";
 
@@ -78,7 +83,7 @@ function clickMenu(i) {
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
-		var lineMat = new THREE.LineBasicMaterial({color: 0xffffff, linewidth: 0.3});
+		var lineMat = new THREE.LineBasicMaterial({color: 0x000000, linewidth: 0.3});
 		var line = new THREE.Line(lineGeo, lineMat);	
 		var previousFolder;
 		var eachTitle;

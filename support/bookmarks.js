@@ -44,7 +44,8 @@ var showFrame = function (site, x, y, z) {
 
 
 	deleteButton = document.createElement('button');
-	var t = document.createTextNode("I don't need it anymore");      
+	deleteButton.innerHTML = "trash it";
+	var t = document.createTextNode("site.title");      
 	deleteButton.appendChild(t);                          
 	deleteButton.className = "deleteButton";
 	dom.appendChild(deleteButton);
