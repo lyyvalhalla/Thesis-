@@ -80,6 +80,8 @@ function clickMenu(i) {
 	var isOn;
 	// toggle display
 	
+
+
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
@@ -88,10 +90,10 @@ function clickMenu(i) {
 		var previousFolder;
 		var eachTitle;
 		if (folders[i].children) {
-			tempNodes = getPathSites(tree.nodes(tempFolder));
-			showNodes = currentNodes(tempFolder);
-			lastDay = getLatest(tempNodes);
-			if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
+			
+			// console.log("meow");
+			if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children) {
+				// console.log("moewoooooo")
 				convexArray[j].visible = true;
 				titles[j].style.display = "block";
 				folders[j].line = line;
@@ -99,17 +101,24 @@ function clickMenu(i) {
 				goPopup.style.display = "inline";
 			} 
 		}	
-		else if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children === null) {
-			convexArray[j].visible = false;
-			titles[j].style.display = "none";
-			scene.remove(folders[j].line);
-			console.log("meow");
+		else if (folders[i].children === null) {
+			
+			if ( folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
+				// console.log("woofffffffff");
+				convexArray[j].visible = false;
+				titles[j].style.display = "none";
+				scene.remove(folders[j].line);
+				goPopup.style.display = "none";
+			}
 		}	
 	}
 	
 
 	//toggle children on click
 	if(folders[i].children) {
+		tempNodes = getPathSites(tree.nodes(tempFolder));
+		lastDay = getLatest(tempNodes);
+		showNodes = currentNodes(tempFolder);
 		$(".eachTitle").remove();
 		for (var g =0; g< tempFolder.children.length; g++) {
 
@@ -129,16 +138,21 @@ function clickMenu(i) {
 	}
 	convexArray[0].visible = true;
 	titles[0].style.display = "block";
+	
 }
 
 
 function onDocumentMouseDown(event) {
 	event.preventDefault();
 
-	$(goPopup).click(function() {
+	// tempNodes = getPathSites(tree.nodes(tempFolder));
 		
-		goStart(lastDay);
+
+	$(goPopup).click(function() {
 		cameraStep = Math.abs(selectPos/pathLength);
+
+		goStart(lastDay);
+		
 		goPopup.style.display = "none";
 		goSubs.style.display = "none";
 		// add > visible current fodler
