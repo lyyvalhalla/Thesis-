@@ -69,18 +69,11 @@ function clickMenu(i) {
 	tempDepth = folders[i].depth + 1;
 
 	// ***** toggle visiblity of PATH nodes *****
-	// clear > invisible everything
 	var readyNodes = getPathSites(nodes);
 	for (var x=0; x<readyNodes.length; x++) {
 		readyNodes[x].particle.visible = false;
 	}
 	
-
-	var lines =[];
-	var isOn;
-	// toggle display
-	
-
 
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
@@ -91,9 +84,7 @@ function clickMenu(i) {
 		var eachTitle;
 		if (folders[i].children) {
 			
-			// console.log("meow");
 			if (folders[j].parentId === folders[i].id && folders[j].depth === tempDepth && folders[i].children) {
-				// console.log("moewoooooo")
 				convexArray[j].visible = true;
 				titles[j].style.display = "block";
 				folders[j].line = line;
@@ -104,7 +95,6 @@ function clickMenu(i) {
 		else if (folders[i].children === null) {
 			
 			if ( folders[j].parentId === folders[i].id && folders[j].depth === tempDepth) {
-				// console.log("woofffffffff");
 				convexArray[j].visible = false;
 				titles[j].style.display = "none";
 				scene.remove(folders[j].line);
@@ -145,14 +135,10 @@ function clickMenu(i) {
 function onDocumentMouseDown(event) {
 	event.preventDefault();
 
-	// tempNodes = getPathSites(tree.nodes(tempFolder));
-		
 
 	$(goPopup).click(function() {
-		cameraStep = Math.abs(selectPos/pathLength);
-
 		goStart(lastDay);
-		
+		cameraStep = Math.abs(selectPos/pathLength);
 		goPopup.style.display = "none";
 		goSubs.style.display = "none";
 		// add > visible current fodler
@@ -171,13 +157,6 @@ function onDocumentMouseDown(event) {
 		}
 	}
 }
-
-
-
-
-
-
-
 
 
 

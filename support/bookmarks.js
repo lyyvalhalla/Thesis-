@@ -25,7 +25,7 @@ var getPathFolders = function(nodes) {
 	return pathFolders;
 }
 
-
+var deleteButton, webpage;
 var showFrame = function (site, x, y, z) {
 
 	dom = document.createElement('div');
@@ -35,7 +35,7 @@ var showFrame = function (site, x, y, z) {
 	object.position.y = y;
 	object.position.z = z;
 
-	var webpage = document.createElement('iframe');
+	webpage = document.createElement('iframe');
 	webpage.src = site.url;
 	webpage.className = "frame";
 	webpage.sandbox = "allow-same-origin allow-scripts";
@@ -43,8 +43,8 @@ var showFrame = function (site, x, y, z) {
 	dom.appendChild(webpage);
 
 
-	var deleteButton = document.createElement('button');
-	var t = document.createTextNode(site.title);      
+	deleteButton = document.createElement('button');
+	var t = document.createTextNode("I don't need it anymore");      
 	deleteButton.appendChild(t);                          
 	deleteButton.className = "deleteButton";
 	dom.appendChild(deleteButton);
@@ -52,6 +52,9 @@ var showFrame = function (site, x, y, z) {
 	deleteButton.onclick = function() {
 		console.log(site.id);
 		removeBookmark(site.id);
+		deleteButton.style.opacity="0";
+		webpage.classList.add('remove');
+		
 	}
 
 	// add time tag
@@ -60,7 +63,10 @@ var showFrame = function (site, x, y, z) {
 	timeTag.className = "timeTag";
 
 	return object;
+
+	
 }
+
 
 
 /****************  fast sheet here ************************/

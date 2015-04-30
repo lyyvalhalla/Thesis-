@@ -55,17 +55,40 @@ canvas {
 .domFrame .frame {
     width: 100%;
     height: 100%;
-    border: 2px solid #666561;
-    box-shadow: -10px 10px 38px 0 rgba(1,1,1,.53);
+    /*border: 2px solid #666561;
+    box-shadow: -10px 10px 38px 0 rgba(1,1,1,.53);*/
  
 }
 
+.frame.remove {
+    -webkit-animation: removeFrame 1s 1 ease-in-out; /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes removeFrame {
+    0% {
+        width: 100%
+        opacity: 1;
+      }
 
+    100% {
+        width: 0;
+        opacity: 0;
+      }
+}
+@keyframes removeFrame {
+    0% {
+        width: 100%
+        opacity: 1;
+      }
+    100% {
+        width: 0;
+        opacity: 0;
+      }
+}
 
 
 .timeTag {
     width: 500px;
-    /*heigh: 100px;*/
     color: #ffffff;
     position: absolute;
     top: 5%;
@@ -74,16 +97,21 @@ canvas {
 
 .deleteButton {
     top: 0;
-    left: 0;
-    width:500px;
-    height: 100px;
-    background: #3498db;
+    left: 50%;
+    width:30%;
+    height: 5%;
+    color: #ffffff;
+    background: rgba(158,40,27, 0.5);
+    cursor: pointer;
+    border: none;
+}
+.deleteButton:active {
+    opacity: 0;
 }
 
 
-
 .nodeTitle {
-    width: 10%;
+    width: 20%;
     height: 5%;
     font-size: 6px;
     color: #ffffff;
