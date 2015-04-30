@@ -24,10 +24,9 @@ function createMenuNodes(folders) {
 		
 
 		var conGeo = new THREE.ConvexGeometry(points);
-		// var conGeo = new THREE.CylinderGeometry( radiusTop, radiusBottom, height, sidesBottom, sidesTop )
 		var conMat = new THREE.MeshLambertMaterial({color: 0xffffff, shading: THREE.FlatShading});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(splineCamera.position.x-100, splineCamera.position.x+ 100),getRandomInt(splineCamera.position.y-50, splineCamera.position.y+50),splineCamera.position.z-150)
+		convex.position.set(getRandomInt(splineCamera.position.x-100, splineCamera.position.x+ 100),getRandomInt(splineCamera.position.y-80, splineCamera.position.y+80),splineCamera.position.z-150)
 		convexArray.push(convex);
 		d.convex = convex;
 		scene.add(convex);

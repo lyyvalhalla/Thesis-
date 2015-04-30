@@ -17,7 +17,7 @@ var plane, sphere;
 
 function createPath() {
 	camera.position.set(0, -180, 0);
-
+	addParticles()
 	// compute length
 	getTempTime(nodes);
 
@@ -60,13 +60,13 @@ function createPath() {
 		new THREE.Vector3(0, -200, zLine-pathLength),
     ]);
 
-	tube = new THREE.TubeGeometry(pipeSpline, 500, 50, 12, false);
+	tube = new THREE.TubeGeometry(pipeSpline, 500, 100, 12, false);
 	tubeMesh = new THREE.SceneUtils.createMultiMaterialObject(tube, [
 		// new THREE.MeshBasicMaterial({
 		// 	color: 0xd6954a
 		// }),
 		new THREE.MeshBasicMaterial({
-			color: 0xffffff,
+			color: 0xDCD279,
 			opacity: 0.3,
 			wireframe: true,
 			transparent: true
@@ -76,8 +76,8 @@ function createPath() {
 
 	scene.add(tubeMesh);
 	// tempTube.scale.set( 1, 1, 1 );
-    scene.fog = new THREE.Fog( 0xFFECB3, 300, 1000);
-
+    // scene.fog = new THREE.Fog( 0xDCD279, 100, 1000);
+    scene.fog = new THREE.FogExp2(0xAEBE80, 0.0005);
 
 
     // create a back wall
@@ -120,7 +120,6 @@ function pathRender() {
 	// 	} 
 	// }
 	
-
 
 
 	var pos = tube.parameters.path.getPointAt( cameraStep );
@@ -211,6 +210,25 @@ function addSphereEnv() {
 	sphere = new THREE.Mesh(sphereGeo, sphereMat);
 	scene.add(sphere);
 }
+
+
+var geoMeshes=[];
+function addParticles() {
+	var geoP = new THREE.CubeGeometry(10, 10, 10);
+	var geoM = new THREE.MeshLambertMaterial({color: 0x3D738B});
+	for (var o=0; o<pathLength/10; o++) {
+		var geoMesh = new THREE.Mesh(geoP, geoM);
+		geoMesh.position.x = getRandomInt(-3000, 3000);
+		geoMesh.position.y = getRandomInt( -1000, 1000);
+		geoMesh.position.z = getRandomInt(-1000, -pathLength);
+		scene.add(geoMesh);
+		geoMeshes.push(geoMesh);
+	}
+}
+
+
+
+
 
 
 

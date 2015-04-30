@@ -195,11 +195,19 @@ function onDocumentMouseMove( event ) {
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 
-	// new TWEEN.Tween( tubeMesh.rotation ).to( {  
-	// 	x: mouse.x/10,
-	// 	y: mouse.y/50,
+	new TWEEN.Tween( tubeMesh.rotation ).to( {  
+		x: mouse.x/100,
+		y: mouse.y/100,
 		
-	// 	}, 2000 ).easing(TWEEN.Easing.Quintic.Out).start();
+		}, 2000 ).easing(TWEEN.Easing.Quintic.Out).start();
+
+
+	for (var i = 0; i<convexArray.length; i++) {
+		new TWEEN.Tween(titleObjects[i].rotation).to({
+			x: mouse.x/10,
+			y: mouse.y/10,
+		}, 1000).easing(TWEEN.Easing.Quintic.Out).start();
+	}
 
 
 	// menu part
@@ -268,14 +276,11 @@ function render() {
 			convexArray[i].rotation.x  += Math.random()/100;
 			convexArray[i].rotation.y  += Math.random()/100;
 			convexArray[i].rotation.z  += Math.random()/100;
-		
-
-		
-		
-		//titleObjects[i].position.x += mouse.x/10;
-		//titleObjects[i].position.y += mouse.y/10;
 	}
 	
+	for (var i=0; i<geoMeshes.length; i++) {	
+		// geoMeshes[i].position.z = splineCamera.position.z -1000;
+	}
 	
 
 	renderer.render( scene, splineCamera );
