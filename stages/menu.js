@@ -6,6 +6,7 @@ var tempNodes = [];
 var showNodes = [];
 var lastDay;
 var isReverse = Math.random() >= 0.5;
+var mainMenu;
 // call in main init()
 function initMenu() {
 	createPath();
@@ -13,7 +14,7 @@ function initMenu() {
 	addPathNodes(nodes);
 }
 
-
+var menuObject = new THREE.Object3D();
 function createMenuNodes(folders) {
 	
 	folders.forEach(function(d){
@@ -26,10 +27,10 @@ function createMenuNodes(folders) {
 		var conGeo = new THREE.ConvexGeometry(points);
 		var conMat = new THREE.MeshLambertMaterial({color: 0xffffff, shading: THREE.FlatShading});
 		var convex = new THREE.Mesh(conGeo, conMat);
-		convex.position.set(getRandomInt(splineCamera.position.x-100, splineCamera.position.x+ 100),getRandomInt(splineCamera.position.y-80, splineCamera.position.y+80),splineCamera.position.z-150)
+		convex.position.set(getRandomInt(splineCamera.position.x-100, splineCamera.position.x+ 100),getRandomInt(splineCamera.position.y-80, splineCamera.position.y+80),splineCamera.position.z-150);
 		convexArray.push(convex);
 		d.convex = convex;
-		scene.add(convex);
+		menuObject.add(convex);
 		convex.visible = false;
 		
 
@@ -43,7 +44,8 @@ function createMenuNodes(folders) {
 		scene2.add(menuTitle);
 	});
 
-	var mainMenu = convexArray[0];
+	scene.add(menuObject);
+	mainMenu = convexArray[0];
 	mainMenu.position.set(splineCamera.position.x, splineCamera.position.y, splineCamera.position.z-150);
 	mainMenu.visible = true;
 	
@@ -53,8 +55,7 @@ function createMenuNodes(folders) {
 		titleObjects[i].position.y = convexArray[i].position.y;
 		titleObjects[i].position.z = convexArray[i].position.z;		
 	}
-	// console.log(titleObjects[0].position);
-	// console.log(convexArray[0].position);
+	
 
 	titles[0].style.display = "block";
 
@@ -82,7 +83,7 @@ function clickMenu(i) {
 	for (var j=0; j<folders.length; j++) {
 		var lineGeo = new THREE.Geometry();
 		lineGeo.vertices.push(folders[i].convex.position, folders[j].convex.position);
-		var lineMat = new THREE.LineBasicMaterial({color: 0x000000, linewidth: 0.3});
+		var lineMat = new THREE.LineBasicMaterial({color: 0xd28399, linewidth: 0.3});
 		var line = new THREE.Line(lineGeo, lineMat);	
 		var previousFolder;
 		var eachTitle;
@@ -134,13 +135,15 @@ function clickMenu(i) {
 	titles[0].style.display = "block";
 	
 }
-
+var isOk = false;
 
 function onDocumentMouseDown(event) {
 	event.preventDefault();
 
 
 	$(goPopup).click(function() {
+		isOk= true;
+
 		goStart(lastDay);
 		cameraStep = Math.abs(selectPos/pathLength);
 		goPopup.style.display = "none";
@@ -148,9 +151,16 @@ function onDocumentMouseDown(event) {
 		// add > visible current fodler
 		toggleViz(showNodes);
 	});
+	console.log(menuObject.position);
 
 	$(goBack).click(function() {
-		cameraStep = 0;
+		splineCamera.position.set( 0, 1000, -200 );
+		
+		// menuObject.position.x = splineCamera.position.x;
+		// menuObject.position.y = splineCamera.position.y;
+		// menuObject.position.z = splineCamera.position.z-150;
+		// console.log(menuObject.position);
+		isOk = false;
 		goBack.style.display= "none";
 		goSubs.style.display = "block";
 	});
@@ -168,6 +178,8 @@ function onDocumentMouseDown(event) {
 function goStart(lastDay) {
 	selectPos = lastDay.particle.position.z + 1200;
 
+
+	cameraStep =
 	goBack = document.getElementById("goBack");
 	goBack.style.display= "inline";
 	goBack.innerHTML = "BACK";

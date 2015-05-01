@@ -60,13 +60,13 @@ function createPath() {
 		new THREE.Vector3(0, -200, zLine-pathLength),
     ]);
 
-	tube = new THREE.TubeGeometry(pipeSpline, 500, 100, 12, false);
+	tube = new THREE.TubeGeometry(pipeSpline, 500, 50, 12, false);
 	tubeMesh = new THREE.SceneUtils.createMultiMaterialObject(tube, [
 		new THREE.MeshBasicMaterial({
 			color: 0xd6954a
 		}),
 		new THREE.MeshBasicMaterial({
-			color: 0xDCD279,
+			color: 0xd28399,
 			opacity: 0.3,
 			wireframe: true,
 			transparent: true
@@ -76,9 +76,10 @@ function createPath() {
 
 	scene.add(tubeMesh);
 	// tempTube.scale.set( 1, 1, 1 );
+	//3f2f34
     // scene.fog = new THREE.Fog( 0xDCD279, 100, 1000);
-    scene.fog = new THREE.FogExp2(0xAEBE80, 0.0005);
-
+    // scene.fog = new THREE.FogExp2(0xAEBE80, 0.0005);
+     scene.fog = new THREE.FogExp2(0x3e7ac1, 0.0025);
 
     // create a back wall
     var planeGeo = new THREE.PlaneBufferGeometry(50, 50);
@@ -124,6 +125,8 @@ function pathRender() {
 
 	var pos = tube.parameters.path.getPointAt( cameraStep );
 	var posNext =  tube.parameters.path.getPointAt( cameraStep + 0.005);
+
+
 
 	// interpolation
 	var segments = tube.tangents.length;

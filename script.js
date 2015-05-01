@@ -97,7 +97,7 @@ function init() {
 	scene2 = new THREE.Scene();
 
 	splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
-	splineCamera.position.set( 0, -200, -200 );
+	splineCamera.position.set( 0, 1000, -200 );
 
 	light = new THREE.AmbientLight(0x536DFE);
 	var dirLight = new THREE.DirectionalLight(0xFFA000);
@@ -137,7 +137,8 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setClearColor( 0xFFECB3);
+	// renderer.setClearColor( 0xFFECB3);
+	renderer.setClearColor( 0x222222);
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
 
@@ -262,7 +263,13 @@ function render() {
 	intersects = raycaster.intersectObjects(convexArray);
 	intersected = intersects[ 0 ];
 	
-	pathRender();
+	
+
+	if (isOk) {
+		pathRender();
+	}
+
+
 	updateFrame(pathNodes, pathArray);
 
 
