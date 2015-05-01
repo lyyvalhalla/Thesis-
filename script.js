@@ -274,10 +274,7 @@ function render() {
 
 
 	/*some updates*/
-	// sphere.position.z = splineCamera.position.z - 1200;
-	light.position.z = splineCamera.position.z -100;
-	light.position.x = splineCamera.position.x;
-	light.position.y = splineCamera.position.y +100;
+
 
 	for (var i = 0; i<convexArray.length; i++) {
 	

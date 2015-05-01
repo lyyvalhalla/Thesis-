@@ -153,8 +153,9 @@ function onDocumentMouseDown(event) {
 		progress.style.visibility = "visible"; 
 		barHolder.style.visibility = "visible";
 		bar.style.visibility = "visible";
+		goBack.style.padding = "10px";
 	});
-	console.log(menuObject.position);
+	
 
 	$(goBack).click(function() {
 		splineCamera.position.set( 0, 1000, -200 );
@@ -170,6 +171,7 @@ function onDocumentMouseDown(event) {
 	for (var i =0; i<convexArray.length; i++) {
 		if (intersects.length > 0 && intersects[0].object === convexArray[i]) {
 			clickMenu(i);
+			goPopup.style.padding = "10px";
 		}
 	}
 }
@@ -181,10 +183,11 @@ function goStart(lastDay) {
 	selectPos = lastDay.particle.position.z + 1200;
 
 
-	cameraStep =
+	
 	goBack = document.getElementById("goBack");
 	goBack.style.display= "inline";
 	goBack.innerHTML = "BACK";
+
 	// pathRender();
 }
 

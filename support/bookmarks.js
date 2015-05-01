@@ -43,10 +43,15 @@ var showFrame = function (site, x, y, z) {
 	dom.appendChild(webpage);
 
 
-	deleteButton = document.createElement('button');
-	deleteButton.innerHTML = "trash it";
-	var t = document.createTextNode("site.title");      
-	deleteButton.appendChild(t);                          
+	deleteButton = document.createElement('div');
+	// deleteButton.innerHTML = "trash it";
+	var t = document.createTextNode(site.title);
+	t.id = "deleteTitle";    
+	deleteButton.appendChild(t); 
+	var trash = document.createElement('img');
+	trash.id = "trash";
+	trash.src ="img/trash.png";
+	deleteButton.appendChild(trash);                         
 	deleteButton.className = "deleteButton";
 	dom.appendChild(deleteButton);
 

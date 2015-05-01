@@ -33,7 +33,7 @@ function createPath() {
 	}); 
 
 	for(var i=0; i<7; i++) {
-		vertexX = getRandomInt(-500, 500);
+		vertexX = getRandomInt(-200, 200);
 		arrayX.push(vertexX);
 	}
 
