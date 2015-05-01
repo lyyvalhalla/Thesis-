@@ -51,7 +51,7 @@ function update(source) {
 			folders.push(nodes[i]);
 		}
 	}
-
+	console.log(folders.length);
 	
 	// ************* get total days >>> total length of path *************
 	firstDay = getMinTime(nodes).dateAdded;

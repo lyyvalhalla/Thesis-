@@ -1,4 +1,4 @@
-extension_id = "fkdnjmgfbbdflepjdlkbekemkaaahkei"
+extension_id = "hoepagfegacjokcdkddnkipfclegeieh"
 var jsonHtml, jsonObject;
 
 
@@ -40,6 +40,45 @@ window.onload = function() {
             });
         }
     });
+
+    $('#wordCount').bind('DOMSubtreeModified', function(e) {
+        if (e.target.innerHTML.length > 0) {
+            var jsonText = e.target.innerText;      // the stringified json in a string
+            var jsonObject = JSON.parse(jsonText);  // the actual object
+            // console.log(jsonText);                
+            console.log(jsonObject);
+        }
+    });
+
+    $('#dateCount').bind('DOMSubtreeModified', function(e) {
+        if (e.target.innerHTML.length > 0) {
+            var jsonText = e.target.innerText;      // the stringified json in a string
+            var jsonObject = JSON.parse(jsonText);  // the actual object
+            // console.log(jsonText);                
+            console.log(jsonObject);
+        }
+    });
+
+    $('#wordCountByMonth').bind('DOMSubtreeModified', function(e) {
+        if (e.target.innerHTML.length > 0) {
+            var jsonText = e.target.innerText;      // the stringified json in a string
+            var jsonObject = JSON.parse(jsonText);  // the actual object
+            // console.log(jsonText);                
+            console.log(jsonObject);
+        }
+    });
+
+    $('#wordCountByYear').bind('DOMSubtreeModified', function(e) {
+        if (e.target.innerHTML.length > 0) {
+            var jsonText = e.target.innerText;      // the stringified json in a string
+            var jsonObject = JSON.parse(jsonText);  // the actual object
+            // console.log(jsonText);                
+            console.log(jsonObject);
+        }
+    });
+
+
+
 };
 
 /* get right directory from chrome json*/
