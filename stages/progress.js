@@ -20,9 +20,9 @@ function initProgress() {
 	endTime.innerHTML = (new Date(firstDay)).toDateString();
 
 	
-	progress.style.visibility = "visible"; 
-	barHolder.style.visibility = "visible";
-	bar.style.visibility = "visible";
+	progress.style.visibility = "hidden"; 
+	barHolder.style.visibility = "hidden";
+	bar.style.visibility = "hidden";
 	
 
 	var startInterval = 30 - (new Date()).getDate(); 

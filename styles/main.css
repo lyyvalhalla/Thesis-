@@ -94,6 +94,7 @@ canvas {
     position: absolute;
     top: 5%;
     left: 20%;
+    color: #ffffff;
 }
 
 .deleteButton {
@@ -291,7 +292,7 @@ canvas {
     height: 30%;
     width: 80%;
 
-    background: #3D738B;
+    background: #3e7ac1;
     cursor: pointer;
     z-index: 2;
 }

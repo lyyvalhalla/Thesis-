@@ -150,19 +150,21 @@ function onDocumentMouseDown(event) {
 		goSubs.style.display = "none";
 		// add > visible current fodler
 		toggleViz(showNodes);
+		progress.style.visibility = "visible"; 
+		barHolder.style.visibility = "visible";
+		bar.style.visibility = "visible";
 	});
 	console.log(menuObject.position);
 
 	$(goBack).click(function() {
 		splineCamera.position.set( 0, 1000, -200 );
 		
-		// menuObject.position.x = splineCamera.position.x;
-		// menuObject.position.y = splineCamera.position.y;
-		// menuObject.position.z = splineCamera.position.z-150;
-		// console.log(menuObject.position);
-		isOk = false;
 		goBack.style.display= "none";
 		goSubs.style.display = "block";
+		isOk = false;
+		progress.style.visibility = "hidden"; 
+		barHolder.style.visibility = "hidden";
+		bar.style.visibility = "hidden";
 	});
 
 	for (var i =0; i<convexArray.length; i++) {

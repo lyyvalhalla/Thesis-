@@ -75,7 +75,7 @@ function createPath() {
 
 
 	scene.add(tubeMesh);
-	// tempTube.scale.set( 1, 1, 1 );
+
 	//3f2f34
     // scene.fog = new THREE.Fog( 0xDCD279, 100, 1000);
     // scene.fog = new THREE.FogExp2(0xAEBE80, 0.0005);
