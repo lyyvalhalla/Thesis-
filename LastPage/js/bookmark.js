@@ -11,10 +11,10 @@ window.onload = function() {
             var jsonObject = JSON.parse(jsonText);  // the actual object
             // console.log(jsonText);                
             console.log(jsonObject);
-            window.scrollBy(100, 0);
 
            
 
+    
             // ...
             // did a bunch of stuff, modified the jsonObject
             // now ready to send it back, call sendBookmarkToExtension here
