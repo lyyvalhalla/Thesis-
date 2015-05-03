@@ -1,0 +1,41 @@
+html, body {
+	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight:10; 
+    font-stretch:normal;
+    letter-spacing: 1px;
+    margin:0;
+    padding:0;
+    height: 100%;
+
+    background: url("http://yiyang-liang.com/random/img/ybg.jpg") no-repeat fixed center;
+    background-size: 100% 100%;
+}
+
+/*#background {
+    position: absolute;
+	background: url("http://yiyang-liang.com/random/img/ybg.jpg");
+	background-size: 100% 100%;
+    min-height:100%;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}*/
+
+
+/*#canvas-wrap canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+}*/
+
+
+#key-words #key-bar {
+    color: #ffffff;
+    background: rgba(255,255,255);
+    position: absolute;
+    height: 10px;
+    width: 500px;
+    bottom: 10%;
+    left: 10%;
+}
