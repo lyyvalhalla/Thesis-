@@ -1,4 +1,6 @@
 html, body {
+    overflow: scroll;
+
 	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight:10; 
     font-stretch:normal;
@@ -9,33 +11,24 @@ html, body {
 
     background: url("http://yiyang-liang.com/random/img/ybg.jpg") no-repeat fixed center;
     background-size: 100% 100%;
+    color: #ffffff;
 }
 
-/*#background {
+
+
+#key-bar {
     position: absolute;
-	background: url("http://yiyang-liang.com/random/img/ybg.jpg");
-	background-size: 100% 100%;
-    min-height:100%;
-    z-index: 0;
-    top: 0;
-    left: 0;
-}*/
-
-
-/*#canvas-wrap canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-}*/
-
-
-#key-words #key-bar {
-    color: #ffffff;
-    background: rgba(255,255,255);
-    position: absolute;
-    height: 10px;
-    width: 500px;
+    background: #fff;
+    height: 1px;
+    width: 80%;
     bottom: 10%;
-    left: 10%;
+    visibility: hidden;
+}
+
+.time-tag {
+    position: absolute;
+    bottom: 12%;
+    height: 50px;
+    width: 1px;
+    visibility: visible;
 }
