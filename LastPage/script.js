@@ -1,7 +1,9 @@
+var tree = d3.layout.tree();
+
 var keyWordArray =[], timeStampArray =[];
 var delta;
-var colors = ["#222222", "#193969", "#1A2A45", "#A62D2A","#FFB600", "#222222" ];
-var wordsArray = [];
+var colors = ["#222222", "#193969", "#1A2A45", "#A62D2A","#FFB600", "#222222", "#193969", "#1A2A45", "#A62D2A","#FFB600", "#222222", "#193969", "#1A2A45", "#A62D2A","#FFB600"];
+var wordsArray = [], eachArray=[];
 function setupKeyWord() {
 
     var years =[];
@@ -19,22 +21,22 @@ function setupKeyWord() {
     keyBar.style.width = 1397*(years.length);
     var barEnd = keyBar.style.width;
     keyBar.style.visibility = "visible";
-    console.log(keyBar.style.left +";" +barEnd );
+
 
     for (var i=0; i<years.length; i++) {
-        console.log(keyWord[years[i]]);
+        // console.log(keyWord[years[i]][0]);
         var timeTag = document.createElement('div');
         timeTag.className = "time-tag";
         timeTag.style.left = 1398 + i*1398;
         timeTag.style.background = "#ffffff";
         keyBar.appendChild(timeTag);
-        // console.log(timeTag.style.left);
-
-        for (var j=0; j<keyWord[years[i]].length; j++) {
-            // console.log(keyWord[years[i]][j].word);
-            // var words = document.getElementById('title');
-            // words.textContent =  keyWord[years[i]][j].word;
-        }
+        
+        var timeYear = document.createElement('div');
+        timeYear.className = "time-year";
+        timeYear.textContent = keyWord[years[i]][0].year;
+        timeYear.style.left = 1200 + i*1398;
+        timeYear.style.bottom = 50;
+        keyBar.appendChild(timeYear);
     }
 
 
@@ -51,55 +53,92 @@ function setupKeyWord() {
         backgrounds.push(backGround);
     }
 
-    var eachArray=[];
+
+    // for (var i=0; i<years.length; i++) {
+    //     var wordsArray =[];
+    //     for (var j=0; j<keyWord[years[i]].length; j++) {
+    //         console.log(keyWord[years[i]][j]);
+    //          wordsArray.push(keyWord[years[i]][j].word);;
+    //     }
+    // }
+
+    var words;
+    var eachWord;
 
     $(window).scroll(function() {
         
         for (var i=0; i<years.length; i++) {
             var wordsArray =[];
             for (var j=0; j<keyWord[years[i]].length; j++) {
-                // console.log(keyWord[years[i]][j].word)
-                wordsArray.push(keyWord[years[i]][j].word);;
+                console.log(keyWord[years[i]][j])
+                // single word
+
+                
+
+
+                
+                wordsArray.push(keyWord[years[i]][j].word);
             }
             
             eachArray.push(wordsArray);
-            var words = document.getElementById('title');
+            words = document.getElementById('title');
             words.style.display = "inline-block";
             words.style.width = 10;
             words.style.height = 100;
             // console.log(((parseInt(backgrounds[i+1].style.left))+1398) + "; " + parseInt(backgrounds[i+1].style.left));
             if (window.pageXOffset < (parseInt(backgrounds[i+1].style.left)+1398) && window.pageXOffset > parseInt(backgrounds[i+1].style.left)) {
-                console.log("woof");
                 words.textContent = eachArray[i];
-                // console.log(eachArray[i]);
             }
 
             if (window.pageXOffset < 1398) {
-                words.textContent = "bookmark bio";
+                words.textContent = "bookmarks bio";
             }
-        }
+        }   
 
-        
     });
+
+    $("#title").hover(function() {
+        console.log("woof");
+    })
+
+   
 
 }
 
 
 
 
-function mousewheel( event ) {
+var root, nodes;
+function getMark(source, id) {
+    root = source[0].children[0];
+    nodes = tree.nodes(root);
 
-    if ( this.enabled === false ) return;
+    var sites = getPathSites(nodes);
+    // console.log(sites);
+    for (var i =0; i< sites.length; i++) {
+        console.log(sites[i]);
+        if (sites[i].id === id)  {
+            return sites[i];
+            console.log(sites[i]);
+        }
+    }
+}
 
-    event.preventDefault();
-    event.stopPropagation();
-    
-    delta = 0;
-    if ( event.wheelDelta ) { // WebKit / Opera / Explorer 9
-        delta = event.wheelDelta;
-    } else if (event.detail) { // Firefox
-        delta = - event.detail;
-    }   
-    document.getElementById('key-bar').scrollLeft += delta;
-    console.log(delta);
+
+
+
+
+
+
+
+
+var getPathSites = function(n) {
+    var pathSites = [];
+    for (var i=0; i<n.length; i++) {
+        if(n[i].url) {
+            tempSite = n[i];
+            pathSites.push(tempSite);   
+        } 
+    }
+    return pathSites;
 }

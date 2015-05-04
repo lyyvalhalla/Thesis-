@@ -10,6 +10,7 @@ html, body {
     margin:0;
     padding:0;
     height: 100%;
+    color: #ffffff;
 }
 
 
@@ -26,7 +27,7 @@ html, body {
 #key-bar {
     position: absolute;
     background: #fff;
-    height: 1px;
+    height: 2px;
     /*width: 80%;*/
     bottom: 10%;
     visibility: hidden;
@@ -37,16 +38,23 @@ html, body {
     bottom: 12%;
     height: 50px;
     width: 1px;
-    visibility: visible;
+    visibility: hidden;
+}
+
+.time-year {
+    position: absolute;
+    height: 50px;
+    font-size: 52px;
 }
 
 #title {
+    font-size: 52px;
     position: fixed;
     display: block;
     top:20%;
     text-align:center;
-    left: 45%;
+    left: 10%;
     width:5%;
     color:#fff;
-    font-size:1.5em;
+    
 }

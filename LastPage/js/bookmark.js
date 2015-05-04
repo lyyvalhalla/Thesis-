@@ -1,5 +1,6 @@
 extension_id = "hoepagfegacjokcdkddnkipfclegeieh"
 var keyWord, timeStamp;
+var source;
 
 // watch the html element that should contain the json string for change
 // when it's changed, it means the extension has sent us the json string via
@@ -12,8 +13,8 @@ window.onload = function() {
             // console.log(jsonText);                
             console.log(jsonObject);
 
-           
-
+            
+             getMark(jsonObject, "341");
     
             // ...
             // did a bunch of stuff, modified the jsonObject
