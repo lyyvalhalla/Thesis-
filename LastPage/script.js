@@ -53,30 +53,31 @@ function setupKeyWord() {
         backgrounds.push(backGround);
     }
 
-
+    // var eachWord, eachObject;
+    // var eachArray;
     // for (var i=0; i<years.length; i++) {
-    //     var wordsArray =[];
+    //     words = document.getElementById('title');
     //     for (var j=0; j<keyWord[years[i]].length; j++) {
-    //         console.log(keyWord[years[i]][j]);
-    //          wordsArray.push(keyWord[years[i]][j].word);;
+    //         // console.log(keyWord[years[i]][j]);
+    //         eachObject = keyWord[years[i]][j];
+    //         eachWord = document.createElement('div');
+    //         eachWord.className = "each-word";
+    //         eachWord.id = "each-word" + j;
+    //         eachWord.textContent = eachObject.word;
+    //         words
     //     }
+    //     console.log(eachWord);
     // }
 
     var words;
-    var eachWord;
+    
 
     $(window).scroll(function() {
         
         for (var i=0; i<years.length; i++) {
             var wordsArray =[];
             for (var j=0; j<keyWord[years[i]].length; j++) {
-                console.log(keyWord[years[i]][j])
-                // single word
-
-                
-
-
-                
+                // console.log(keyWord[years[i]][j])
                 wordsArray.push(keyWord[years[i]][j].word);
             }
             
@@ -88,6 +89,7 @@ function setupKeyWord() {
             // console.log(((parseInt(backgrounds[i+1].style.left))+1398) + "; " + parseInt(backgrounds[i+1].style.left));
             if (window.pageXOffset < (parseInt(backgrounds[i+1].style.left)+1398) && window.pageXOffset > parseInt(backgrounds[i+1].style.left)) {
                 words.textContent = eachArray[i];
+                
             }
 
             if (window.pageXOffset < 1398) {
@@ -98,8 +100,10 @@ function setupKeyWord() {
     });
 
     $("#title").hover(function() {
-        console.log("woof");
-    })
+        console.log(pageXOffset);
+    });
+
+
 
    
 
@@ -116,7 +120,6 @@ function getMark(source, id) {
     var sites = getPathSites(nodes);
     // console.log(sites);
     for (var i =0; i< sites.length; i++) {
-        console.log(sites[i]);
         if (sites[i].id === id)  {
             return sites[i];
             console.log(sites[i]);
