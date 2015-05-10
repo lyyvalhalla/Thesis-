@@ -197,8 +197,8 @@ function onDocumentMouseMove( event ) {
 
 
 	new TWEEN.Tween( tubeMesh.rotation ).to( {  
-		x: mouse.x/100,
-		y: mouse.y/100,
+		x: mouse.x/500,
+		y: mouse.y/500,
 		
 		}, 2000 ).easing(TWEEN.Easing.Quintic.Out).start();
 

@@ -95,28 +95,36 @@ canvas {
     top: 5%;
     left: 20%;
     color: #ffffff;
+    background: #000000;
 }
 
 .deleteButton {
+    background: #000000;
     top: 0;
-    left: 100px;
-    
-    /*height: 5%;*/
+    height: 50px;
+    width: 50%;
+    font-size: 20px;
     color: #ffffff;
-    cursor: pointer;
-    border: none;
+    border: 1px solid white;
+    border-radius: 4px;
+
 }
 .deleteButton:active {
     opacity: 0;
 }
 
 .deleteButton #deleteTitle{
-    left: 50%;
+    position: absolute;
+    width: 50%;
+    top: 10px;
+    left: 10px;
 }
 
-.deleteButton #trash {
+#deleteTitle #trash {
+    position: absolute;
+    right: 5%;
+    height:30px;
     width: 30px;
-    height: 30px;
     cursor: pointer;
 }
 

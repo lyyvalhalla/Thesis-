@@ -16,6 +16,7 @@ var plane, sphere;
 
 
 function createPath() {
+
 	camera.position.set(0, -180, 0);
 	addParticles()
 	// compute length
@@ -163,6 +164,7 @@ function addPathNodes(nodes) {
 	for (var i =0; i<pathNodes.length; i++) {
 
 		var position = tube.parameters.path.getPointAt(pathNodes[i].zPos/10000);
+		// console.log(position);
 		
 		var geometry =  new THREE.BoxGeometry(10, 10, 10);
 		var material =  new THREE.MeshBasicMaterial({color: 0x83A69E, wireframe: true});  // sortCategory() here 
@@ -171,7 +173,7 @@ function addPathNodes(nodes) {
 		pathArray.push(pathNode);
 		pathNode.position.x = position.x;
 		pathNode.position.y = position.y + 25;
-		pathNode.position.z = position.z - 1000;
+		pathNode.position.z = position.z + getRandomInt(-1000, 100);
 		pathNode.visible = true;
 		scene.add(pathNode);
 	}
@@ -183,9 +185,9 @@ function addPathNodes(nodes) {
 function updateFrame(pathNodes, pathArray){
 	
 	for (var i=0, j=folders.length; i<pathArray.length; i++ ) {
-		if (splineCamera.position.distanceTo(pathArray[i].position) > 700 && splineCamera.position.distanceTo(pathArray[i].position) < 760 && pathArray[i].visible) {
+		if (splineCamera.position.distanceTo(pathArray[i].position) > 680 && splineCamera.position.distanceTo(pathArray[i].position) < 740 && pathArray[i].visible) {
 			if (checkArray.indexOf(i) === -1) {
-				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 100, pathArray[i].position.z)
+				var newFrame = new showFrame(pathNodes[i], pathArray[i].position.x, pathArray[i].position.y + 80, pathArray[i].position.z);
 				scene2.add(newFrame);
 				pathArray[j].frame = newFrame;
 				checkArray.push(i);

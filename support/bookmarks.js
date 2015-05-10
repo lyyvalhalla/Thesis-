@@ -35,24 +35,24 @@ var showFrame = function (site, x, y, z) {
 	object.position.y = y;
 	object.position.z = z;
 
-	webpage = document.createElement('iframe');
-	webpage.src = site.url;
-	webpage.className = "frame";
-	webpage.sandbox = "allow-same-origin allow-scripts";
-	// webpage.sandbox = "allow-same-origin";
-	dom.appendChild(webpage);
+	// webpage = document.createElement('iframe');
+	// webpage.src = site.url;
+	// webpage.className = "frame";
+	// webpage.sandbox = "allow-same-origin allow-scripts";
+	// // webpage.sandbox = "allow-same-origin";
+	// dom.appendChild(webpage);
 
 
 	deleteButton = document.createElement('div');
-	// deleteButton.innerHTML = "trash it";
-	var t = document.createTextNode(site.title);
-	t.id = "deleteTitle";    
-	deleteButton.appendChild(t); 
+	deleteButton.className = "deleteButton";
+	var t = document.createElement('div');
+	t.textContent = site.title;
+	t.id = "deleteTitle"; 
 	var trash = document.createElement('img');
 	trash.id = "trash";
-	trash.src ="img/trash.png";
-	deleteButton.appendChild(trash);                         
-	deleteButton.className = "deleteButton";
+	trash.src ="img/trash.png"; 
+	t.appendChild(trash);                         
+	deleteButton.appendChild(t); 
 	dom.appendChild(deleteButton);
 
 	deleteButton.onclick = function() {
@@ -67,6 +67,14 @@ var showFrame = function (site, x, y, z) {
 	var timeTag = document.getElementById('timeTag');
 	timeTag.textContent = site.time;
 	timeTag.className = "timeTag";
+
+
+	webpage = document.createElement('iframe');
+	webpage.src = site.url;
+	webpage.className = "frame";
+	webpage.sandbox = "allow-same-origin allow-scripts";
+	// webpage.sandbox = "allow-same-origin";
+	dom.appendChild(webpage);
 
 	return object;
 
