@@ -1,18 +1,14 @@
 var composer;
 
+var keyTrigger = false;
 var PI = Math.PI;
-var cube_size = 100, grid = 6, total_cubes = (grid * grid);
+var cube_size = 230, grid = 6, total_cubes = (grid * grid);
 var wall_size = (grid * cube_size), half_wall_size = (wall_size / 2);
-var main_color = 0xf0f0f0, secondary_color = 0x222222;
+var main_color = 0x3d738b, secondary_color = 0x333333;
 var cubes = [];
 
-Utils = {
-    randomInRange : function(min, max) {
-        return Math.floor(Math.random() * (max- min + 1)) + min;
-    }
-}
-
-
+var searchInput;
+var allowEx;
 
 
 var Flipping_Wall = new THREE.Object3D();
@@ -93,13 +89,14 @@ function setupWall(object) {
         object.add(tile);
     })
 }
+var i, geometry, material, x, y, row, col, minDuration, maxDuration, minDelay, maxDelay, attrOptions, attr, direction, config;
 
 
 // tweenMax here:
 function setupCubes(object) {
-	var i, geometry, material, x, y, row, col, minDuration, maxDuration, minDelay, maxDelay, attrOptions, attr, direction, config;
+	// var i, geometry, material, x, y, row, col, minDuration, maxDuration, minDelay, maxDelay, attrOptions, attr, direction, config;
 
-	geometry = new THREE.BoxGeometry(cube_size, cube_size, 0.05);
+	geometry = new THREE.BoxGeometry(cube_size, cube_size, 10);
 	material = new THREE.MeshLambertMaterial({color: main_color});
 	x = 0;
     y = 0;
@@ -108,7 +105,7 @@ function setupCubes(object) {
     minDuration = 3;
     maxDuration = 6;
     minDelay = 0;
-    maxDelay = 0.6;
+    maxDelay = 1;
     attrOptions = ['x', 'y'];
 
     for (var i=0; i<total_cubes; i++) {
@@ -141,16 +138,12 @@ function setupCubes(object) {
 
 
 	var counter = 0;
-	if (counter > total_cubes) {
-		
-		// input div disable keyboard event
-	}
-
+	
     // ****************** temp commented >> uncomment when doing the transitions******************
-    /* 
- 	document.onkeydown = function(cube) {
-
- 		
+    console.log($('startType'));
+ 	$('startType').keypress(function(cube) {
+         console.log("woof");
+ 		keyTrigger = true;
  		// console.log(counter + "; " + "keypressed");
 
  		config = {
@@ -162,15 +155,27 @@ function setupCubes(object) {
         direction = (Math.random() < 0.5 ? -PI : PI);
         config[attr] = direction;
 
-        TweenMax.to(
-        	cubes[counter].rotation,
-        	Utils.randomInRange(minDuration, maxDuration),
-        	config
+        // for (var i=0; i<cubes.length; i++) {
+        //         TweenMax.to(
+                
+        //         cubes[i].rotation,
+        //         Utils.randomInRange(minDuration, maxDuration),
+        //         config
+        //     );
+        // }
+            cubes.forEach(function(cube) {
+                TweenMax.to(
+                
+                    cube.rotation,
+                    Utils.randomInRange(minDuration, maxDuration),
+                    config
+                
+                 );
+            }
         );
 
-        counter = counter +1;
- 	}
-    */
+ 	});
+    
     
  	
 }
@@ -222,16 +227,74 @@ var setupSearchBox = function (x, y, z) {
     searchBox.position.y = y;
     searchBox.position.z = z;
 
-    var searchInput = document.createElement('input');
-    searchInput.id = "startType";
-    searchInput.type = "search";
-    // searchInput.type = "text";   
+    searchInput = document.getElementById("startType");
+    // searchInput.id = "startType";
+    searchInput.type = "text";
+    searchInput.style.display ="block";
+    searchInput.value = "Guess how many bookmarks you have? type a number..."  
     box.appendChild(searchInput);
+
+    $(searchInput).focus(function() {
+        searchInput.value = "";
+
+        setTimeout(function(){
+            setAllow();
+            allowEx.style.opacity = "1";
+
+        }, 1000);
+    });
+
+     $(searchInput).focusout(function() {
+
+     });
+
+
+    $(searchInput).keypress(function(cube) {
+        console.log("woof");
+        keyTrigger = true;
+        // console.log(counter + "; " + "keypressed");
+
+        config = {
+            ease : Elastic.easeOut,
+            delay : Utils.randomInRange(minDelay, maxDelay),
+            repeat : -1
+        };
+        attr = attrOptions[~~(Math.random() * attrOptions.length)];
+        direction = (Math.random() < 0.5 ? -PI : PI);
+        config[attr] = direction;
+
+    // for (var i=0; i<cubes.length; i++) {
+    //         TweenMax.to(
+            
+    //         cubes[i].rotation,
+    //         Utils.randomInRange(minDuration, maxDuration),
+    //         config
+    //     );
+    // }
+        cubes.forEach(function(cube) {
+            TweenMax.to(
+            
+                cube.rotation,
+                Utils.randomInRange(minDuration, maxDuration),
+                config
+            
+             );
+        }
+    );
+
+});
 
 
     return searchBox;
-
     
+    
+}
+
+
+
+function setAllow() {
+    allowEx = document.getElementById("startAllow");
+    allowEx.textContent = "Press enter to find the right answer."
 }
 
 
@@ -245,7 +308,11 @@ var setupSearchBox = function (x, y, z) {
 
 
 
-
+Utils = {
+    randomInRange : function(min, max) {
+        return Math.floor(Math.random() * (max- min + 1)) + min;
+    }
+}
 
 
 

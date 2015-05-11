@@ -16,6 +16,8 @@ function initMenu() {
 
 var menuObject = new THREE.Object3D();
 function createMenuNodes(folders) {
+
+	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	
 	folders.forEach(function(d){
 		var points = [];

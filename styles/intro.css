@@ -2,9 +2,44 @@ body {
     overflow: hidden; 
 }
 
+@-webkit-keyframes typing { from { width: 0; } }
+@-webkit-keyframes blink-caret { 50% { border-color: transparent; } }
+
 #startType {
+	background-color: transparent;
+	font: bold 300% Futura, monospace;
+	border: none;
     position: relative;
+    width: 1200px;
+    height: 500px;
     margin: 0 auto;
-    display: block;
-   
+    left: 10px;
+    display: none;
+    font-size: 46px;
+   	autofocus: autofocus;
+   	white-space: nowrap;
+   	-webkit-animation: typing 2s steps(21, end), blink-caret 0.5s step-end infinite alternate;
+   	/*color:transparent;*/
+}
+
+
+#startType:focus {
+	outline: 0;
+	
+	width: 200px;
+	height: 500px;
+	color: #ffffff;
+}
+
+
+#startAllow {
+	color: #ffffff;
+	font: bold 300% Futura, monospace;
+	font-size: 36px;
+	position: absolute;
+	width: 1000px;
+    height: 80px;
+	-webkit-transition: 2s linear;
+	top: 30%;
+	text-align: center;
 }

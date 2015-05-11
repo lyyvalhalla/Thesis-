@@ -3,6 +3,10 @@ var jsonHtml, jsonObject;
 
 
 window.onload = function() {
+    init();
+    animate();
+
+
     $('#json').bind('DOMSubtreeModified', function(e) {
         if (e.target.innerHTML.length > 0) {
             jsonHtml = e.target.innerHTML;      // the stringified json in a string
@@ -13,9 +17,9 @@ window.onload = function() {
 
             bmInit(jsonObject);
             // initProgress();
-
-            init();
-            animate();
+            update(root);
+            // init();
+            
 
            
 

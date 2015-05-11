@@ -74,7 +74,7 @@ function update(source) {
 
 
 	/************* path menu ******************/
-	initMenu();
+	// initMenu();
 }
 
 
@@ -108,7 +108,7 @@ function init() {
 	scene.add(dirLight);
 	scene.add(dirLight2);
 	// drawings here
-	update(root);
+	// update(root);
 
 	/*****************  PATH parts *****************/
 	// createPath();
@@ -128,12 +128,12 @@ function init() {
 	// *****************  start stages***************** 
 	// startStage();
 
-	            initProgress();
+	// initProgress();
 
 	// ***************** call stages here:***************** 
-	
-	// scene2.add(new setupSearchBox(0, 0, 0));
-	// scene.add(Flipping_Wall);
+	//startstage
+	scene2.add(new setupSearchBox(0, 0, 0));
+	scene.add(Flipping_Wall);
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -171,10 +171,10 @@ function init() {
 
 
 	window.addEventListener( 'resize', onWindowResize, false );
-	window.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	
 	window.addEventListener( 'mousewheel', mousewheel, false );
 	window.addEventListener( 'DOMMouseScroll', mousewheel, false ); // firefox
-	window.addEventListener( 'mousedown', onDocumentMouseDown, false );
+	// window.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
 function onWindowResize() {
@@ -270,7 +270,7 @@ function render() {
 	}
 
 
-	updateFrame(pathNodes, pathArray);
+	//updateFrame(pathNodes, pathArray);
 
 
 	/*some updates*/
@@ -283,8 +283,10 @@ function render() {
 			convexArray[i].rotation.z  += Math.random()/100;
 	}
 	
-	renderer.render( scene, splineCamera );
-	renderer2.render( scene2, splineCamera );
+	renderer.render( scene, camera );
+	// renderer.render(scene, splineCamera);
+	// renderer2.render( scene2, splineCamera );
+	renderer2.render( scene2, camera );
 
 }
 
